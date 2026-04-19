@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galerie – Great Silkyway</title>
+  <meta name="description" content="Fotogalerie Yorkshire teriérů z chovatelské stanice Great Silkyway." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .gallery-grid-full {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .gallery-grid-full .gallery-item {
+      aspect-ratio: 1;
+    }
+    .gallery-grid-full .gallery-item.wide {
+      grid-column: span 2;
+      aspect-ratio: 2/1;
+    }
+    @media (max-width: 768px) {
+      .gallery-grid-full {
+        grid-template-columns: 1fr 1fr;
+      }
+      .gallery-grid-full .gallery-item.wide {
+        grid-column: span 2;
+      }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid-full {
+        grid-template-columns: 1fr;
+      }
+      .gallery-grid-full .gallery-item.wide {
+        grid-column: span 1;
+        aspect-ratio: 1;
+      }
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open {
+      display: flex;
+    }
+    .lightbox__content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .lightbox__img {
+      max-width: 90vw;
+      max-height: 82vh;
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+    }
+    .lightbox__emoji {
+      display: none;
+    }
+    .lightbox__caption-text {
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+      opacity: 0.85;
+    }
+    .lightbox__close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .filter-tab {
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 2px solid var(--color-border);
+      background: var(--color-white);
+      color: var(--color-text-soft);
+      transition: var(--transition);
+    }
+    .filter-tab:hover,
+    .filter-tab.active {
+      background: var(--color-gold);
+      border-color: var(--color-gold);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__logo">
+          <img src="logo.jpg" alt="Great Silkyway logo" class="nav__logo-img" />
+          <div class="nav__logo-text">
+            <span class="nav__logo-main">Great Silkyway</span>
+            <span class="nav__logo-sub">Yorkshire Terrier Kennel</span>
+          </div>
+        </a>
+        <ul class="nav__links">
+          <li><a href="index.html" class="nav__link">Úvod</a></li>
+          <li><a href="about.html" class="nav__link">O nás</a></li>
+          <li><a href="nasi-psi.html" class="nav__link">Naši psi</a></li>
+          <li><a href="stena.html" class="nav__link">Štěňata</a></li>
+          <li><a href="galerie.html" class="nav__link active">Galerie</a></li>
+        </ul>
+        <a href="kontakt.html" class="btn btn--primary nav__cta btn--sm">Kontaktujte nás</a>
+        <button class="nav__burger" id="burger" aria-label="Otevřít menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav__mobile" id="mobileMenu">
+      <a href="index.html" class="nav__link">Úvod</a>
+      <a href="about.html" class="nav__link">O nás</a>
+      <a href="nasi-psi.html" class="nav__link">Naši psi</a>
+      <a href="stena.html" class="nav__link">Štěňata</a>
+      <a href="galerie.html" class="nav__link active">Galerie</a>
+      <a href="kontakt.html" class="btn btn--primary">Kontaktujte nás</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Úvod</a> <span>/</span> <span>Galerie</span>
+      </div>
+      <h1>Fotogalerie</h1>
+      <p>Nahlédněte do každodenního života naší chovatelské stanice, výstav a rodinného štěstí.</p>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="section">
+    <div class="container">
+
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">Vše</button>
+        <button class="filter-tab" data-filter="stenata">Štěňata</button>
+        <button class="filter-tab" data-filter="psi">Dospělí psi</button>
+        <button class="filter-tab" data-filter="vystavy">Výstavy</button>
+        <button class="filter-tab" data-filter="rodiny">Šťastné rodiny</button>
+      </div>
+
+      <div class="gallery-grid-full" id="galleryGrid">
+
+        <!-- Ti Amo Romantico Senorita -->
+        <div class="gallery-item wide" data-category="psi" data-caption="Ti Amo Romantico Senorita" style="cursor:pointer;">
+          <img src="York1.jpg" alt="Ti Amo Romantico Senorita" style="width:100%;height:100%;object-fit:cover;object-position:center center;" />
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Ti Amo Romantico Senorita</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="psi" data-caption="Ti Amo Romantico Senorita — profil" style="cursor:pointer;">
+          <img src="York2.jpg" alt="Ti Amo Romantico Senorita" style="width:100%;height:100%;object-fit:cover;object-position:top center;" />
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Ti Amo Romantico Senorita — profil</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="psi" data-caption="Ti Amo Romantico Senorita — portrét" style="cursor:pointer;">
+          <img src="York3.jpg" alt="Ti Amo Romantico Senorita" style="width:100%;height:100%;object-fit:cover;object-position:top center;" />
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Ti Amo Romantico Senorita — portrét</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="psi" data-caption="Ti Amo Romantico Senorita — elegance" style="cursor:pointer;">
+          <img src="York4.jpg" alt="Ti Amo Romantico Senorita" style="width:100%;height:100%;object-fit:cover;object-position:top center;" />
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Ti Amo Romantico Senorita — elegance</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="psi" data-caption="Ti Amo Romantico Senorita — výstavní póza" style="cursor:pointer;">
+          <img src="York5.jpg" alt="Ti Amo Romantico Senorita" style="width:100%;height:100%;object-fit:cover;object-position:top center;" />
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Ti Amo Romantico Senorita — výstavní póza</span></div>
+        </div>
+
+        <div class="gallery-item wide" data-category="psi" data-caption="Bella Chatobrian — naše šampionka" data-emoji="🐕" style="cursor:pointer;">
+          <span class="gallery-emoji" style="font-size:80px;">🐕</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Bella Chatobrian — naše šampionka</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="stenata" data-caption="Nový vrh A — únor 2025" data-emoji="🐶" style="cursor:pointer;">
+          <span class="gallery-emoji">🐶</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Nový vrh A — únor 2025</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="vystavy" data-caption="Duke — Interchampion 2023" data-emoji="🏆" style="cursor:pointer;">
+          <span class="gallery-emoji">🏆</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Duke — Interchampion 2023</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="stenata" data-caption="Angie — 4 týdny" data-emoji="🐶" style="cursor:pointer;">
+          <span class="gallery-emoji">🐶</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Angie — 4 týdny</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="rodiny" data-caption="Šťastná rodina z Prahy" data-emoji="❤️" style="cursor:pointer;">
+          <span class="gallery-emoji">❤️</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Šťastná rodina z Prahy</span></div>
+        </div>
+
+        <div class="gallery-item wide" data-category="vystavy" data-caption="Luna na výstavě — CACIB Brno 2024" data-emoji="🌟" style="cursor:pointer;">
+          <span class="gallery-emoji" style="font-size:80px;">🌟</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Luna na výstavě — CACIB Brno 2024</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="psi" data-caption="Maxim Chatobrian Royal" data-emoji="🐕" style="cursor:pointer;">
+          <span class="gallery-emoji">🐕</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Maxim Chatobrian Royal</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="stenata" data-caption="Apollo — 6 týdnů" data-emoji="🐶" style="cursor:pointer;">
+          <span class="gallery-emoji">🐶</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Apollo — 6 týdnů</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="rodiny" data-caption="Náš yorkie a jeho nová rodinka" data-emoji="🥰" style="cursor:pointer;">
+          <span class="gallery-emoji">🥰</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Náš yorkie a jeho nová rodinka</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="psi" data-caption="Stella Wisdom Dream" data-emoji="🐕" style="cursor:pointer;">
+          <span class="gallery-emoji">🐕</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Stella Wisdom Dream</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="stenata" data-caption="Aurora — hravá holčička" data-emoji="🐾" style="cursor:pointer;">
+          <span class="gallery-emoji">🐾</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Aurora — hravá holčička</span></div>
+        </div>
+
+        <div class="gallery-item" data-category="rodiny" data-caption="Vánoce s yorkshire terierem" data-emoji="🎄" style="cursor:pointer;">
+          <span class="gallery-emoji">🎄</span>
+          <div class="gallery-item__overlay"><span class="gallery-item__caption">Vánoce s yorkshire terierem</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lightboxClose">✕</button>
+    <div class="lightbox__content">
+      <img class="lightbox__img" id="lightboxImg" src="" alt="" />
+      <div class="lightbox__emoji" id="lightboxEmoji"></div>
+      <p class="lightbox__caption-text" id="lightboxCaption"></p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-banner">
+    <div class="container">
+      <span class="section-label" style="color: var(--color-gold-light);">Sdílejte radost</span>
+      <h2>Máte yorkshire od nás? Pošlete nám fotky!</h2>
+      <p>Rádi přidáme fotky vašeho mazlíčka do naší galerie šťastných rodin.</p>
+      <a href="kontakt.html" class="btn btn--primary">Napsat nám</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__upper">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <img src="logo.jpg" alt="Great Silkyway logo" class="nav__logo-img" />
+            <div class="nav__logo-text">
+              <span class="nav__logo-main">Great Silkyway</span>
+              <span class="nav__logo-sub" style="color:var(--color-gold-light);">Yorkshire Terrier Kennel</span>
+            </div>
+          </div>
+          <p class="footer__tagline">Profesionální chovatelská stanice Yorkshire teriérů s FCI registrací. Chováme s láskou od roku 2009.</p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link">📘</a>
+            <a href="#" class="footer__social-link">📷</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer__col-title">Navigace</div>
+          <ul class="footer__links">
+            <li><a href="index.html">Úvod</a></li>
+            <li><a href="about.html">O nás</a></li>
+            <li><a href="nasi-psi.html">Naši psi</a></li>
+            <li><a href="stena.html">Štěňata</a></li>
+            <li><a href="galerie.html">Galerie</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__col-title">Informace</div>
+          <ul class="footer__links">
+            <li><a href="#">FCI registrace</a></li>
+            <li><a href="#">Zdravotní testy</a></li>
+            <li><a href="#">Adopční podmínky</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__col-title">Kontakt</div>
+          <ul class="footer__links" style="gap:12px;">
+            <li style="color:rgba(255,255,255,0.7);">📍 Česká republika</li>
+            <li><a href="mailto:info@great-silkyway.cz">📧 info@great-silkyway.cz</a></li>
+            <li><a href="kontakt.html" class="btn btn--primary btn--sm" style="margin-top:8px; display:inline-flex;">Napište nám</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__lower">
+        <span>© 2025 Great Silkyway. Všechna práva vyhrazena.</span>
+        <span>Chovatelská stanice FCI · ČMKU registrace</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const burger = document.getElementById('burger');
+    const menu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => menu.classList.toggle('open'));
+
+    // Gallery filter
+    const tabs = document.querySelectorAll('.filter-tab');
+    const items = document.querySelectorAll('#galleryGrid .gallery-item');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+        items.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxEmoji = document.getElementById('lightboxEmoji');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        if (img) {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightboxImg.style.display = 'block';
+          lightboxEmoji.textContent = '';
+        } else {
+          lightboxImg.style.display = 'none';
+          lightboxEmoji.textContent = item.dataset.emoji || '🐕';
+          lightboxEmoji.style.display = 'block';
+          lightboxEmoji.style.fontSize = '80px';
+        }
+        lightboxCaption.textContent = item.dataset.caption || '';
+        lightbox.classList.add('open');
+      });
+    });
+
+    lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) lightbox.classList.remove('open');
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') lightbox.classList.remove('open');
+    });
+  </script>
+</body>
+</html>

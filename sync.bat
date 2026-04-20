@@ -1,9 +1,28 @@
 @echo off
 cd /d "%~dp0"
-echo Synchronizuji se GitHubem...
-git add -A
-git commit -m "Aktualizace webu"
-git push origin main
+echo ================================
+echo  Synchronizace s GitHubem
+echo ================================
 echo.
-echo Hotovo! Zmeny jsou na GitHubu.
+
+git add -A
+
+git diff --cached --quiet
+if %errorlevel% == 0 (
+    echo Zadne zmeny k odeslani.
+) else (
+    git commit -m "Aktualizace webu"
+    echo.
+    echo Odesílám na GitHub...
+    git push origin main
+    if %errorlevel% == 0 (
+        echo.
+        echo HOTOVO! Zmeny jsou na GitHubu.
+    ) else (
+        echo.
+        echo CHYBA pri odesílání! Zkontroluj pripojeni nebo prihlaseni.
+    )
+)
+
+echo.
 pause

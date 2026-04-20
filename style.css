@@ -1404,3 +1404,23 @@ p {
   clip: rect(0,0,0,0);
   overflow: hidden;
 }
+
+/* Language switcher */
+.lang-switcher {
+  background: transparent;
+  border: 2px solid var(--color-gold);
+  color: var(--color-gold);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+.lang-switcher:hover {
+  background: var(--color-gold);
+  color: white;
+}

@@ -14,7 +14,7 @@
     <div class="container">
       <div class="nav__inner">
         <a href="index.html" class="nav__logo">
-          <img src="logo.jpg" alt="Great Silkyway logo" class="nav__logo-img" />
+          <img src="great-logo.png" alt="Great Silkyway logo" class="nav__logo-img" />
           <div class="nav__logo-text">
             <span class="nav__logo-main">Great Silkyway</span>
             <span class="nav__logo-sub">Yorkshire Terrier Kennel</span>
@@ -22,15 +22,17 @@
         </a>
 
         <ul class="nav__links">
-          <li><a href="index.html" class="nav__link active">Úvod</a></li>
-          <li><a href="about.html" class="nav__link">O nás</a></li>
-          <li><a href="nasi-psi.html" class="nav__link">Naši psi</a></li>
-          <li><a href="stena.html" class="nav__link">Štěňata</a></li>
-          <li><a href="galerie.html" class="nav__link">Galerie</a></li>
+          <li><a href="index.html" class="nav__link active" data-i18n="nav_home">Úvod</a></li>
+          <li><a href="about.html" class="nav__link" data-i18n="nav_about">O nás</a></li>
+          <li><a href="nasi-psi.html" class="nav__link" data-i18n="nav_dogs">Naši psi</a></li>
+          <li><a href="stena.html" class="nav__link" data-i18n="nav_puppies">Štěňata</a></li>
+          <li><a href="vrhy.html" class="nav__link" data-i18n="nav_litters">Vrhy</a></li>
+          <li><a href="galerie.html" class="nav__link" data-i18n="nav_gallery">Galerie</a></li>
         </ul>
 
-        <a href="kontakt.html" class="btn btn--primary nav__cta btn--sm">Kontaktujte nás</a>
+        <a href="kontakt.html" class="btn btn--primary nav__cta btn--sm" data-i18n="nav_contact_btn">Kontaktujte nás</a>
 
+        <button class="lang-switcher" onclick="toggleLang()">EN</button>
         <button class="nav__burger" id="burger" aria-label="Otevřít menu">
           <span></span><span></span><span></span>
         </button>
@@ -39,12 +41,13 @@
 
     <!-- Mobile menu -->
     <div class="nav__mobile" id="mobileMenu">
-      <a href="index.html" class="nav__link active">Úvod</a>
-      <a href="about.html" class="nav__link">O nás</a>
-      <a href="nasi-psi.html" class="nav__link">Naši psi</a>
-      <a href="stena.html" class="nav__link">Štěňata</a>
-      <a href="galerie.html" class="nav__link">Galerie</a>
-      <a href="kontakt.html" class="btn btn--primary">Kontaktujte nás</a>
+      <a href="index.html" class="nav__link active" data-i18n="nav_home">Úvod</a>
+      <a href="about.html" class="nav__link" data-i18n="nav_about">O nás</a>
+      <a href="nasi-psi.html" class="nav__link" data-i18n="nav_dogs">Naši psi</a>
+      <a href="stena.html" class="nav__link" data-i18n="nav_puppies">Štěňata</a>
+      <a href="vrhy.html" class="nav__link" data-i18n="nav_litters">Vrhy</a>
+      <a href="galerie.html" class="nav__link" data-i18n="nav_gallery">Galerie</a>
+      <a href="kontakt.html" class="btn btn--primary" data-i18n="nav_contact_btn">Kontaktujte nás</a>
     </div>
   </nav>
 
@@ -52,34 +55,30 @@
   <section class="hero">
     <div class="hero__grid">
       <div class="hero__content">
-        <span class="hero__badge">🏆 FCI registrovaná stanice</span>
+        <span class="hero__badge" data-i18n="hero_badge">🏆 FCI registrovaná stanice</span>
         <h1 class="hero__title">
-          Krásní Yorkshire teriéři
-          <span class="accent">s láskou a péčí</span>
+          <span data-i18n="hero_title1">Krásní Yorkshire teriéři</span>
+          <span class="accent" data-i18n="hero_title2">s láskou a péčí</span>
         </h1>
-        <p class="hero__desc">
-          Vítejte v chovatelské stanici Great Silkyway. Chováme Yorkshire teriéry
-          s důrazem na zdraví, povahu a krásu. Každé štěně vyrůstá v rodinném prostředí
-          s láskou a odbornou péčí.
-        </p>
+        <p class="hero__desc" data-i18n="hero_desc">Vítejte v chovatelské stanici Great Silkyway. Chováme Yorkshire teriéry s důrazem na zdraví, povahu a krásu. Každé štěně vyrůstá v rodinném prostředí s láskou a odbornou péčí.</p>
 
         <div class="btn-group">
-          <a href="stena.html" class="btn btn--primary">Dostupná štěňata</a>
-          <a href="about.html" class="btn btn--outline">Více o nás</a>
+          <a href="stena.html" class="btn btn--primary" data-i18n="hero_btn_puppies">Dostupná štěňata</a>
+          <a href="about.html" class="btn btn--outline" data-i18n="hero_btn_about">Více o nás</a>
         </div>
 
         <div class="hero__stats">
           <div>
             <span class="hero__stat-value">15+</span>
-            <span class="hero__stat-label">Let zkušeností</span>
+            <span class="hero__stat-label" data-i18n="hero_stat_exp">Let zkušeností</span>
           </div>
           <div>
             <span class="hero__stat-value">200+</span>
-            <span class="hero__stat-label">Spokojených rodin</span>
+            <span class="hero__stat-label" data-i18n="hero_stat_families">Spokojených rodin</span>
           </div>
           <div>
             <span class="hero__stat-value">FCI</span>
-            <span class="hero__stat-label">Registrace</span>
+            <span class="hero__stat-label" data-i18n="hero_stat_reg">Registrace</span>
           </div>
         </div>
       </div>
@@ -97,29 +96,29 @@
         <div class="feature-card">
           <div class="feature-card__icon">📋</div>
           <div>
-            <div class="feature-card__title">FCI průkazy původu</div>
-            <div class="feature-card__desc">Všechna štěňata s mezinárodně uznávaným průkazem</div>
+            <div class="feature-card__title" data-i18n="feat_fci_title">FCI průkazy původu</div>
+            <div class="feature-card__desc" data-i18n="feat_fci_desc">Všechna štěňata s mezinárodně uznávaným průkazem</div>
           </div>
         </div>
         <div class="feature-card">
           <div class="feature-card__icon">🧬</div>
           <div>
-            <div class="feature-card__title">DNA testování</div>
-            <div class="feature-card__desc">Rodiče otestováni na dědičné choroby</div>
+            <div class="feature-card__title" data-i18n="feat_dna_title">DNA testování</div>
+            <div class="feature-card__desc" data-i18n="feat_dna_desc">Rodiče otestováni na dědičné choroby</div>
           </div>
         </div>
         <div class="feature-card">
           <div class="feature-card__icon">💉</div>
           <div>
-            <div class="feature-card__title">Očkování & odčervení</div>
-            <div class="feature-card__desc">Kompletní veterinární péče před předáním</div>
+            <div class="feature-card__title" data-i18n="feat_vac_title">Očkování & odčervení</div>
+            <div class="feature-card__desc" data-i18n="feat_vac_desc">Kompletní veterinární péče před předáním</div>
           </div>
         </div>
         <div class="feature-card">
           <div class="feature-card__icon">🏠</div>
           <div>
-            <div class="feature-card__title">Rodinná výchova</div>
-            <div class="feature-card__desc">Štěňata socializována v domácím prostředí</div>
+            <div class="feature-card__title" data-i18n="feat_fam_title">Rodinná výchova</div>
+            <div class="feature-card__desc" data-i18n="feat_fam_desc">Štěňata socializována v domácím prostředí</div>
           </div>
         </div>
       </div>
@@ -137,35 +136,31 @@
           <div class="about-split__image-badge">
             <span class="badge-icon">🏆</span>
             <div class="badge-text">
-              <strong>15+ let</strong>
-              <span>zkušený chovatel</span>
+              <strong data-i18n="badge_exp">15+ let</strong>
+              <span data-i18n="badge_breeder">zkušený chovatel</span>
             </div>
           </div>
         </div>
 
         <div>
-          <span class="section-label">O chovatelské stanici</span>
+          <span class="section-label" data-i18n="about_label">O chovatelské stanici</span>
           <div class="divider"></div>
-          <h2 class="section-title">Chováme yorkshiry s vášní a zodpovědností</h2>
+          <h2 class="section-title" data-i18n="about_title">Chováme yorkshiry s vášní a zodpovědností</h2>
           <p>
-            Chovatelská stanice Great Silkyway vznikla z čisté lásky k Yorkshire teriérům.
-            Chov je pro nás nejen koníčkem, ale posláním — přivést na svět zdravá,
-            dobře socializovaná štěňata, která budou radostí celých rodin.
+            <span data-i18n="about_p1">Chovatelská stanice Great Silkyway vznikla z čisté lásky k Yorkshire teriérům. Chov je pro nás nejen koníčkem, ale posláním — přivést na svět zdravá, dobře socializovaná štěňata, která budou radostí celých rodin.</span>
           </p>
           <p>
-            Naši chovatelé jsou registrováni u FCI a ČMKU. Každý náš chovný pes prochází
-            komplexním zdravotním testováním včetně DNA analýzy, aby se zajistilo,
-            že předávají svým potomkům jen to nejlepší.
+            <span data-i18n="about_p2">Naši chovatelé jsou registrováni u FCI a ČMKU. Každý náš chovný pes prochází komplexním zdravotním testováním včetně DNA analýzy, aby se zajistilo, že předávají svým potomkům jen to nejlepší.</span>
           </p>
 
           <div class="checkmarks">
-            <div class="checkmark-item">Registrace FCI / ČMKU</div>
-            <div class="checkmark-item">Zdravotní testy rodičů</div>
-            <div class="checkmark-item">Celoživotní podpora majitelů</div>
-            <div class="checkmark-item">Smlouva o prodeji s zárukou</div>
+            <div class="checkmark-item" data-i18n="about_check1">Registrace FCI / ČMKU</div>
+            <div class="checkmark-item" data-i18n="about_check2">Zdravotní testy rodičů</div>
+            <div class="checkmark-item" data-i18n="about_check3">Celoživotní podpora majitelů</div>
+            <div class="checkmark-item" data-i18n="about_check4">Smlouva o prodeji s zárukou</div>
           </div>
 
-          <a href="about.html" class="btn btn--primary">Zjistit více o nás</a>
+          <a href="about.html" class="btn btn--primary" data-i18n="about_btn">Zjistit více o nás</a>
         </div>
       </div>
     </div>
@@ -175,13 +170,10 @@
   <section class="section section--alt">
     <div class="container">
       <div class="text-center">
-        <span class="section-label">Chovní jedinci</span>
+        <span class="section-label" data-i18n="dogs_label">Chovní jedinci</span>
         <div class="divider" style="margin: 0 auto 24px;"></div>
-        <h2 class="section-title">Naši chovní psi</h2>
-        <p class="section-subtitle">
-          Seznamte se s hvězdami naší stanice — chovnými fenami a psy
-          s výbornými výsledky z výstav a zdravotními prověrkami.
-        </p>
+        <h2 class="section-title" data-i18n="dogs_title">Naši chovní psi</h2>
+        <p class="section-subtitle" data-i18n="dogs_subtitle">Seznamte se s hvězdami naší stanice — chovnými fenami a psy s výbornými výsledky z výstav a zdravotními prověrkami.</p>
       </div>
 
       <div class="dogs-grid">
@@ -265,7 +257,7 @@
       </div>
 
       <div class="text-center mt-40">
-        <a href="nasi-psi.html" class="btn btn--outline">Zobrazit všechny psy</a>
+        <a href="nasi-psi.html" class="btn btn--outline" data-i18n="dogs_show_all">Zobrazit všechny psy</a>
       </div>
     </div>
   </section>
@@ -274,19 +266,17 @@
   <section class="section">
     <div class="container">
       <div class="text-center">
-        <span class="section-label">Aktuální vrh</span>
+        <span class="section-label" data-i18n="puppies_label">Aktuální vrh</span>
         <div class="divider" style="margin: 0 auto 24px;"></div>
-        <h2 class="section-title">Dostupná štěňata</h2>
-        <p class="section-subtitle">
-          Hledáte svého nového čtyřnohého přítele? Podívejte se na naše aktuálně dostupná štěňata s průkazem FCI.
-        </p>
+        <h2 class="section-title" data-i18n="puppies_title">Dostupná štěňata</h2>
+        <p class="section-subtitle" data-i18n="puppies_subtitle">Hledáte svého nového čtyřnohého přítele? Podívejte se na naše aktuálně dostupná štěňata s průkazem FCI.</p>
       </div>
 
       <div class="puppies-grid">
         <div class="puppy-card">
           <div class="puppy-card__image">
             <span>🐶</span>
-            <span class="puppy-card__status puppy-card__status--available">Volné</span>
+            <span class="puppy-card__status puppy-card__status--available" data-i18n="status_available">Volné</span>
           </div>
           <div class="puppy-card__body">
             <div class="puppy-card__name">Yorkie Fena #1</div>
@@ -298,7 +288,7 @@
         <div class="puppy-card">
           <div class="puppy-card__image">
             <span>🐶</span>
-            <span class="puppy-card__status puppy-card__status--reserved">Rezervováno</span>
+            <span class="puppy-card__status puppy-card__status--reserved" data-i18n="status_reserved">Rezervováno</span>
           </div>
           <div class="puppy-card__body">
             <div class="puppy-card__name">Yorkie Pes #1</div>
@@ -310,7 +300,7 @@
         <div class="puppy-card">
           <div class="puppy-card__image">
             <span>🐶</span>
-            <span class="puppy-card__status puppy-card__status--available">Volné</span>
+            <span class="puppy-card__status puppy-card__status--available" data-i18n="status_available">Volné</span>
           </div>
           <div class="puppy-card__body">
             <div class="puppy-card__name">Yorkie Fena #2</div>
@@ -321,7 +311,7 @@
       </div>
 
       <div class="text-center mt-40">
-        <a href="stena.html" class="btn btn--primary">Všechna štěňata</a>
+        <a href="stena.html" class="btn btn--primary" data-i18n="puppies_all">Všechna štěňata</a>
       </div>
     </div>
   </section>
@@ -330,10 +320,10 @@
   <section class="section section--alt">
     <div class="container">
       <div class="text-center mb-40">
-        <span class="section-label">Fotogalerie</span>
+        <span class="section-label" data-i18n="gallery_label">Fotogalerie</span>
         <div class="divider" style="margin: 0 auto 24px;"></div>
-        <h2 class="section-title">Naše yorkshire rodina</h2>
-        <p class="section-subtitle">Krátký pohled do každodenního života naší chovatelské stanice.</p>
+        <h2 class="section-title" data-i18n="gallery_title">Naše yorkshire rodina</h2>
+        <p class="section-subtitle" data-i18n="gallery_subtitle">Krátký pohled do každodenního života naší chovatelské stanice.</p>
       </div>
 
       <div class="gallery-grid">
@@ -364,7 +354,7 @@
       </div>
 
       <div class="text-center mt-40">
-        <a href="galerie.html" class="btn btn--outline">Celá galerie</a>
+        <a href="galerie.html" class="btn btn--outline" data-i18n="gallery_all">Celá galerie</a>
       </div>
     </div>
   </section>
@@ -373,10 +363,10 @@
   <section class="section">
     <div class="container">
       <div class="text-center">
-        <span class="section-label">Reference</span>
+        <span class="section-label" data-i18n="test_label">Reference</span>
         <div class="divider" style="margin: 0 auto 24px;"></div>
-        <h2 class="section-title">Co říkají naše rodiny</h2>
-        <p class="section-subtitle">Přečtěte si zkušenosti lidí, kteří si od nás přijali yorkshire teriéra.</p>
+        <h2 class="section-title" data-i18n="test_title">Co říkají naše rodiny</h2>
+        <p class="section-subtitle" data-i18n="test_subtitle">Přečtěte si zkušenosti lidí, kteří si od nás přijali yorkshire teriéra.</p>
       </div>
 
       <div class="testimonials-grid mt-40">
@@ -425,12 +415,12 @@
   <!-- CTA BANNER -->
   <section class="cta-banner">
     <div class="container">
-      <span class="section-label" style="color: var(--color-gold-light);">Máte zájem?</span>
-      <h2>Najděte svého Yorkshire teriéra</h2>
-      <p>Vyplňte krátký dotazník a my vám pomůžeme najít štěně, které bude do vaší rodiny ideálně pasovat.</p>
+      <span class="section-label" style="color: var(--color-gold-light);" data-i18n="cta_label">Máte zájem?</span>
+      <h2 data-i18n="cta_title">Najděte svého Yorkshire teriéra</h2>
+      <p data-i18n="cta_desc">Vyplňte krátký dotazník a my vám pomůžeme najít štěně, které bude do vaší rodiny ideálně pasovat.</p>
       <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-        <a href="stena.html" class="btn btn--primary">Aktuální štěňata</a>
-        <a href="kontakt.html" class="btn btn--outline-white">Kontaktovat nás</a>
+        <a href="stena.html" class="btn btn--primary" data-i18n="cta_btn1">Aktuální štěňata</a>
+        <a href="kontakt.html" class="btn btn--outline-white" data-i18n="cta_btn2">Kontaktovat nás</a>
       </div>
     </div>
   </section>
@@ -441,16 +431,16 @@
       <div class="footer__upper">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="logo.jpg" alt="Great Silkyway logo" class="nav__logo-img" />
+            <img src="logo-white.png" alt="Great Silkyway logo" class="nav__logo-img" />
             <div class="nav__logo-text">
               <span class="nav__logo-main">Great Silkyway</span>
               <span class="nav__logo-sub" style="color:var(--color-gold-light);">Yorkshire Terrier Kennel</span>
             </div>
           </div>
-          <p class="footer__tagline">
+          <p class="footer__tagline"><span data-i18n="footer_tagline">
             Profesionální chovatelská stanice Yorkshire teriérů s FCI registrací.
             Chováme s láskou, zodpovědností a vášní od roku 2009.
-          </p>
+          </span></p>
           <div class="footer__social">
             <a href="#" class="footer__social-link" title="Facebook">📘</a>
             <a href="#" class="footer__social-link" title="Instagram">📷</a>
@@ -458,39 +448,40 @@
         </div>
 
         <div>
-          <div class="footer__col-title">Navigace</div>
+          <div class="footer__col-title" data-i18n="footer_nav_title">Navigace</div>
           <ul class="footer__links">
             <li><a href="index.html">Úvod</a></li>
             <li><a href="about.html">O nás</a></li>
             <li><a href="nasi-psi.html">Naši psi</a></li>
             <li><a href="stena.html">Štěňata</a></li>
+            <li><a href="vrhy.html">Vrhy</a></li>
             <li><a href="galerie.html">Galerie</a></li>
           </ul>
         </div>
 
         <div>
-          <div class="footer__col-title">Informace</div>
+          <div class="footer__col-title" data-i18n="footer_info_title">Informace</div>
           <ul class="footer__links">
-            <li><a href="#">FCI registrace</a></li>
-            <li><a href="#">Zdravotní testy</a></li>
-            <li><a href="#">Adopční podmínky</a></li>
-            <li><a href="#">FAQ</a></li>
+            <li><a href="#" data-i18n="footer_fci_reg">FCI registrace</a></li>
+            <li><a href="#" data-i18n="footer_health">Zdravotní testy</a></li>
+            <li><a href="#" data-i18n="footer_adoption">Adopční podmínky</a></li>
+            <li><a href="#" data-i18n="footer_faq">FAQ</a></li>
           </ul>
         </div>
 
         <div>
-          <div class="footer__col-title">Kontakt</div>
+          <div class="footer__col-title" data-i18n="footer_contact_title">Kontakt</div>
           <ul class="footer__links" style="gap:12px;">
             <li style="color:rgba(255,255,255,0.7);">📍 Česká republika</li>
             <li><a href="mailto:info@great-silkyway.cz">📧 info@great-silkyway.cz</a></li>
-            <li><a href="kontakt.html" class="btn btn--primary btn--sm" style="margin-top:8px; display:inline-flex;">Napište nám</a></li>
+            <li><a href="kontakt.html" class="btn btn--primary btn--sm" style="margin-top:8px; display:inline-flex;" data-i18n="footer_write">Napište nám</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer__lower">
-        <span>© 2025 Great Silkyway. Všechna práva vyhrazena.</span>
-        <span>Chovatelská stanice FCI · ČMKU registrace</span>
+        <span data-i18n="footer_rights">© 2025 Great Silkyway. Všechna práva vyhrazena.</span>
+        <span data-i18n="footer_reg">Chovatelská stanice FCI · ČMKU registrace</span>
       </div>
     </div>
   </footer>
@@ -503,5 +494,6 @@
       menu.classList.toggle('open');
     });
   </script>
+<script src="lang.js"></script>
 </body>
 </html>

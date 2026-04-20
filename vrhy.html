@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vrhy – Great Silkyway</title>
+  <meta name="description" content="Přehled vrhů Yorkshire teriérů z chovatelské stanice Great Silkyway." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .vrhy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 32px;
+    }
+    .vrh-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .vrh-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .vrh-card__image {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+    .vrh-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      transition: transform 0.4s ease;
+    }
+    .vrh-card:hover .vrh-card__image img {
+      transform: scale(1.05);
+    }
+    .vrh-card__body {
+      padding: 24px;
+    }
+    .vrh-card__label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      margin-bottom: 8px;
+    }
+    .vrh-card__title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--color-navy);
+      margin-bottom: 12px;
+    }
+    .vrh-card__desc {
+      font-size: 0.92rem;
+      color: var(--color-text-soft);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox__content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .lightbox__img {
+      max-width: 90vw;
+      max-height: 82vh;
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+    }
+    .lightbox__caption-text {
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+      opacity: 0.85;
+    }
+    .lightbox__close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__logo">
+          <img src="great-logo.png" alt="Great Silkyway logo" class="nav__logo-img" />
+          <div class="nav__logo-text">
+            <span class="nav__logo-main">Great Silkyway</span>
+            <span class="nav__logo-sub">Yorkshire Terrier Kennel</span>
+          </div>
+        </a>
+        <ul class="nav__links">
+          <li><a href="index.html" class="nav__link" data-i18n="nav_home">Úvod</a></li>
+          <li><a href="about.html" class="nav__link" data-i18n="nav_about">O nás</a></li>
+          <li><a href="nasi-psi.html" class="nav__link" data-i18n="nav_dogs">Naši psi</a></li>
+          <li><a href="stena.html" class="nav__link" data-i18n="nav_puppies">Štěňata</a></li>
+          <li><a href="vrhy.html" class="nav__link active" data-i18n="nav_litters">Vrhy</a></li>
+          <li><a href="galerie.html" class="nav__link" data-i18n="nav_gallery">Galerie</a></li>
+        </ul>
+        <a href="kontakt.html" class="btn btn--primary nav__cta btn--sm" data-i18n="nav_contact_btn">Kontaktujte nás</a>
+        <button class="lang-switcher" onclick="toggleLang()">EN</button>
+        <button class="nav__burger" id="burger" aria-label="Otevřít menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav__mobile" id="mobileMenu">
+      <a href="index.html" class="nav__link" data-i18n="nav_home">Úvod</a>
+      <a href="about.html" class="nav__link" data-i18n="nav_about">O nás</a>
+      <a href="nasi-psi.html" class="nav__link" data-i18n="nav_dogs">Naši psi</a>
+      <a href="stena.html" class="nav__link" data-i18n="nav_puppies">Štěňata</a>
+      <a href="vrhy.html" class="nav__link active" data-i18n="nav_litters">Vrhy</a>
+      <a href="galerie.html" class="nav__link" data-i18n="nav_gallery">Galerie</a>
+      <a href="kontakt.html" class="btn btn--primary" data-i18n="nav_contact_btn">Kontaktujte nás</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html" data-i18n="bc_home">Úvod</a> <span>/</span> <span data-i18n="bc_litters">Vrhy</span>
+      </div>
+      <h1 data-i18n="litters_page_title">Naše vrhy</h1>
+      <p data-i18n="litters_page_desc">Přehled uskutečněných a aktuálních vrhů naší chovatelské stanice.</p>
+    </div>
+  </section>
+
+  <!-- VRHY -->
+  <section class="section">
+    <div class="container">
+      <span class="section-label" data-i18n="litters_label">Přehled vrhů</span>
+      <div class="divider"></div>
+      <h2 class="section-title" style="margin-bottom:40px;" data-i18n="litters_title">Vrhy Great Silkyway</h2>
+
+      <div class="vrhy-grid">
+
+        <div class="vrh-card" style="cursor:pointer;" data-img="VRH_A.jpg" data-caption="Vrh A">
+          <div class="vrh-card__image">
+            <img src="VRH_A.jpg" alt="Vrh A" />
+          </div>
+          <div class="vrh-card__body">
+            <div class="vrh-card__label">Great Silkyway</div>
+            <div class="vrh-card__title" data-i18n="litter_a_title">Vrh A</div>
+            <p class="vrh-card__desc" data-i18n="litter_a_desc">Štěňata z vrhu A naší chovatelské stanice.</p>
+            <a href="kontakt.html" class="btn btn--outline btn--sm" data-i18n="litter_inquiry">Dotaz na vrh</a>
+          </div>
+        </div>
+
+        <div class="vrh-card" style="cursor:pointer;" data-img="VRH_B.jpg" data-caption="Vrh B">
+          <div class="vrh-card__image">
+            <img src="VRH_B.jpg" alt="Vrh B" />
+          </div>
+          <div class="vrh-card__body">
+            <div class="vrh-card__label">Great Silkyway</div>
+            <div class="vrh-card__title" data-i18n="litter_b_title">Vrh B</div>
+            <p class="vrh-card__desc" data-i18n="litter_b_desc">Štěňata z vrhu B naší chovatelské stanice.</p>
+            <a href="kontakt.html" class="btn btn--outline btn--sm" data-i18n="litter_inquiry">Dotaz na vrh</a>
+          </div>
+        </div>
+
+        <div class="vrh-card" style="cursor:pointer;" data-img="VRH_C.jpg" data-caption="Vrh C">
+          <div class="vrh-card__image">
+            <img src="VRH_C.jpg" alt="Vrh C" />
+          </div>
+          <div class="vrh-card__body">
+            <div class="vrh-card__label">Great Silkyway</div>
+            <div class="vrh-card__title" data-i18n="litter_c_title">Vrh C</div>
+            <p class="vrh-card__desc" data-i18n="litter_c_desc">Štěňata z vrhu C naší chovatelské stanice.</p>
+            <a href="kontakt.html" class="btn btn--outline btn--sm" data-i18n="litter_inquiry">Dotaz na vrh</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lightboxClose">✕</button>
+    <div class="lightbox__content">
+      <img class="lightbox__img" id="lightboxImg" src="" alt="" />
+      <p class="lightbox__caption-text" id="lightboxCaption"></p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-banner">
+    <div class="container">
+      <span class="section-label" style="color: var(--color-gold-light);" data-i18n="vrhy_cta_label">Plánované vrhy</span>
+      <h2 data-i18n="vrhy_cta_title">Zajímá vás některý z vrhů?</h2>
+      <p data-i18n="vrhy_cta_desc">Napište nám a my vám sdělíme aktuální plány pro příští vrhy i možnosti rezervace.</p>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <a href="kontakt.html" class="btn btn--primary" data-i18n="vrhy_cta_btn1">Napište nám</a>
+        <a href="stena.html" class="btn btn--outline-white" data-i18n="vrhy_cta_btn2">Dostupná štěňata</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__upper">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <img src="logo-white.png" alt="Great Silkyway logo" class="nav__logo-img" />
+            <div class="nav__logo-text">
+              <span class="nav__logo-main">Great Silkyway</span>
+              <span class="nav__logo-sub" style="color:var(--color-gold-light);">Yorkshire Terrier Kennel</span>
+            </div>
+          </div>
+          <p class="footer__tagline"><span data-i18n="footer_tagline">Profesionální chovatelská stanice Yorkshire teriérů s FCI registrací. Chováme s láskou od roku 2009.</span></p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link">📘</a>
+            <a href="#" class="footer__social-link">📷</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer__col-title" data-i18n="footer_nav_title">Navigace</div>
+          <ul class="footer__links">
+            <li><a href="index.html">Úvod</a></li>
+            <li><a href="about.html">O nás</a></li>
+            <li><a href="nasi-psi.html">Naši psi</a></li>
+            <li><a href="stena.html">Štěňata</a></li>
+            <li><a href="vrhy.html">Vrhy</a></li>
+            <li><a href="galerie.html">Galerie</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__col-title" data-i18n="footer_info_title">Informace</div>
+          <ul class="footer__links">
+            <li><a href="#" data-i18n="footer_fci_reg">FCI registrace</a></li>
+            <li><a href="#" data-i18n="footer_health">Zdravotní testy</a></li>
+            <li><a href="#" data-i18n="footer_adoption">Adopční podmínky</a></li>
+            <li><a href="#" data-i18n="footer_faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__col-title" data-i18n="footer_contact_title">Kontakt</div>
+          <ul class="footer__links" style="gap:12px;">
+            <li style="color:rgba(255,255,255,0.7);">📍 Česká republika</li>
+            <li><a href="mailto:info@great-silkyway.cz">📧 info@great-silkyway.cz</a></li>
+            <li><a href="kontakt.html" class="btn btn--primary btn--sm" style="margin-top:8px; display:inline-flex;" data-i18n="footer_write">Napište nám</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__lower">
+        <span data-i18n="footer_rights">© 2025 Great Silkyway. Všechna práva vyhrazena.</span>
+        <span data-i18n="footer_reg">Chovatelská stanice FCI · ČMKU registrace</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const menu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => menu.classList.toggle('open'));
+
+    // Lightbox on image click
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.querySelectorAll('.vrh-card').forEach(card => {
+      card.querySelector('.vrh-card__image').addEventListener('click', () => {
+        lightboxImg.src = card.dataset.img;
+        lightboxCaption.textContent = card.dataset.caption;
+        lightbox.classList.add('open');
+      });
+    });
+
+    lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+  </script>
+<script src="lang.js"></script>
+</body>
+</html>

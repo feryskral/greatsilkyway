@@ -14,32 +14,35 @@
     <div class="container">
       <div class="nav__inner">
         <a href="index.html" class="nav__logo">
-          <img src="logo.jpg" alt="Great Silkyway logo" class="nav__logo-img" />
+          <img src="great-logo.png" alt="Great Silkyway logo" class="nav__logo-img" />
           <div class="nav__logo-text">
             <span class="nav__logo-main">Great Silkyway</span>
             <span class="nav__logo-sub">Yorkshire Terrier Kennel</span>
           </div>
         </a>
         <ul class="nav__links">
-          <li><a href="index.html" class="nav__link">Úvod</a></li>
-          <li><a href="about.html" class="nav__link active">O nás</a></li>
-          <li><a href="nasi-psi.html" class="nav__link">Naši psi</a></li>
-          <li><a href="stena.html" class="nav__link">Štěňata</a></li>
-          <li><a href="galerie.html" class="nav__link">Galerie</a></li>
+          <li><a href="index.html" class="nav__link" data-i18n="nav_home">Úvod</a></li>
+          <li><a href="about.html" class="nav__link active" data-i18n="nav_about">O nás</a></li>
+          <li><a href="nasi-psi.html" class="nav__link" data-i18n="nav_dogs">Naši psi</a></li>
+          <li><a href="stena.html" class="nav__link" data-i18n="nav_puppies">Štěňata</a></li>
+          <li><a href="vrhy.html" class="nav__link" data-i18n="nav_litters">Vrhy</a></li>
+          <li><a href="galerie.html" class="nav__link" data-i18n="nav_gallery">Galerie</a></li>
         </ul>
-        <a href="kontakt.html" class="btn btn--primary nav__cta btn--sm">Kontaktujte nás</a>
+        <a href="kontakt.html" class="btn btn--primary nav__cta btn--sm" data-i18n="nav_contact_btn">Kontaktujte nás</a>
+        <button class="lang-switcher" onclick="toggleLang()">EN</button>
         <button class="nav__burger" id="burger" aria-label="Otevřít menu">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
     <div class="nav__mobile" id="mobileMenu">
-      <a href="index.html" class="nav__link">Úvod</a>
-      <a href="about.html" class="nav__link active">O nás</a>
-      <a href="nasi-psi.html" class="nav__link">Naši psi</a>
-      <a href="stena.html" class="nav__link">Štěňata</a>
-      <a href="galerie.html" class="nav__link">Galerie</a>
-      <a href="kontakt.html" class="btn btn--primary">Kontaktujte nás</a>
+      <a href="index.html" class="nav__link" data-i18n="nav_home">Úvod</a>
+      <a href="about.html" class="nav__link active" data-i18n="nav_about">O nás</a>
+      <a href="nasi-psi.html" class="nav__link" data-i18n="nav_dogs">Naši psi</a>
+      <a href="stena.html" class="nav__link" data-i18n="nav_puppies">Štěňata</a>
+      <a href="vrhy.html" class="nav__link" data-i18n="nav_litters">Vrhy</a>
+      <a href="galerie.html" class="nav__link" data-i18n="nav_gallery">Galerie</a>
+      <a href="kontakt.html" class="btn btn--primary" data-i18n="nav_contact_btn">Kontaktujte nás</a>
     </div>
   </nav>
 
@@ -47,10 +50,10 @@
   <section class="page-hero">
     <div class="container">
       <div class="breadcrumb">
-        <a href="index.html">Úvod</a> <span>/</span> <span>O nás</span>
+        <a href="index.html" data-i18n="bc_home">Úvod</a> <span>/</span> <span data-i18n="bc_about">O nás</span>
       </div>
-      <h1>O naší chovatelské stanici</h1>
-      <p>Více než 15 let lásky k Yorkshire teriérům, zodpovědného chovu a šťastných rodin.</p>
+      <h1 data-i18n="about_page_title">O naší chovatelské stanici</h1>
+      <p data-i18n="about_page_desc">Více než 15 let lásky k Yorkshire teriérům, zodpovědného chovu a šťastných rodin.</p>
     </div>
   </section>
 
@@ -59,26 +62,21 @@
     <div class="container">
       <div class="about-split">
         <div>
-          <span class="section-label">Náš příběh</span>
+          <span class="section-label" data-i18n="story_label">Náš příběh</span>
           <div class="divider"></div>
-          <h2 class="section-title">Vítejte v Great Silkyway</h2>
+          <h2 class="section-title" data-i18n="story_title">Vítejte v Great Silkyway</h2>
           <p>
-            Chovatelská stanice Great Silkyway vznikla v roce 2009 z čisté a nefalšované lásky
-            k Yorkshire teriérům. To, co začalo jako osobní vášeň jedné rodiny, se postupem let
-            rozrostlo v respektovanou chovatelskou stanici s mezinárodní FCI registrací.
+            <span data-i18n="story_p1">Chovatelská stanice Great Silkyway vznikla v roce 2009 z čisté a nefalšované lásky k Yorkshire teriérům. To, co začalo jako osobní vášeň jedné rodiny, se postupem let rozrostlo v respektovanou chovatelskou stanici s mezinárodní FCI registrací.</span>
           </p>
           <p>
-            Naším hlavním posláním je chovat Yorkshire teriéry, kteří jsou nejen krásní navenek,
-            ale především zdraví, dobře socializovaní a s výbornou povahou. Věříme, že správný
-            yorkie je věrný společník pro celou rodinu — od batolat po seniory.
+            <span data-i18n="story_p2">Naším hlavním posláním je chovat Yorkshire teriéry, kteří jsou nejen krásní navenek, ale především zdraví, dobře socializovaní a s výbornou povahou. Věříme, že správný yorkie je věrný společník pro celou rodinu — od batolat po seniory.</span>
           </p>
           <p>
-            Každé štěně, které opouští naši stanici, odchází jako součást naší rodiny. Zůstáváme
-            k dispozici novým majitelům po celý život psa — s radami, podporou i přátelstvím.
+            <span data-i18n="story_p3">Každé štěně, které opouští naši stanici, odchází jako součást naší rodiny. Zůstáváme k dispozici novým majitelům po celý život psa — s radami, podporou i přátelstvím.</span>
           </p>
           <div class="btn-group">
-            <a href="stena.html" class="btn btn--primary">Aktuální štěňata</a>
-            <a href="kontakt.html" class="btn btn--outline">Napište nám</a>
+            <a href="stena.html" class="btn btn--primary" data-i18n="story_btn1">Aktuální štěňata</a>
+            <a href="kontakt.html" class="btn btn--outline" data-i18n="story_btn2">Napište nám</a>
           </div>
         </div>
 
@@ -89,8 +87,8 @@
           <div class="about-split__image-badge">
             <span class="badge-icon">📜</span>
             <div class="badge-text">
-              <strong>FCI registrace</strong>
-              <span>od roku 2009</span>
+              <strong data-i18n="badge_fci">FCI registrace</strong>
+              <span data-i18n="badge_since">od roku 2009</span>
             </div>
           </div>
         </div>
@@ -102,32 +100,32 @@
   <section class="section section--alt">
     <div class="container">
       <div class="text-center">
-        <span class="section-label">Naše hodnoty</span>
+        <span class="section-label" data-i18n="values_label">Naše hodnoty</span>
         <div class="divider" style="margin: 0 auto 24px;"></div>
-        <h2 class="section-title">Co nás řídí</h2>
-        <p class="section-subtitle">Tyto principy stojí za každým rozhodnutím, které v naší chovatelské stanici činíme.</p>
+        <h2 class="section-title" data-i18n="values_title">Co nás řídí</h2>
+        <p class="section-subtitle" data-i18n="values_subtitle">Tyto principy stojí za každým rozhodnutím, které v naší chovatelské stanici činíme.</p>
       </div>
 
       <div class="dogs-grid mt-40">
         <div class="dog-card" style="text-align:center;">
           <div class="dog-card__image" style="font-size:56px; aspect-ratio:unset; padding:32px 0;">❤️</div>
           <div class="dog-card__body">
-            <div class="dog-card__name">Láska na prvním místě</div>
-            <p class="dog-card__desc">Každý náš pes žije jako člen rodiny. Žádná klec, žádný kennel — jen domov plný tepla a péče.</p>
+            <div class="dog-card__name" data-i18n="val1_title">Láska na prvním místě</div>
+            <p class="dog-card__desc" data-i18n="val1_desc">Každý náš pes žije jako člen rodiny. Žádná klec, žádný kennel — jen domov plný tepla a péče.</p>
           </div>
         </div>
         <div class="dog-card" style="text-align:center;">
           <div class="dog-card__image" style="font-size:56px; aspect-ratio:unset; padding:32px 0;">🔬</div>
           <div class="dog-card__body">
-            <div class="dog-card__name">Zdraví nade vše</div>
-            <p class="dog-card__desc">Všichni chovní jedinci jsou testováni na genetické nemoci. Zdraví potomků je naší nejvyšší prioritou.</p>
+            <div class="dog-card__name" data-i18n="val2_title">Zdraví nade vše</div>
+            <p class="dog-card__desc" data-i18n="val2_desc">Všichni chovní jedinci jsou testováni na genetické nemoci. Zdraví potomků je naší nejvyšší prioritou.</p>
           </div>
         </div>
         <div class="dog-card" style="text-align:center;">
           <div class="dog-card__image" style="font-size:56px; aspect-ratio:unset; padding:32px 0;">🤝</div>
           <div class="dog-card__body">
-            <div class="dog-card__name">Poctivost a transparentnost</div>
-            <p class="dog-card__desc">Sdílíme vše — výsledky zdravotních testů, výstavní tituly i rodokmen. Žádná tajemství.</p>
+            <div class="dog-card__name" data-i18n="val3_title">Poctivost a transparentnost</div>
+            <p class="dog-card__desc" data-i18n="val3_desc">Sdílíme vše — výsledky zdravotních testů, výstavní tituly i rodokmen. Žádná tajemství.</p>
           </div>
         </div>
       </div>
@@ -145,33 +143,28 @@
           <div class="about-split__image-badge">
             <span class="badge-icon">🏆</span>
             <div class="badge-text">
-              <strong>Chovatel roku</strong>
-              <span>ČMKU 2022</span>
+              <strong data-i18n="badge_breeder_year">Chovatel roku</strong>
+              <span data-i18n="badge_year">ČMKU 2022</span>
             </div>
           </div>
         </div>
 
         <div>
-          <span class="section-label">Chovatelé</span>
+          <span class="section-label" data-i18n="breeder_label">Chovatelé</span>
           <div class="divider"></div>
-          <h2 class="section-title">Kdo stojí za Great Silkyway</h2>
+          <h2 class="section-title" data-i18n="breeder_title">Kdo stojí za Great Silkyway</h2>
           <p>
-            Za naší stanicí stojí vášnivá chovatelka se dvěma desetiletími zkušeností
-            s chovem Yorkshire teriérů. Aktivně se účastní výstav psů po celé Evropě,
-            je členkou ČMKU (Českomoravská kynologická unie) a pravidelně absolvuje
-            odborné semináře zaměřené na welfare a zdraví psů.
+            <span data-i18n="breeder_p1">Za naší stanicí stojí vášnivá chovatelka se dvěma desetiletími zkušeností s chovem Yorkshire teriérů. Aktivně se účastní výstav psů po celé Evropě, je členkou ČMKU a pravidelně absolvuje odborné semináře zaměřené na welfare a zdraví psů.</span>
           </p>
           <p>
-            Vrhy plánujeme s velkým rozmyslem — vybíráme rodiče nejen podle titulů,
-            ale především podle zdraví, povahy a chovné hodnoty. Počet vrhů za rok
-            záměrně omezujeme, aby každé štěně dostalo tu nejlepší možnou péči a pozornost.
+            <span data-i18n="breeder_p2">Vrhy plánujeme s velkým rozmyslem — vybíráme rodiče nejen podle titulů, ale především podle zdraví, povahy a chovné hodnoty. Počet vrhů za rok záměrně omezujeme, aby každé štěně dostalo tu nejlepší možnou péči a pozornost.</span>
           </p>
 
           <div class="checkmarks">
-            <div class="checkmark-item">Členka ČMKU a FCI</div>
-            <div class="checkmark-item">Aktivní výstavní kariéra v ČR i zahraničí</div>
-            <div class="checkmark-item">Průběžné vzdělávání v oblasti genetiky a welfare</div>
-            <div class="checkmark-item">Maximálně 3 vrhy ročně pro kvalitu nad kvantitu</div>
+            <div class="checkmark-item" data-i18n="breeder_check1">Členka ČMKU a FCI</div>
+            <div class="checkmark-item" data-i18n="breeder_check2">Aktivní výstavní kariéra v ČR i zahraničí</div>
+            <div class="checkmark-item" data-i18n="breeder_check3">Průběžné vzdělávání v oblasti genetiky a welfare</div>
+            <div class="checkmark-item" data-i18n="breeder_check4">Maximálně 3 vrhy ročně pro kvalitu nad kvantitu</div>
           </div>
         </div>
       </div>
@@ -182,39 +175,39 @@
   <section class="section section--navy">
     <div class="container">
       <div class="text-center">
-        <span class="section-label" style="color:var(--color-gold-light);">Certifikace &amp; registrace</span>
+        <span class="section-label" style="color:var(--color-gold-light);" data-i18n="cert_label">Certifikace &amp; registrace</span>
         <div class="divider" style="margin: 0 auto 24px;"></div>
-        <h2 class="section-title">Naše záruky kvality</h2>
-        <p class="section-subtitle">Transparentnost a profesionalita jsou základem naší práce.</p>
+        <h2 class="section-title" data-i18n="cert_title">Naše záruky kvality</h2>
+        <p class="section-subtitle" data-i18n="cert_subtitle">Transparentnost a profesionalita jsou základem naší práce.</p>
       </div>
 
       <div class="features__grid mt-40">
         <div class="feature-card">
           <div class="feature-card__icon">📋</div>
           <div>
-            <div class="feature-card__title">FCI průkaz původu</div>
-            <div class="feature-card__desc">Mezinárodně uznávaný průkaz pro každé štěně</div>
+            <div class="feature-card__title" data-i18n="cert1_title">FCI průkaz původu</div>
+            <div class="feature-card__desc" data-i18n="cert1_desc">Mezinárodně uznávaný průkaz pro každé štěně</div>
           </div>
         </div>
         <div class="feature-card">
           <div class="feature-card__icon">🧬</div>
           <div>
-            <div class="feature-card__title">DNA profil</div>
-            <div class="feature-card__desc">Všichni chovní jedinci mají DNA certifikát</div>
+            <div class="feature-card__title" data-i18n="cert2_title">DNA profil</div>
+            <div class="feature-card__desc" data-i18n="cert2_desc">Všichni chovní jedinci mají DNA certifikát</div>
           </div>
         </div>
         <div class="feature-card">
           <div class="feature-card__icon">💉</div>
           <div>
-            <div class="feature-card__title">Veterinární pas</div>
-            <div class="feature-card__desc">Očkování, odčervení, veterinární prohlídka</div>
+            <div class="feature-card__title" data-i18n="cert3_title">Veterinární pas</div>
+            <div class="feature-card__desc" data-i18n="cert3_desc">Očkování, odčervení, veterinární prohlídka</div>
           </div>
         </div>
         <div class="feature-card">
           <div class="feature-card__icon">📃</div>
           <div>
-            <div class="feature-card__title">Kupní smlouva</div>
-            <div class="feature-card__desc">Písemná smlouva s podmínkami a zárukami</div>
+            <div class="feature-card__title" data-i18n="cert4_title">Kupní smlouva</div>
+            <div class="feature-card__desc" data-i18n="cert4_desc">Písemná smlouva s podmínkami a zárukami</div>
           </div>
         </div>
       </div>
@@ -224,12 +217,12 @@
   <!-- CTA -->
   <section class="cta-banner">
     <div class="container">
-      <span class="section-label" style="color: var(--color-gold-light);">Pojďme se poznat</span>
-      <h2>Máte otázky? Rádi odpovíme.</h2>
-      <p>Neváhejte nás kontaktovat. Rádi vám poradíme, zda je yorkshire teriér ta pravá volba pro vás.</p>
+      <span class="section-label" style="color: var(--color-gold-light);" data-i18n="about_cta_label">Pojďme se poznat</span>
+      <h2 data-i18n="about_cta_title">Máte otázky? Rádi odpovíme.</h2>
+      <p data-i18n="about_cta_desc">Neváhejte nás kontaktovat. Rádi vám poradíme, zda je yorkshire teriér ta pravá volba pro vás.</p>
       <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-        <a href="kontakt.html" class="btn btn--primary">Napište nám</a>
-        <a href="stena.html" class="btn btn--outline-white">Aktuální štěňata</a>
+        <a href="kontakt.html" class="btn btn--primary" data-i18n="about_cta_btn1">Napište nám</a>
+        <a href="stena.html" class="btn btn--outline-white" data-i18n="about_cta_btn2">Aktuální štěňata</a>
       </div>
     </div>
   </section>
@@ -240,49 +233,50 @@
       <div class="footer__upper">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="logo.jpg" alt="Great Silkyway logo" class="nav__logo-img" />
+            <img src="logo-white.png" alt="Great Silkyway logo" class="nav__logo-img" />
             <div class="nav__logo-text">
               <span class="nav__logo-main">Great Silkyway</span>
               <span class="nav__logo-sub" style="color:var(--color-gold-light);">Yorkshire Terrier Kennel</span>
             </div>
           </div>
-          <p class="footer__tagline">Profesionální chovatelská stanice Yorkshire teriérů s FCI registrací. Chováme s láskou od roku 2009.</p>
+          <p class="footer__tagline"><span data-i18n="footer_tagline">Profesionální chovatelská stanice Yorkshire teriérů s FCI registrací. Chováme s láskou od roku 2009.</span></p>
           <div class="footer__social">
             <a href="#" class="footer__social-link">📘</a>
             <a href="#" class="footer__social-link">📷</a>
           </div>
         </div>
         <div>
-          <div class="footer__col-title">Navigace</div>
+          <div class="footer__col-title" data-i18n="footer_nav_title">Navigace</div>
           <ul class="footer__links">
             <li><a href="index.html">Úvod</a></li>
             <li><a href="about.html">O nás</a></li>
             <li><a href="nasi-psi.html">Naši psi</a></li>
             <li><a href="stena.html">Štěňata</a></li>
+            <li><a href="vrhy.html">Vrhy</a></li>
             <li><a href="galerie.html">Galerie</a></li>
           </ul>
         </div>
         <div>
-          <div class="footer__col-title">Informace</div>
+          <div class="footer__col-title" data-i18n="footer_info_title">Informace</div>
           <ul class="footer__links">
-            <li><a href="#">FCI registrace</a></li>
-            <li><a href="#">Zdravotní testy</a></li>
-            <li><a href="#">Adopční podmínky</a></li>
-            <li><a href="#">FAQ</a></li>
+            <li><a href="#" data-i18n="footer_fci_reg">FCI registrace</a></li>
+            <li><a href="#" data-i18n="footer_health">Zdravotní testy</a></li>
+            <li><a href="#" data-i18n="footer_adoption">Adopční podmínky</a></li>
+            <li><a href="#" data-i18n="footer_faq">FAQ</a></li>
           </ul>
         </div>
         <div>
-          <div class="footer__col-title">Kontakt</div>
+          <div class="footer__col-title" data-i18n="footer_contact_title">Kontakt</div>
           <ul class="footer__links" style="gap:12px;">
             <li style="color:rgba(255,255,255,0.7);">📍 Česká republika</li>
             <li><a href="mailto:info@great-silkyway.cz">📧 info@great-silkyway.cz</a></li>
-            <li><a href="kontakt.html" class="btn btn--primary btn--sm" style="margin-top:8px; display:inline-flex;">Napište nám</a></li>
+            <li><a href="kontakt.html" class="btn btn--primary btn--sm" style="margin-top:8px; display:inline-flex;" data-i18n="footer_write">Napište nám</a></li>
           </ul>
         </div>
       </div>
       <div class="footer__lower">
-        <span>© 2025 Great Silkyway. Všechna práva vyhrazena.</span>
-        <span>Chovatelská stanice FCI · ČMKU registrace</span>
+        <span data-i18n="footer_rights">© 2025 Great Silkyway. Všechna práva vyhrazena.</span>
+        <span data-i18n="footer_reg">Chovatelská stanice FCI · ČMKU registrace</span>
       </div>
     </div>
   </footer>
@@ -292,5 +286,6 @@
     const menu = document.getElementById('mobileMenu');
     burger.addEventListener('click', () => menu.classList.toggle('open'));
   </script>
+<script src="lang.js"></script>
 </body>
 </html>

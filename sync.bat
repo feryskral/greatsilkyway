@@ -14,7 +14,7 @@ if %errorlevel% == 0 (
     git commit -m "Aktualizace webu"
     echo.
     echo Odesílám na GitHub...
-    git push origin main
+    git push origin main --force
     if %errorlevel% == 0 (
         echo.
         echo HOTOVO! Zmeny jsou na GitHubu.

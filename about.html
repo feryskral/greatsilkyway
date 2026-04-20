@@ -62,7 +62,7 @@
     <div class="container">
       <div class="about-split">
         <div>
-          <span class="section-label" data-i18n="story_label">Náš příběh</span>
+          <span class="section-label aos" data-i18n="story_label">Náš příběh</span>
           <div class="divider"></div>
           <h2 class="section-title" data-i18n="story_title">Vítejte v Great Silkyway</h2>
           <p>
@@ -80,7 +80,7 @@
           </div>
         </div>
 
-        <div class="about-split__image">
+        <div class="about-split__image aos aos--left">
           <div class="about-split__image-placeholder">
             <span class="icon">🐕</span>
           </div>
@@ -100,7 +100,7 @@
   <section class="section section--alt">
     <div class="container">
       <div class="text-center">
-        <span class="section-label" data-i18n="values_label">Naše hodnoty</span>
+        <span class="section-label aos" data-i18n="values_label">Naše hodnoty</span>
         <div class="divider" style="margin: 0 auto 24px;"></div>
         <h2 class="section-title" data-i18n="values_title">Co nás řídí</h2>
         <p class="section-subtitle" data-i18n="values_subtitle">Tyto principy stojí za každým rozhodnutím, které v naší chovatelské stanici činíme.</p>
@@ -150,7 +150,7 @@
         </div>
 
         <div>
-          <span class="section-label" data-i18n="breeder_label">Chovatelé</span>
+          <span class="section-label aos" data-i18n="breeder_label">Chovatelé</span>
           <div class="divider"></div>
           <h2 class="section-title" data-i18n="breeder_title">Kdo stojí za Great Silkyway</h2>
           <p>
@@ -175,35 +175,35 @@
   <section class="section section--navy">
     <div class="container">
       <div class="text-center">
-        <span class="section-label" style="color:var(--color-gold-light);" data-i18n="cert_label">Certifikace &amp; registrace</span>
+        <span class="section-label aos" style="color:var(--color-gold-light);" data-i18n="cert_label">Certifikace &amp; registrace</span>
         <div class="divider" style="margin: 0 auto 24px;"></div>
         <h2 class="section-title" data-i18n="cert_title">Naše záruky kvality</h2>
         <p class="section-subtitle" data-i18n="cert_subtitle">Transparentnost a profesionalita jsou základem naší práce.</p>
       </div>
 
       <div class="features__grid mt-40">
-        <div class="feature-card">
+        <div class="feature-card aos aos-d1">
           <div class="feature-card__icon">📋</div>
           <div>
             <div class="feature-card__title" data-i18n="cert1_title">FCI průkaz původu</div>
             <div class="feature-card__desc" data-i18n="cert1_desc">Mezinárodně uznávaný průkaz pro každé štěně</div>
           </div>
         </div>
-        <div class="feature-card">
+        <div class="feature-card aos aos-d2">
           <div class="feature-card__icon">🧬</div>
           <div>
             <div class="feature-card__title" data-i18n="cert2_title">DNA profil</div>
             <div class="feature-card__desc" data-i18n="cert2_desc">Všichni chovní jedinci mají DNA certifikát</div>
           </div>
         </div>
-        <div class="feature-card">
+        <div class="feature-card aos aos-d3">
           <div class="feature-card__icon">💉</div>
           <div>
             <div class="feature-card__title" data-i18n="cert3_title">Veterinární pas</div>
             <div class="feature-card__desc" data-i18n="cert3_desc">Očkování, odčervení, veterinární prohlídka</div>
           </div>
         </div>
-        <div class="feature-card">
+        <div class="feature-card aos aos-d4">
           <div class="feature-card__icon">📃</div>
           <div>
             <div class="feature-card__title" data-i18n="cert4_title">Kupní smlouva</div>
@@ -217,7 +217,7 @@
   <!-- CTA -->
   <section class="cta-banner">
     <div class="container">
-      <span class="section-label" style="color: var(--color-gold-light);" data-i18n="about_cta_label">Pojďme se poznat</span>
+      <span class="section-label aos" style="color: var(--color-gold-light);" data-i18n="about_cta_label">Pojďme se poznat</span>
       <h2 data-i18n="about_cta_title">Máte otázky? Rádi odpovíme.</h2>
       <p data-i18n="about_cta_desc">Neváhejte nás kontaktovat. Rádi vám poradíme, zda je yorkshire teriér ta pravá volba pro vás.</p>
       <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
@@ -286,6 +286,7 @@
     const menu = document.getElementById('mobileMenu');
     burger.addEventListener('click', () => menu.classList.toggle('open'));
   </script>
+<script src="animations.js"></script>
 <script src="lang.js"></script>
 </body>
 </html>

@@ -167,13 +167,13 @@
   <!-- VRHY -->
   <section class="section">
     <div class="container">
-      <span class="section-label" data-i18n="litters_label">Přehled vrhů</span>
+      <span class="section-label aos" data-i18n="litters_label">Přehled vrhů</span>
       <div class="divider"></div>
       <h2 class="section-title" style="margin-bottom:40px;" data-i18n="litters_title">Vrhy Great Silkyway</h2>
 
       <div class="vrhy-grid">
 
-        <div class="vrh-card" style="cursor:pointer;" data-img="VRH_A.jpg" data-caption="Vrh A">
+        <div class="vrh-card aos aos-d1" style="cursor:pointer;" data-img="VRH_A.jpg" data-caption="Vrh A">
           <div class="vrh-card__image">
             <img src="VRH_A.jpg" alt="Vrh A" />
           </div>
@@ -185,7 +185,7 @@
           </div>
         </div>
 
-        <div class="vrh-card" style="cursor:pointer;" data-img="VRH_B.jpg" data-caption="Vrh B">
+        <div class="vrh-card aos aos-d2" style="cursor:pointer;" data-img="VRH_B.jpg" data-caption="Vrh B">
           <div class="vrh-card__image">
             <img src="VRH_B.jpg" alt="Vrh B" />
           </div>
@@ -197,7 +197,7 @@
           </div>
         </div>
 
-        <div class="vrh-card" style="cursor:pointer;" data-img="VRH_C.jpg" data-caption="Vrh C">
+        <div class="vrh-card aos aos-d3" style="cursor:pointer;" data-img="VRH_C.jpg" data-caption="Vrh C">
           <div class="vrh-card__image">
             <img src="VRH_C.jpg" alt="Vrh C" />
           </div>
@@ -225,7 +225,7 @@
   <!-- CTA -->
   <section class="cta-banner">
     <div class="container">
-      <span class="section-label" style="color: var(--color-gold-light);" data-i18n="vrhy_cta_label">Plánované vrhy</span>
+      <span class="section-label aos" style="color: var(--color-gold-light);" data-i18n="vrhy_cta_label">Plánované vrhy</span>
       <h2 data-i18n="vrhy_cta_title">Zajímá vás některý z vrhů?</h2>
       <p data-i18n="vrhy_cta_desc">Napište nám a my vám sdělíme aktuální plány pro příští vrhy i možnosti rezervace.</p>
       <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
@@ -312,6 +312,7 @@
     lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
   </script>
+<script src="animations.js"></script>
 <script src="lang.js"></script>
 </body>
 </html>

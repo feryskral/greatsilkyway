@@ -1424,3 +1424,102 @@ p {
   background: var(--color-gold);
   color: white;
 }
+
+/* ─── ANIMATIONS ─────────────────────────────────────────────────────────── */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes dividerGrow {
+  from { width: 0; }
+  to   { width: 48px; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes heroEntrance {
+  0%   { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll-triggered base state */
+.aos {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.aos.aos--left  { transform: translateX(-36px); }
+.aos.aos--right { transform: translateX(36px); }
+.aos.aos--scale { transform: scale(0.9); }
+.aos.aos--visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Stagger delays */
+.aos-d1 { transition-delay: 0.1s; }
+.aos-d2 { transition-delay: 0.2s; }
+.aos-d3 { transition-delay: 0.3s; }
+.aos-d4 { transition-delay: 0.4s; }
+.aos-d5 { transition-delay: 0.5s; }
+
+/* Hero entrance */
+.hero__badge    { animation: heroEntrance 0.6s ease both; animation-delay: 0.1s; }
+.hero__title    { animation: heroEntrance 0.7s ease both; animation-delay: 0.25s; }
+.hero__desc     { animation: heroEntrance 0.7s ease both; animation-delay: 0.4s; }
+.hero__actions  { animation: heroEntrance 0.7s ease both; animation-delay: 0.55s; }
+.hero__stats    { animation: heroEntrance 0.7s ease both; animation-delay: 0.7s; }
+
+/* Floating badge */
+.about-split__image-badge,
+.hero__image-badge {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Divider animation */
+.divider.animated-divider {
+  animation: dividerGrow 0.6s ease both;
+}
+
+/* Gold shimmer on section labels */
+.section-label {
+  background: linear-gradient(90deg, var(--color-gold) 0%, #f5c842 40%, var(--color-gold) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Card hover lift — enhanced */
+.dog-card, .puppy-card, .vrh-card, .feature-card {
+  transition: transform 0.35s cubic-bezier(.22,.61,.36,1), box-shadow 0.35s ease;
+}
+.dog-card:hover, .puppy-card:hover, .vrh-card:hover, .feature-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.13);
+}
+
+/* Page hero entrance */
+.page-hero h1 { animation: heroEntrance 0.7s ease both; animation-delay: 0.15s; }
+.page-hero p  { animation: heroEntrance 0.7s ease both; animation-delay: 0.3s; }
+.breadcrumb   { animation: heroEntrance 0.5s ease both; animation-delay: 0.05s; }
+

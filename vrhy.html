@@ -173,39 +173,42 @@
 
       <div class="vrhy-grid">
 
-        <div class="vrh-card aos aos-d1" style="cursor:pointer;" data-img="VRH_A.jpg" data-caption="Vrh A">
-          <div class="vrh-card__image">
-            <img src="VRH_A.jpg" alt="Vrh A" style="object-position: center top;" />
-          </div>
-          <div class="vrh-card__body">
-            <div class="vrh-card__label">Great Silkyway</div>
-            <div class="vrh-card__title" data-i18n="litter_a_title">Vrh A</div>
-            <p class="vrh-card__desc" data-i18n="litter_a_desc">Štěňata z vrhu A naší chovatelské stanice.</p>
-            <a href="kontakt.html" class="btn btn--outline btn--sm" data-i18n="litter_inquiry">Dotaz na vrh</a>
-          </div>
-        </div>
-
-        <div class="vrh-card aos aos-d2" style="cursor:pointer;" data-img="VRH_B.jpg" data-caption="Vrh B">
-          <div class="vrh-card__image">
-            <img src="VRH_B.jpg" alt="Vrh B" style="object-position: center top;" />
-          </div>
-          <div class="vrh-card__body">
-            <div class="vrh-card__label">Great Silkyway</div>
-            <div class="vrh-card__title" data-i18n="litter_b_title">Vrh B</div>
-            <p class="vrh-card__desc" data-i18n="litter_b_desc">Štěňata z vrhu B naší chovatelské stanice.</p>
-            <a href="kontakt.html" class="btn btn--outline btn--sm" data-i18n="litter_inquiry">Dotaz na vrh</a>
-          </div>
-        </div>
-
-        <div class="vrh-card aos aos-d3" style="cursor:pointer;" data-img="VRH_C.jpg" data-caption="Vrh C">
-          <div class="vrh-card__image">
+        <div class="vrh-card aos aos-d1" style="cursor:pointer;" data-img="VRH_C.jpg" data-caption="Vrh C">
+          <div class="vrh-card__image" style="position:relative;">
             <img src="VRH_C.jpg" alt="Vrh C" style="object-position: center top;" />
+            <span class="puppy-card__status puppy-card__status--available" data-i18n="litter_status_available">Dostupný</span>
           </div>
           <div class="vrh-card__body">
             <div class="vrh-card__label">Great Silkyway</div>
             <div class="vrh-card__title" data-i18n="litter_c_title">Vrh C</div>
             <p class="vrh-card__desc" data-i18n="litter_c_desc">Štěňata z vrhu C naší chovatelské stanice.</p>
             <a href="kontakt.html" class="btn btn--outline btn--sm" data-i18n="litter_inquiry">Dotaz na vrh</a>
+          </div>
+        </div>
+
+        <div class="vrh-card aos aos-d2" style="cursor:pointer; opacity:0.75;" data-img="VRH_B.jpg" data-caption="Vrh B">
+          <div class="vrh-card__image" style="position:relative;">
+            <img src="VRH_B.jpg" alt="Vrh B" style="object-position: center top;" />
+            <span class="puppy-card__status puppy-card__status--reserved" data-i18n="litter_status_unavailable">Nedostupné</span>
+          </div>
+          <div class="vrh-card__body">
+            <div class="vrh-card__label">Great Silkyway</div>
+            <div class="vrh-card__title" data-i18n="litter_b_title">Vrh B</div>
+            <p class="vrh-card__desc" data-i18n="litter_b_desc">Štěňata z vrhu B naší chovatelské stanice.</p>
+            <button class="btn btn--outline btn--sm" disabled style="opacity:0.4; cursor:not-allowed;" data-i18n="litter_inquiry">Dotaz na vrh</button>
+          </div>
+        </div>
+
+        <div class="vrh-card aos aos-d3" style="cursor:pointer; opacity:0.75;" data-img="VRH_A.jpg" data-caption="Vrh A">
+          <div class="vrh-card__image" style="position:relative;">
+            <img src="VRH_A.jpg" alt="Vrh A" style="object-position: center top;" />
+            <span class="puppy-card__status puppy-card__status--reserved" data-i18n="litter_status_unavailable">Nedostupné</span>
+          </div>
+          <div class="vrh-card__body">
+            <div class="vrh-card__label">Great Silkyway</div>
+            <div class="vrh-card__title" data-i18n="litter_a_title">Vrh A</div>
+            <p class="vrh-card__desc" data-i18n="litter_a_desc">Štěňata z vrhu A naší chovatelské stanice.</p>
+            <button class="btn btn--outline btn--sm" disabled style="opacity:0.4; cursor:not-allowed;" data-i18n="litter_inquiry">Dotaz na vrh</button>
           </div>
         </div>
 
@@ -247,9 +250,9 @@
               <span class="nav__logo-sub" style="color:var(--color-gold-light);">Yorkshire Terrier Kennel</span>
             </div>
           </div>
-          <p class="footer__tagline"><span data-i18n="footer_tagline">Profesionální chovatelská stanice Yorkshire teriérů s FCI registrací. Chováme s láskou od roku 2009.</span></p>
+          <p class="footer__tagline"><span data-i18n="footer_tagline">Profesionální chovatelská stanice Yorkshire teriérů s FCI registrací. Chováme s láskou od roku 2023.</span></p>
           <div class="footer__social">
-            <a href="#" class="footer__social-link">📘</a>
+            <a href="https://www.facebook.com/profile.php?id=100089532775624" class="footer__social-link" target="_blank" rel="noopener">📘</a>
             <a href="https://www.instagram.com/great_silkyway_kennel/" class="footer__social-link" target="_blank" rel="noopener">📷</a>
           </div>
         </div>
@@ -283,8 +286,8 @@
         </div>
       </div>
       <div class="footer__lower">
-        <span data-i18n="footer_rights">© 2025 Great Silkyway. Všechna práva vyhrazena.</span>
-        <span data-i18n="footer_reg">Chovatelská stanice FCI · ČMKU registrace</span>
+        <span data-i18n="footer_rights">© 2026 Great Silkyway. Všechna práva vyhrazena.</span>
+        <span data-i18n="footer_reg">Chovatelská stanice s FCI registrací</span>
       </div>
     </div>
   </footer>

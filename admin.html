@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin – Great Silkyway</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: #f5f3ef; min-height: 100vh; }
+
+    /* LOGIN */
+    .admin-login {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .admin-login__box {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(13,27,62,0.1);
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    .admin-login__icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+    .admin-login__title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--color-navy);
+      margin-bottom: 6px;
+    }
+    .admin-login__sub {
+      font-size: 0.88rem;
+      color: var(--color-text-soft);
+      margin-bottom: 28px;
+    }
+    .admin-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #e1dcd1;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+    .admin-input:focus {
+      outline: none;
+      border-color: var(--color-gold);
+    }
+    .admin-error {
+      color: #c0392b;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      min-height: 1.2em;
+    }
+
+    /* DASHBOARD */
+    .admin-dash { display: none; }
+    .admin-dash.active { display: block; }
+    .admin-header {
+      background: var(--color-navy);
+      color: #fff;
+      padding: 18px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .admin-header__title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .admin-header__actions { display: flex; gap: 10px; }
+    .admin-btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .admin-btn--primary { background: var(--color-gold); color: var(--color-navy); }
+    .admin-btn--primary:hover { background: #e8c577; }
+    .admin-btn--ghost { background: rgba(255,255,255,0.12); color: #fff; }
+    .admin-btn--ghost:hover { background: rgba(255,255,255,0.2); }
+    .admin-btn--danger { background: #c0392b; color: #fff; }
+    .admin-btn--danger:hover { background: #a93226; }
+    .admin-btn--secondary { background: #e8e4dc; color: var(--color-navy); }
+    .admin-btn--secondary:hover { background: #d9d3c6; }
+
+    .admin-tabs {
+      background: #fff;
+      border-bottom: 1px solid #e8e4dc;
+      padding: 0 32px;
+      display: flex;
+      gap: 4px;
+    }
+    .admin-tab {
+      padding: 14px 20px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--color-text-soft);
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .admin-tab.active { color: var(--color-navy); border-bottom-color: var(--color-gold); }
+
+    .admin-main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+
+    .admin-section-title {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--color-navy);
+      margin-bottom: 8px;
+    }
+    .admin-section-sub {
+      color: var(--color-text-soft);
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+    }
+
+    /* PUPPY CARDS */
+    .puppy-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .puppy-editor {
+      background: #fff;
+      border: 1px solid #e8e4dc;
+      border-radius: 12px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 18px;
+      align-items: center;
+    }
+    .puppy-editor__photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 10px;
+      background: #f0ece4;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #d1c9ba;
+    }
+    .puppy-editor__photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .puppy-editor__photo-hint {
+      font-size: 0.75rem;
+      color: var(--color-text-soft);
+      text-align: center;
+      padding: 8px;
+    }
+    .puppy-editor__fields {
+      display: grid;
+      gap: 10px;
+    }
+    .puppy-field {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .puppy-field label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--color-navy);
+      min-width: 80px;
+    }
+    .puppy-field input, .puppy-field select {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #e1dcd1;
+      border-radius: 6px;
+      font-size: 0.92rem;
+      font-family: inherit;
+    }
+    .puppy-editor__delete {
+      align-self: flex-start;
+    }
+
+    @media (max-width: 720px) {
+      .puppy-editor { grid-template-columns: 1fr; }
+      .admin-header { padding: 14px 16px; flex-wrap: wrap; gap: 10px; }
+      .admin-tabs { padding: 0 12px; overflow-x: auto; }
+      .admin-main { padding: 20px 16px; }
+    }
+
+    /* MISC */
+    .empty-state {
+      background: #fff;
+      border: 2px dashed #e8e4dc;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      color: var(--color-text-soft);
+      margin-bottom: 20px;
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--color-navy);
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s;
+      z-index: 100;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    .export-box {
+      background: #fff;
+      border: 1px solid #e8e4dc;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    .export-box h3 {
+      color: var(--color-navy);
+      font-family: var(--font-heading);
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+    .export-box p {
+      color: var(--color-text-soft);
+      font-size: 0.88rem;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .export-box ol {
+      color: var(--color-text-soft);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    .export-box code {
+      background: #f5f3ef;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div class="admin-login" id="loginScreen">
+    <div class="admin-login__box">
+      <div class="admin-login__icon">🔐</div>
+      <div class="admin-login__title">Great Silkyway – Admin</div>
+      <div class="admin-login__sub">Přihlaste se pro správu obsahu</div>
+      <input type="password" id="loginPass" class="admin-input" placeholder="Heslo" autocomplete="current-password" />
+      <button class="admin-btn admin-btn--primary" style="width:100%; justify-content:center;" onclick="login()">Přihlásit</button>
+      <div class="admin-error" id="loginErr"></div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="admin-dash" id="dashboard">
+    <div class="admin-header">
+      <div class="admin-header__title">🐶 Great Silkyway – Admin</div>
+      <div class="admin-header__actions">
+        <button class="admin-btn admin-btn--primary" onclick="saveChanges()">💾 Uložit</button>
+        <button class="admin-btn admin-btn--ghost" onclick="logout()">Odhlásit</button>
+      </div>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="puppies" onclick="switchTab('puppies')">🐾 Štěňátka</button>
+      <button class="admin-tab" data-tab="texts" onclick="switchTab('texts')">✏️ Texty</button>
+      <button class="admin-tab" data-tab="export" onclick="switchTab('export')">📤 Export / Import</button>
+    </div>
+
+    <div class="admin-main">
+
+      <!-- PUPPIES TAB -->
+      <div class="admin-panel active" id="tab-puppies">
+        <div class="admin-section-title">Správa štěňátek</div>
+        <div class="admin-section-sub">Přidejte, upravte nebo odeberte štěňátka zobrazená na úvodní stránce a v sekci Štěňata.</div>
+
+        <div class="puppy-list" id="puppyList"></div>
+
+        <button class="admin-btn admin-btn--secondary" onclick="addPuppy()">+ Přidat štěňátko</button>
+      </div>
+
+      <!-- TEXTS TAB -->
+      <div class="admin-panel" id="tab-texts">
+        <div class="admin-section-title">Úprava textů</div>
+        <div class="admin-section-sub">Upravte hlavní texty úvodní stránky. Prázdné pole = zůstává výchozí text.</div>
+
+        <div class="export-box">
+          <h3>Hero sekce (úvod)</h3>
+          <div class="puppy-field"><label>Nadpis 1:</label><input type="text" id="txt-hero-title1" placeholder="Krásní Yorkshire teriéři" /></div>
+          <div class="puppy-field" style="margin-top:10px;"><label>Nadpis 2:</label><input type="text" id="txt-hero-title2" placeholder="s láskou a péčí" /></div>
+          <div class="puppy-field" style="margin-top:10px;"><label style="align-self:flex-start; margin-top:8px;">Popis:</label><textarea id="txt-hero-desc" class="puppy-field" rows="3" style="flex:1; padding:8px 12px; border:1px solid #e1dcd1; border-radius:6px; font-size:0.92rem; font-family:inherit;" placeholder="Vítejte..."></textarea></div>
+        </div>
+
+        <div class="export-box">
+          <h3>Kontakt</h3>
+          <div class="puppy-field"><label>Telefon:</label><input type="text" id="txt-phone" placeholder="+420 777 757 076" /></div>
+          <div class="puppy-field" style="margin-top:10px;"><label>E-mail:</label><input type="text" id="txt-email" placeholder="info@great-silkyway.cz" /></div>
+        </div>
+      </div>
+
+      <!-- EXPORT TAB -->
+      <div class="admin-panel" id="tab-export">
+        <div class="admin-section-title">Export / Import obsahu</div>
+        <div class="admin-section-sub">Pro zveřejnění změn si stáhněte JSON a nahrajte ho na web.</div>
+
+        <div class="export-box">
+          <h3>📤 Stáhnout obsah</h3>
+          <p>Stáhne soubor <code>content.json</code> se všemi vašimi změnami. Ten nahrajte do kořenové složky webu — všichni návštěvníci pak uvidí aktuální obsah.</p>
+          <button class="admin-btn admin-btn--primary" onclick="exportContent()">📥 Stáhnout content.json</button>
+        </div>
+
+        <div class="export-box">
+          <h3>📥 Importovat content.json</h3>
+          <p>Nahrajte dříve stažený soubor a pokračujte v úpravách.</p>
+          <input type="file" id="importFile" accept="application/json" style="margin-bottom:12px;" />
+          <br>
+          <button class="admin-btn admin-btn--secondary" onclick="importContent()">Nahrát soubor</button>
+        </div>
+
+        <div class="export-box">
+          <h3>🗑 Vymazat všechny úpravy</h3>
+          <p>Vrátí obsah do výchozího stavu (vymaže jen vaše úpravy, ne hlavní web).</p>
+          <button class="admin-btn admin-btn--danger" onclick="resetAll()">Obnovit výchozí obsah</button>
+        </div>
+
+        <div class="export-box">
+          <h3>ℹ️ Jak to funguje</h3>
+          <ol>
+            <li>Přidejte/upravte štěňátka a texty v administraci.</li>
+            <li>Stiskněte <strong>💾 Uložit</strong> nahoře — změny se uloží do vašeho prohlížeče.</li>
+            <li>Klikněte na <strong>Stáhnout content.json</strong>.</li>
+            <li>Stažený soubor nahrajte na svůj web (stejná složka jako <code>index.html</code>).</li>
+            <li>Hotovo — stránky teď ukazují váš aktualizovaný obsah všem návštěvníkům.</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ===== CONFIG =====
+    // Heslo pro přihlášení - ZMĚŇTE NA SVÉ VLASTNÍ!
+    const ADMIN_PASS = 'greatsilky2026';
+    const STORAGE_KEY = 'gs_admin_content';
+
+    // ===== STATE =====
+    let content = {
+      puppies: [],
+      texts: {}
+    };
+
+    // ===== AUTH =====
+    function login() {
+      const pass = document.getElementById('loginPass').value;
+      if (pass === ADMIN_PASS) {
+        sessionStorage.setItem('gs_admin_auth', '1');
+        showDashboard();
+      } else {
+        document.getElementById('loginErr').textContent = 'Nesprávné heslo';
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem('gs_admin_auth');
+      location.reload();
+    }
+
+    document.getElementById('loginPass').addEventListener('keydown', e => {
+      if (e.key === 'Enter') login();
+    });
+
+    function showDashboard() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').classList.add('active');
+      loadContent();
+      renderPuppies();
+      loadTexts();
+    }
+
+    if (sessionStorage.getItem('gs_admin_auth') === '1') {
+      showDashboard();
+    }
+
+    // ===== TABS =====
+    function switchTab(id) {
+      document.querySelectorAll('.admin-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === id));
+      document.querySelectorAll('.admin-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + id));
+    }
+
+    // ===== CONTENT =====
+    function loadContent() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try { content = JSON.parse(saved); } catch {}
+      }
+      if (!content.puppies) content.puppies = [];
+      if (!content.texts) content.texts = {};
+
+      // Default puppies if empty
+      if (content.puppies.length === 0) {
+        content.puppies = [
+          { name: 'Citrine', gender: 'female', status: 'available', photo: 'Citrine.jpg' },
+          { name: 'Coral', gender: 'male', status: 'available', photo: 'Coral.jpg' }
+        ];
+      }
+    }
+
+    function loadTexts() {
+      const t = content.texts || {};
+      document.getElementById('txt-hero-title1').value = t.hero_title1 || '';
+      document.getElementById('txt-hero-title2').value = t.hero_title2 || '';
+      document.getElementById('txt-hero-desc').value = t.hero_desc || '';
+      document.getElementById('txt-phone').value = t.phone || '';
+      document.getElementById('txt-email').value = t.email || '';
+    }
+
+    function collectTexts() {
+      content.texts = {
+        hero_title1: document.getElementById('txt-hero-title1').value.trim(),
+        hero_title2: document.getElementById('txt-hero-title2').value.trim(),
+        hero_desc: document.getElementById('txt-hero-desc').value.trim(),
+        phone: document.getElementById('txt-phone').value.trim(),
+        email: document.getElementById('txt-email').value.trim(),
+      };
+      // remove empty
+      Object.keys(content.texts).forEach(k => { if (!content.texts[k]) delete content.texts[k]; });
+    }
+
+    function renderPuppies() {
+      const list = document.getElementById('puppyList');
+      list.innerHTML = '';
+      if (content.puppies.length === 0) {
+        list.innerHTML = '<div class="empty-state">Žádná štěňátka. Klikněte na "Přidat štěňátko" níže.</div>';
+        return;
+      }
+      content.puppies.forEach((p, i) => {
+        const el = document.createElement('div');
+        el.className = 'puppy-editor';
+        el.innerHTML = `
+          <label class="puppy-editor__photo" data-idx="${i}">
+            ${p.photo ? `<img src="${p.photo}" alt="${p.name}" />` : '<div class="puppy-editor__photo-hint">Klikněte pro nahrání fotky</div>'}
+            <input type="file" accept="image/*" style="display:none" onchange="uploadPhoto(${i}, this)" />
+          </label>
+          <div class="puppy-editor__fields">
+            <div class="puppy-field"><label>Jméno:</label><input type="text" value="${escapeAttr(p.name)}" oninput="updatePuppy(${i}, 'name', this.value)" /></div>
+            <div class="puppy-field"><label>Pohlaví:</label>
+              <select onchange="updatePuppy(${i}, 'gender', this.value)">
+                <option value="female" ${p.gender==='female'?'selected':''}>Fena</option>
+                <option value="male" ${p.gender==='male'?'selected':''}>Pes</option>
+              </select>
+            </div>
+            <div class="puppy-field"><label>Stav:</label>
+              <select onchange="updatePuppy(${i}, 'status', this.value)">
+                <option value="available" ${p.status==='available'?'selected':''}>Volné</option>
+                <option value="reserved" ${p.status==='reserved'?'selected':''}>Rezervováno</option>
+              </select>
+            </div>
+          </div>
+          <button class="admin-btn admin-btn--danger puppy-editor__delete" onclick="deletePuppy(${i})">🗑</button>
+        `;
+        list.appendChild(el);
+      });
+    }
+
+    function escapeAttr(s) {
+      return (s || '').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    }
+
+    function addPuppy() {
+      content.puppies.push({ name: 'Nové štěňátko', gender: 'female', status: 'available', photo: '' });
+      renderPuppies();
+    }
+
+    function deletePuppy(i) {
+      if (!confirm('Opravdu smazat toto štěňátko?')) return;
+      content.puppies.splice(i, 1);
+      renderPuppies();
+    }
+
+    function updatePuppy(i, field, value) {
+      content.puppies[i][field] = value;
+    }
+
+    function uploadPhoto(i, input) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        content.puppies[i].photo = e.target.result;
+        renderPuppies();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveChanges() {
+      collectTexts();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(content));
+      showToast('✓ Uloženo do prohlížeče');
+    }
+
+    function exportContent() {
+      collectTexts();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(content));
+      const blob = new Blob([JSON.stringify(content, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'content.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('📥 Stahování zahájeno');
+    }
+
+    function importContent() {
+      const file = document.getElementById('importFile').files[0];
+      if (!file) { alert('Vyberte soubor.'); return; }
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          content = JSON.parse(e.target.result);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(content));
+          renderPuppies();
+          loadTexts();
+          showToast('✓ Obsah načten');
+        } catch {
+          alert('Neplatný soubor.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetAll() {
+      if (!confirm('Opravdu obnovit výchozí obsah? Všechny úpravy se smažou.')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      content = { puppies: [], texts: {} };
+      loadContent();
+      renderPuppies();
+      loadTexts();
+      showToast('↺ Obnoveno');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+  </script>
+</body>
+</html>

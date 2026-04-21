@@ -4,8 +4,108 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Great Silkyway – Chovatelská stanice Yorkshire teriérů</title>
-  <meta name="description" content="Great Silkyway – profesionální chovatelská stanice Yorkshire teriérů s FCI průkazy, DNA testy a srdečnou péčí." />
+  <meta name="description" content="Great Silkyway – profesionální chovatelská stanice Yorkshire teriérů s FCI průkazy, srdečnou péčí a celoživotní podporou." />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .achievements-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .achievements-modal.open { display: flex; }
+    .achievements-modal__box {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 540px;
+      width: 100%;
+      max-height: 82vh;
+      overflow-y: auto;
+      padding: 40px 36px 36px;
+      position: relative;
+    }
+    .achievements-modal__close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: rgba(0,0,0,0.07);
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--color-navy);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .achievements-modal__title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--color-navy);
+      margin-bottom: 4px;
+    }
+    .achievements-modal__subtitle {
+      font-size: 0.83rem;
+      color: var(--color-text-soft);
+      margin-bottom: 28px;
+    }
+    .achievements-list { display: flex; flex-direction: column; gap: 8px; }
+    .achievement-item-wrap {
+      border: 1px solid #e8e4dc;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+    .achievement-item-wrap.open { border-color: var(--color-gold); }
+    .achievement-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 13px 16px;
+      border: none;
+      background: none;
+      text-align: left;
+      cursor: pointer;
+      color: var(--color-navy);
+      font-family: inherit;
+      font-size: inherit;
+      transition: background 0.2s;
+    }
+    .achievement-item:hover { background: #faf8f4; }
+    .achievement-item-wrap.open .achievement-item { background: #faf8f4; }
+    .achievement-item__icon { font-size: 1.3rem; flex-shrink: 0; }
+    .achievement-item__text { flex: 1; }
+    .achievement-item__name { font-weight: 600; font-size: 0.93rem; margin-bottom: 2px; }
+    .achievement-item__date { font-size: 0.77rem; color: var(--color-text-soft); }
+    .achievement-item__arrow {
+      color: var(--color-gold);
+      font-size: 0.85rem;
+      transition: transform 0.3s ease;
+    }
+    .achievement-item-wrap.open .achievement-item__arrow { transform: rotate(180deg); }
+    .achievement-item__panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background: #f5f3ef;
+    }
+    .achievement-item-wrap.open .achievement-item__panel { max-height: 620px; }
+    .achievement-item__panel iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      display: block;
+    }
+    .btn--achievements { margin-top: 16px; display: inline-flex; align-items: center; gap: 6px; }
+  </style>
 </head>
 <body>
 
@@ -67,24 +167,91 @@
           <a href="about.html" class="btn btn--outline" data-i18n="hero_btn_about">Více o nás</a>
         </div>
 
-        <div class="hero__stats">
-          <div>
-            <span class="hero__stat-value">15+</span>
-            <span class="hero__stat-label" data-i18n="hero_stat_exp">Let zkušeností</span>
+        <style>
+          .trust-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 32px;
+          }
+          @media (max-width: 720px) {
+            .trust-cards { grid-template-columns: 1fr; gap: 12px; }
+          }
+          .trust-card {
+            background: #fff;
+            border: 1px solid rgba(201, 168, 106, 0.25);
+            border-radius: 14px;
+            padding: 18px 18px 16px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            box-shadow: 0 2px 10px rgba(13, 27, 62, 0.04);
+          }
+          .trust-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-gold), #e8c577);
+          }
+          .trust-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(13, 27, 62, 0.12);
+            border-color: var(--color-gold);
+          }
+          .trust-card__icon {
+            font-size: 1.9rem;
+            line-height: 1;
+            margin-bottom: 10px;
+            display: block;
+          }
+          .trust-card__icon--fci {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--color-navy);
+            background: linear-gradient(135deg, var(--color-gold), #e8c577);
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+          }
+          .trust-card__title {
+            font-family: var(--font-heading);
+            font-size: 1.02rem;
+            color: var(--color-navy);
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1.3;
+          }
+          .trust-card__desc {
+            font-size: 0.8rem;
+            color: var(--color-text-soft);
+            line-height: 1.45;
+          }
+        </style>
+        <div class="trust-cards">
+          <div class="trust-card">
+            <span class="trust-card__icon">❤️</span>
+            <div class="trust-card__title" data-i18n="trust1_title">Štěňátko vybrané s láskou</div>
+            <div class="trust-card__desc" data-i18n="trust1_desc">Každé vyrůstá v naší rodině — ne v kotci</div>
           </div>
-          <div>
-            <span class="hero__stat-value">200+</span>
-            <span class="hero__stat-label" data-i18n="hero_stat_families">Spokojených rodin</span>
+          <div class="trust-card">
+            <span class="trust-card__icon">🏆</span>
+            <div class="trust-card__title" data-i18n="trust2_title">Prověřená kvalita</div>
+            <div class="trust-card__desc" data-i18n="trust2_desc">Rodiče s výstavními tituly a zdravím v pořádku</div>
           </div>
-          <div>
-            <span class="hero__stat-value">FCI</span>
-            <span class="hero__stat-label" data-i18n="hero_stat_reg">Registrace</span>
+          <div class="trust-card">
+            <span class="trust-card__icon trust-card__icon--fci">FCI</span>
+            <div class="trust-card__title" data-i18n="trust3_title">Mezinárodní průkaz původu</div>
+            <div class="trust-card__desc" data-i18n="trust3_desc">Garance rodokmenu i celoživotní podpora chovatele</div>
           </div>
         </div>
       </div>
 
       <div class="hero__image">
-        <img src="Lari1.jpg" alt="Great Silkyway – Yorkshire teriér na výstavě" class="hero__photo" />
+        <img src="foto-chovatelka.jpg" alt="Chovatelka Great Silkyway" class="hero__photo" />
       </div>
     </div>
   </section>
@@ -103,8 +270,8 @@
         <div class="feature-card aos aos-d2">
           <div class="feature-card__icon">🧬</div>
           <div>
-            <div class="feature-card__title" data-i18n="feat_dna_title">DNA testování</div>
-            <div class="feature-card__desc" data-i18n="feat_dna_desc">Rodiče otestováni na dědičné choroby</div>
+            <div class="feature-card__title" data-i18n="feat_dna_title">Zdravé štěňátko</div>
+            <div class="feature-card__desc" data-i18n="feat_dna_desc">Vaše štěně přichází zdravé a plné života</div>
           </div>
         </div>
         <div class="feature-card aos aos-d3">
@@ -131,14 +298,7 @@
       <div class="about-split">
         <div class="about-split__image aos aos--left">
           <div class="about-split__image-placeholder" style="padding:0;overflow:hidden;border-radius:var(--radius-lg);">
-            <img src="foto-chovatelka.jpg" alt="Chovatelka Great Silkyway" style="width:100%;height:100%;object-fit:cover;object-position:center top;" />
-          </div>
-          <div class="about-split__image-badge">
-            <span class="badge-icon">🏆</span>
-            <div class="badge-text">
-              <strong data-i18n="badge_exp">15+ let</strong>
-              <span data-i18n="badge_breeder">zkušený chovatel</span>
-            </div>
+            <img src="vystavni_fotka.jpg" alt="Great Silkyway — výstavní úspěch" style="width:100%;height:100%;object-fit:cover;object-position:center top;" />
           </div>
         </div>
 
@@ -150,14 +310,14 @@
             <span data-i18n="about_p1">Chovatelská stanice Great Silkyway vznikla z čisté lásky k Yorkshire teriérům. Chov je pro nás nejen koníčkem, ale posláním — přivést na svět zdravá, dobře socializovaná štěňata, která budou radostí celých rodin.</span>
           </p>
           <p>
-            <span data-i18n="about_p2">Naši chovatelé jsou registrováni u FCI a ČMKU. Každý náš chovný pes prochází komplexním zdravotním testováním včetně DNA analýzy, aby se zajistilo, že předávají svým potomkům jen to nejlepší.</span>
+            <span data-i18n="about_p2">Naši chovatelé jsou registrováni u FCI. Rodiče každého štěněte pečlivě vybíráme podle zdraví, povahy a chovné hodnoty — aby vaše štěňátko přišlo do nového domova jako ten nejlepší možný společník.</span>
           </p>
 
           <div class="checkmarks">
-            <div class="checkmark-item" data-i18n="about_check1">Registrace FCI / ČMKU</div>
+            <div class="checkmark-item" data-i18n="about_check1">Registrace FCI</div>
             <div class="checkmark-item" data-i18n="about_check2">Zdravotní testy rodičů</div>
             <div class="checkmark-item" data-i18n="about_check3">Celoživotní podpora majitelů</div>
-            <div class="checkmark-item" data-i18n="about_check4">Smlouva o prodeji s zárukou</div>
+            <div class="checkmark-item" data-i18n="about_check4">Jsme tu pro vás i po předání</div>
           </div>
 
           <a href="about.html" class="btn btn--primary" data-i18n="about_btn">Zjistit více o nás</a>
@@ -177,7 +337,7 @@
       </div>
 
       <div class="dogs-grid">
-        <div class="dog-card aos aos-d1">
+        <div class="dog-card aos aos-d1" style="cursor:pointer;" onclick="location.href='nasi-psi.html'">
           <div class="dog-card__image">
             <img src="York1.jpg" alt="Ti Amo Romantico Senorita" style="width:100%;height:100%;object-fit:cover;object-position:center center;" />
             <span class="dog-card__badge">Fena</span>
@@ -188,14 +348,15 @@
             <p class="dog-card__desc">Nádherná fena s výjimečně hedvábnou srstí a typickým výstavním výrazem. Elegantní, temperamentní a plná energie.</p>
             <div class="dog-card__meta">
               <div class="dog-card__meta-item">
-                <label>DNA</label>
-                <span>Čistý ✓</span>
+                <label>Zdraví</label>
+                <span>V pořádku ✓</span>
               </div>
             </div>
+            <button class="btn btn--outline btn--sm btn--achievements" onclick="event.stopPropagation(); openRomaAchievements()">🏆 Úspěchy</button>
           </div>
         </div>
 
-        <div class="dog-card aos aos-d2">
+        <div class="dog-card aos aos-d2" style="cursor:pointer;" onclick="location.href='nasi-psi.html'">
           <div class="dog-card__image">
             <img src="topfoto.jpg" alt="Enchanting Michelle" style="width:100%;height:100%;object-fit:cover;object-position:center center;" />
             <span class="dog-card__badge">Fena</span>
@@ -206,14 +367,15 @@
             <p class="dog-card__desc">Okouzlující fena s nádhernou srstí a výraznou osobností. Elegantní, klidná a předává nejlepší vlastnosti.</p>
             <div class="dog-card__meta">
               <div class="dog-card__meta-item">
-                <label>DNA</label>
-                <span>Čistý ✓</span>
+                <label>Zdraví</label>
+                <span>V pořádku ✓</span>
               </div>
             </div>
+            <button class="btn btn--outline btn--sm btn--achievements" onclick="event.stopPropagation(); openMichelleAchievements()">🏆 Úspěchy</button>
           </div>
         </div>
 
-        <div class="dog-card aos aos-d3">
+        <div class="dog-card aos aos-d3" style="cursor:pointer;" onclick="location.href='nasi-psi.html'">
           <div class="dog-card__image">
             <img src="mateo.jpg" alt="JCH EARL Matteo" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;" />
             <span class="dog-card__badge" style="background:var(--color-navy);">Pes</span>
@@ -221,21 +383,18 @@
           <div class="dog-card__body">
             <div class="dog-card__breed">Yorkshire teriér</div>
             <div class="dog-card__name">JCH EARL Matteo</div>
-            <p class="dog-card__desc">Nejmladší chovná fena s velkým potenciálem. Výjimečná srst zlatavé barvy a hravá povaha.</p>
+            <p class="dog-card__desc">Výjimečný pes s titulem Junior Champion. Matteo disponuje dokonalou stavbou těla, nádhernou srstí a sebevědomou povahou výstavního psa.</p>
             <div class="dog-card__meta">
               <div class="dog-card__meta-item">
-                <label>Narozena</label>
-                <span>2021</span>
+                <label>Tituly</label>
+                <span>JCH EARL</span>
               </div>
               <div class="dog-card__meta-item">
-                <label>Titul</label>
-                <span>Jub. Ví. ČR</span>
-              </div>
-              <div class="dog-card__meta-item">
-                <label>Vrhy</label>
-                <span>1</span>
+                <label>Zdraví</label>
+                <span>V pořádku ✓</span>
               </div>
             </div>
+            <button class="btn btn--outline btn--sm btn--achievements" onclick="event.stopPropagation(); openMatteoAchievements()">🏆 Úspěchy</button>
           </div>
         </div>
       </div>
@@ -256,39 +415,46 @@
         <p class="section-subtitle" data-i18n="puppies_subtitle">Hledáte svého nového čtyřnohého přítele? Podívejte se na naše aktuálně dostupná štěňata s průkazem FCI.</p>
       </div>
 
-      <div class="puppies-grid">
-        <div class="puppy-card aos aos-d1">
-          <div class="puppy-card__image">
-            <span>🐶</span>
+      <style>
+        .puppy-card__gender {
+          position: absolute;
+          top: 12px;
+          left: 12px;
+          padding: 6px 14px;
+          border-radius: 999px;
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: #fff;
+          z-index: 2;
+        }
+        .puppy-card__gender--female { background: #d8607f; }
+        .puppy-card__gender--male   { background: var(--color-navy); }
+      </style>
+      <div class="puppies-grid" id="puppies-grid-home">
+        <div class="puppy-card aos aos-d1" style="cursor:pointer;" onclick="location.href='stena.html'">
+          <div class="puppy-card__image" style="padding:0; overflow:hidden; position:relative;">
+            <img src="Citrine.jpg" alt="Citrine" style="width:100%; height:100%; object-fit:cover; object-position:center center;" />
+            <span class="puppy-card__gender puppy-card__gender--female" data-i18n="gender_female">Fena</span>
             <span class="puppy-card__status puppy-card__status--available" data-i18n="status_available">Volné</span>
           </div>
           <div class="puppy-card__body">
-            <div class="puppy-card__name">Yorkie Fena #1</div>
-            <div class="puppy-card__info">Fena · narozena 15. 2. 2025 · tradiční zbarvení</div>
+            <div class="puppy-card__name">Citrine</div>
+            <div class="puppy-card__info">Yorkshire teriér</div>
             <div class="puppy-card__price">Na dotaz</div>
           </div>
         </div>
 
-        <div class="puppy-card aos aos-d2">
-          <div class="puppy-card__image">
-            <span>🐶</span>
-            <span class="puppy-card__status puppy-card__status--reserved" data-i18n="status_reserved">Rezervováno</span>
-          </div>
-          <div class="puppy-card__body">
-            <div class="puppy-card__name">Yorkie Pes #1</div>
-            <div class="puppy-card__info">Pes · narozen 15. 2. 2025 · tradiční zbarvení</div>
-            <div class="puppy-card__price">Rezervováno</div>
-          </div>
-        </div>
-
-        <div class="puppy-card aos aos-d3">
-          <div class="puppy-card__image">
-            <span>🐶</span>
+        <div class="puppy-card aos aos-d2" style="cursor:pointer;" onclick="location.href='stena.html'">
+          <div class="puppy-card__image" style="padding:0; overflow:hidden; position:relative;">
+            <img src="Coral.jpg" alt="Coral" style="width:100%; height:100%; object-fit:cover; object-position:center center;" />
+            <span class="puppy-card__gender puppy-card__gender--male" data-i18n="gender_male">Pes</span>
             <span class="puppy-card__status puppy-card__status--available" data-i18n="status_available">Volné</span>
           </div>
           <div class="puppy-card__body">
-            <div class="puppy-card__name">Yorkie Fena #2</div>
-            <div class="puppy-card__info">Fena · narozena 15. 2. 2025 · tradiční zbarvení</div>
+            <div class="puppy-card__name">Coral</div>
+            <div class="puppy-card__info">Yorkshire teriér</div>
             <div class="puppy-card__price">Na dotaz</div>
           </div>
         </div>
@@ -423,10 +589,10 @@
           </div>
           <p class="footer__tagline"><span data-i18n="footer_tagline">
             Profesionální chovatelská stanice Yorkshire teriérů s FCI registrací.
-            Chováme s láskou, zodpovědností a vášní od roku 2009.
+            Chováme s láskou, zodpovědností a vášní od roku 2023.
           </span></p>
           <div class="footer__social">
-            <a href="#" class="footer__social-link" title="Facebook">📘</a>
+            <a href="https://www.facebook.com/profile.php?id=100089532775624" class="footer__social-link" title="Facebook" target="_blank" rel="noopener">📘</a>
             <a href="#" class="footer__social-link" title="Instagram">📷</a>
           </div>
         </div>
@@ -464,11 +630,187 @@
       </div>
 
       <div class="footer__lower">
-        <span data-i18n="footer_rights">© 2025 Great Silkyway. Všechna práva vyhrazena.</span>
-        <span data-i18n="footer_reg">Chovatelská stanice FCI · ČMKU registrace</span>
+        <span data-i18n="footer_rights">© 2026 Great Silkyway. Všechna práva vyhrazena.</span>
+        <span data-i18n="footer_reg">Chovatelská stanice s FCI registrací</span>
       </div>
     </div>
   </footer>
+
+  <!-- ROMA ACHIEVEMENTS MODAL -->
+  <div class="achievements-modal" id="romaModal">
+    <div class="achievements-modal__box">
+      <button class="achievements-modal__close" id="romaModalClose">✕</button>
+      <div class="achievements-modal__title">🏆 Ti Amo Romantico Senorita</div>
+      <div class="achievements-modal__subtitle">Přehled titulů a certifikátů z výstav</div>
+      <div class="achievements-list">
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📋</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Posudek z výstavy</div>
+              <div class="achievement-item__date">Ti Amo Romantico Senorita</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-roma/posudek-1049654.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MICHELLE ACHIEVEMENTS MODAL -->
+  <div class="achievements-modal" id="michelleModal">
+    <div class="achievements-modal__box">
+      <button class="achievements-modal__close" id="michelleModalClose">✕</button>
+      <div class="achievements-modal__title">🏆 Enchanting Michelle</div>
+      <div class="achievements-modal__subtitle">Přehled titulů a certifikátů z výstav</div>
+      <div class="achievements-list">
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📜</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Certifikát z výstavy</div>
+              <div class="achievement-item__date">25. 11. 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-michelle/20231125170627-3073-470-Certificate.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📜</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Certifikát z výstavy</div>
+              <div class="achievement-item__date">25. 11. 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-michelle/20231125170741-3072-553-Certificate.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📜</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Certifikát z výstavy</div>
+              <div class="achievement-item__date">01. 06. 2024</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-michelle/20240601124010-3477-228-Certificate.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATTEO ACHIEVEMENTS MODAL -->
+  <div class="achievements-modal" id="matteoModal">
+    <div class="achievements-modal__box">
+      <button class="achievements-modal__close" id="matteoModalClose">✕</button>
+      <div class="achievements-modal__title">🏆 JCH EARL Matteo</div>
+      <div class="achievements-modal__subtitle">Přehled titulů a certifikátů z výstav</div>
+      <div class="achievements-list">
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">🥇</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Junior Autumn Winner 2023</div>
+              <div class="achievement-item__date">Bosna a Hercegovina · říjen 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-matteo/20231101211831-Bosnia-Herzegovina%20Titles-Junior%20Autumn%20Winner%202023-1203550-.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">🥇</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Autumn Winner 2023</div>
+              <div class="achievement-item__date">Bosna a Hercegovina · říjen 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-matteo/20231101211820-Bosnia-Herzegovina%20Titles-Autumn%20Winner%202023-1203554-.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📜</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Certifikát z výstavy</div>
+              <div class="achievement-item__date">28. 10. 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-matteo/20231028092358-3033-109-Certificate.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📋</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Rozhodčí zpráva</div>
+              <div class="achievement-item__date">28. 10. 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-matteo/20231028092358-3033-109-JudgmentReport.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📜</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Certifikát z výstavy</div>
+              <div class="achievement-item__date">28. 10. 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-matteo/20231028140116-3035-126-Certificate.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📜</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Certifikát z výstavy</div>
+              <div class="achievement-item__date">29. 10. 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-matteo/20231029103400-3034-101-Certificate.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📜</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Certifikát z výstavy</div>
+              <div class="achievement-item__date">29. 10. 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-matteo/20231029144332-3036-122-Certificate.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📜</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Certifikát z výstavy</div>
+              <div class="achievement-item__date">25. 11. 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-matteo/20231125170542-3073-466-Certificate.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+        <div class="achievement-item-wrap">
+          <button type="button" class="achievement-item" onclick="toggleAch(this)">
+            <span class="achievement-item__icon">📜</span>
+            <div class="achievement-item__text">
+              <div class="achievement-item__name">Certifikát z výstavy</div>
+              <div class="achievement-item__date">25. 11. 2023</div>
+            </div>
+            <span class="achievement-item__arrow">▼</span>
+          </button>
+          <div class="achievement-item__panel"><iframe data-src="tituly-matteo/20231125170707-3072-548-Certificate.pdf" src="about:blank" loading="lazy"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
     // Mobile menu toggle
@@ -477,8 +819,67 @@
     burger.addEventListener('click', () => {
       menu.classList.toggle('open');
     });
+
+    function toggleAch(btn) {
+      const wrap = btn.parentElement;
+      const opening = !wrap.classList.contains('open');
+      wrap.parentElement.querySelectorAll('.achievement-item-wrap.open').forEach(w => {
+        if (w !== wrap) w.classList.remove('open');
+      });
+      wrap.classList.toggle('open', opening);
+      if (opening) {
+        const iframe = wrap.querySelector('iframe');
+        if (iframe && iframe.dataset.src && !iframe.dataset.loaded) {
+          iframe.src = iframe.dataset.src;
+          iframe.dataset.loaded = '1';
+        }
+      }
+    }
+
+    function openRomaAchievements() {
+      document.getElementById('romaModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeRomaAchievements() {
+      document.getElementById('romaModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('romaModalClose').addEventListener('click', closeRomaAchievements);
+    document.getElementById('romaModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('romaModal')) closeRomaAchievements();
+    });
+
+    function openMichelleAchievements() {
+      document.getElementById('michelleModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMichelleAchievements() {
+      document.getElementById('michelleModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('michelleModalClose').addEventListener('click', closeMichelleAchievements);
+    document.getElementById('michelleModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('michelleModal')) closeMichelleAchievements();
+    });
+
+    function openMatteoAchievements() {
+      document.getElementById('matteoModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMatteoAchievements() {
+      document.getElementById('matteoModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('matteoModalClose').addEventListener('click', closeMatteoAchievements);
+    document.getElementById('matteoModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('matteoModal')) closeMatteoAchievements();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeRomaAchievements(); closeMichelleAchievements(); closeMatteoAchievements(); }
+    });
   </script>
 <script src="animations.js"></script>
+<script src="content-loader.js"></script>
 <script src="lang.js"></script>
 </body>
 </html>

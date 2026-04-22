@@ -303,13 +303,19 @@
     const lightboxCaption = document.getElementById('lightboxCaption');
     const lightboxClose = document.getElementById('lightboxClose');
 
-    document.querySelectorAll('.vrh-card').forEach(card => {
-      card.querySelector('.vrh-card__image').addEventListener('click', () => {
-        lightboxImg.src = card.dataset.img;
-        lightboxCaption.textContent = card.dataset.caption;
-        lightbox.classList.add('open');
+    window.bindVrhLightbox = function () {
+      document.querySelectorAll('.vrh-card').forEach(card => {
+        const img = card.querySelector('.vrh-card__image');
+        if (!img || img.dataset.lightboxBound) return;
+        img.dataset.lightboxBound = '1';
+        img.addEventListener('click', () => {
+          lightboxImg.src = card.dataset.img;
+          lightboxCaption.textContent = card.dataset.caption;
+          lightbox.classList.add('open');
+        });
       });
-    });
+    };
+    window.bindVrhLightbox();
 
     lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
     lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
@@ -317,5 +323,7 @@
   </script>
 <script src="animations.js"></script>
 <script src="lang.js"></script>
+<script src="site-api.js"></script>
+<script src="litters-api.js"></script>
 </body>
 </html>

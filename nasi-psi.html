@@ -179,7 +179,7 @@
       <div class="divider"></div>
       <h2 class="section-title" style="margin-bottom:40px;" data-i18n="females_title">Naše dámy</h2>
 
-      <div class="dogs-grid">
+      <div class="dogs-grid" id="dogs-females">
 
         <!-- Ti Amo Romantico Senorita -->
         <div class="dog-card aos aos-d1" style="cursor:pointer;" onclick="location.href='galerie.html#senorita'">
@@ -225,8 +225,8 @@
 
         <!-- Oxygen Fresh Stream -->
         <div class="dog-card aos aos-d3" style="cursor:pointer;" onclick="location.href='galerie.html#oxygen'">
-          <div class="dog-card__image">
-            <img src="OXI.jpg" alt="Oxygen Fresh Stream" style="width:100%;height:100%;object-fit:cover;object-position:center center;" />
+          <div class="dog-card__image" style="position:relative;overflow:hidden;background:rgb(45,40,38);">
+            <img src="oxygen_foto2.png" alt="Oxygen Fresh Stream" style="width:100%;height:100%;object-fit:contain;object-position:center center;" />
             <span class="dog-card__badge">Fena</span>
           </div>
           <div class="dog-card__body">
@@ -255,7 +255,7 @@
       <div class="divider"></div>
       <h2 class="section-title" style="margin-bottom:40px;" data-i18n="males_title">Naši pánové</h2>
 
-      <div class="dogs-grid">
+      <div class="dogs-grid" id="dogs-males">
 
         <!-- Earl Matteo Angel Of My Heart -->
         <div class="dog-card aos aos-d3" style="cursor:pointer;" onclick="location.href='galerie.html#matteo'">
@@ -681,5 +681,7 @@
   </script>
 <script src="animations.js"></script>
 <script src="lang.js"></script>
+<script src="site-api.js"></script>
+<script src="dogs-api.js"></script>
 </body>
 </html>

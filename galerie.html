@@ -494,51 +494,12 @@
     const menu = document.getElementById('mobileMenu');
     burger.addEventListener('click', () => menu.classList.toggle('open'));
 
-    // Gallery filter
-    const tabs = document.querySelectorAll('.filter-tab');
-    const items = document.querySelectorAll('#galleryGrid .gallery-item');
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const filter = tab.dataset.filter;
-        items.forEach(item => {
-          if (filter === 'all' || item.dataset.category.includes(filter)) {
-            item.style.display = '';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // Lightbox
+    // Lightbox (bind once)
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxEmoji = document.getElementById('lightboxEmoji');
     const lightboxCaption = document.getElementById('lightboxCaption');
     const lightboxClose = document.getElementById('lightboxClose');
-
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
-        if (img) {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxImg.style.display = 'block';
-          lightboxEmoji.textContent = '';
-        } else {
-          lightboxImg.style.display = 'none';
-          lightboxEmoji.textContent = item.dataset.emoji || '🐕';
-          lightboxEmoji.style.display = 'block';
-          lightboxEmoji.style.fontSize = '80px';
-        }
-        lightboxCaption.textContent = item.dataset.caption || '';
-        lightbox.classList.add('open');
-      });
-    });
-
     lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) lightbox.classList.remove('open');
@@ -547,14 +508,60 @@
       if (e.key === 'Escape') lightbox.classList.remove('open');
     });
 
-    // Auto-filter from URL hash (e.g. galerie.html#michelle)
-    if (location.hash) {
-      const hashFilter = location.hash.slice(1);
-      const hashTab = document.querySelector(`.filter-tab[data-filter="${hashFilter}"]`);
-      if (hashTab) hashTab.click();
-    }
+    // Gallery filter + lightbox — exposed so CMS loader can re-bind after fetch
+    window.bindGalleryInteractions = function () {
+      const tabs = document.querySelectorAll('.filter-tab');
+      const items = document.querySelectorAll('#galleryGrid .gallery-item');
+
+      tabs.forEach(tab => {
+        if (tab.dataset.bound) return;
+        tab.dataset.bound = '1';
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const filter = tab.dataset.filter;
+          document.querySelectorAll('#galleryGrid .gallery-item').forEach(item => {
+            if (filter === 'all' || item.dataset.category.includes(filter)) {
+              item.style.display = '';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      items.forEach(item => {
+        if (item.dataset.lightboxBound) return;
+        item.dataset.lightboxBound = '1';
+        item.addEventListener('click', () => {
+          const img = item.querySelector('img');
+          if (img) {
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            lightboxImg.style.display = 'block';
+            lightboxEmoji.textContent = '';
+          } else {
+            lightboxImg.style.display = 'none';
+            lightboxEmoji.textContent = item.dataset.emoji || '🐕';
+            lightboxEmoji.style.display = 'block';
+            lightboxEmoji.style.fontSize = '80px';
+          }
+          lightboxCaption.textContent = item.dataset.caption || '';
+          lightbox.classList.add('open');
+        });
+      });
+
+      if (location.hash) {
+        const hashFilter = location.hash.slice(1);
+        const hashTab = document.querySelector(`.filter-tab[data-filter="${hashFilter}"]`);
+        if (hashTab) hashTab.click();
+      }
+    };
+    window.bindGalleryInteractions();
   </script>
 <script src="animations.js"></script>
 <script src="lang.js"></script>
+<script src="site-api.js"></script>
+<script src="gallery-api.js"></script>
 </body>
 </html>

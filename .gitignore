@@ -1,0 +1,17 @@
+# Node
+node_modules/
+
+# Payload CMS (lokální)
+cms/
+
+# API scripts (nepoužívané — CMS vypnuté)
+dogs-api.js
+litters-api.js
+puppies-api.js
+gallery-api.js
+site-api.js
+
+# Temp
+_*.png
+_*.jpg
+_*.mjs

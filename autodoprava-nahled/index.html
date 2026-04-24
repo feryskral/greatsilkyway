@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="meta.title">Horáček s.r.o. — Vnitrostátní a mezinárodní autodoprava</title>
+<meta name="description" content="Horáček s.r.o. — spolehlivá vnitrostátní a mezinárodní autodoprava od roku 2004.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="#uvod" class="logo" aria-label="Horáček s.r.o.">
+      <span class="logo-text">Horáček <em>s.r.o.</em></span>
+    </a>
+    <nav id="mainnav">
+      <a href="#uvod" data-i18n="nav.home">Úvod</a>
+      <a href="#onas" data-i18n="nav.about">O nás</a>
+      <a href="#vozovypark" data-i18n="nav.fleet">Vozový park</a>
+      <a href="#kariera" data-i18n="nav.career">Kariéra</a>
+      <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
+      <div class="lang-switch lang-switch-mobile" id="langSwitchMobile">
+        <button data-lang="cs" class="active">CZ</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="de">DE</button>
+      </div>
+    </nav>
+    <div class="header-right">
+      <a href="tel:+420777156897" class="header-phone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>+420 777 156 897</span>
+      </a>
+      <div class="lang-switch" id="langSwitch">
+        <button data-lang="cs" class="active">CZ</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="de">DE</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="scroll-progress" id="scrollProgress">
+  <img class="progress-truck" src="img/horacek_logo_transparent.png" alt="" aria-hidden="true">
+</div>
+
+<!-- HERO -->
+<section id="uvod" class="hero">
+  <div class="hero-bg" id="heroBg">
+    <div class="hero-slide active" style="background-image:url('img/uvod1.webp'), url('img/uvod.webp');"></div>
+    <div class="hero-slide" style="background-image:url('img/uvod2.webp'), url('img/truck5.jpeg');"></div>
+    <div class="hero-slide" style="background-image:url('img/uvod3.webp'), url('img/about.jpeg');"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-dots" id="heroDots">
+    <button class="hero-dot active" data-slide="0" aria-label="Slide 1"></button>
+    <button class="hero-dot" data-slide="1" aria-label="Slide 2"></button>
+    <button class="hero-dot" data-slide="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="container hero-inner">
+    <span class="hero-tag reveal" data-i18n="hero.tag">● Od roku 2004</span>
+    <h1 class="h1-split" data-i18n="hero.h1"><span>Autodoprava,</span> <span>na</span> <span>kterou</span> <span>se</span> <span class="accent-text">spolehnete</span><span>.</span></h1>
+    <p class="hero-sub reveal reveal-delay-2" data-i18n="hero.sub">Rodinná firma s vlastní flotilou poskytující spolehlivé a rychlé přepravy po celé České republice a Evropě.</p>
+    <div class="hero-actions reveal reveal-delay-3">
+      <a href="#kontakt" class="btn btn-primary" data-i18n="hero.cta1">Poptat přepravu <span class="arrow">→</span></a>
+      <a href="#vozovypark" class="btn btn-outline" data-i18n="hero.cta2">Vozový park</a>
+    </div>
+  </div>
+
+  <div class="hero-facts">
+    <div class="hero-fact">
+      <div class="hero-fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17V7h13v10M16 10h4l3 3v4h-7M6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM19 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg></div>
+      <div><strong data-i18n="heroFact.1a">10+ vozidel</strong><span data-i18n="heroFact.1b">ve vlastní flotile</span></div>
+    </div>
+    <div class="hero-fact">
+      <div class="hero-fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+      <div><strong data-i18n="heroFact.2a">ČR + EU</strong><span data-i18n="heroFact.2b">po celé Evropě</span></div>
+    </div>
+    <div class="hero-fact">
+      <div class="hero-fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div><strong data-i18n="heroFact.3a">GPS monitoring</strong><span data-i18n="heroFact.3b">sledování 24/7</span></div>
+    </div>
+    <div class="hero-fact">
+      <div class="hero-fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 6v6c0 5 4 9 9 10 5-1 9-5 9-10V6l-9-4z"/><path d="m9 12 2 2 4-4"/></svg></div>
+      <div><strong data-i18n="heroFact.4a">Pojištěné zásilky</strong><span data-i18n="heroFact.4b">maximální bezpečí</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST MARQUEE -->
+<div class="marquee" id="marquee">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- TWO BIG SERVICE CARDS -->
+<section class="section" style="padding-top:140px;">
+  <div class="container">
+    <div class="services-big">
+      <a href="#vozovypark" class="service-big reveal tilt">
+        <div class="service-big-bg service-big-bg-1"></div>
+        <div class="service-big-content">
+          <span class="eyebrow" data-i18n="bigCard.1eyebrow">Vnitrostátní</span>
+          <h3 data-i18n="bigCard.1title">Přeprava po ČR</h3>
+          <p data-i18n="bigCard.1text">Potřebujete poslat paletu nebo celý kamion po Česku? Zajistíme rychlé a spolehlivé doručení vlastními vozidly.</p>
+          <span class="service-big-link" data-i18n="common.readMore">Zjistit více <span>→</span></span>
+        </div>
+      </a>
+      <a href="#vozovypark" class="service-big reveal reveal-delay-1 tilt">
+        <div class="service-big-bg service-big-bg-2"></div>
+        <div class="service-big-content">
+          <span class="eyebrow" data-i18n="bigCard.2eyebrow">Mezinárodní</span>
+          <h3 data-i18n="bigCard.2title">Přeprava po EU</h3>
+          <p data-i18n="bigCard.2text">Pravidelné a jednorázové přepravy po celé Evropské unii. Zkušenosti s mezinárodními trasami a celním odbavením.</p>
+          <span class="service-big-link" data-i18n="common.readMore">Zjistit více <span>→</span></span>
+        </div>
+      </a>
+    </div>
+
+    <div style="text-align:center;">
+      <span class="eyebrow" data-i18n="services.eyebrow">Další služby</span>
+      <h2 class="section-title center" data-i18n="services.title">Co pro vás <em>umíme</em></h2>
+      <p class="center-text" data-i18n="services.sub">Komplexní přepravní služby s důrazem na spolehlivost a bezpečnost každé zásilky.</p>
+    </div>
+
+    <div class="services">
+      <div class="service reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v9"/></svg></div>
+        <h3 data-i18n="srv.1t">Paletová přeprava</h3>
+        <p data-i18n="srv.1d">Efektivní přeprava paletových zásilek — až 33 europalet v jednom vozidle.</p>
+      </div>
+      <div class="service reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3 data-i18n="srv.2t">Expresní dodání</h3>
+        <p data-i18n="srv.2d">Rychlé přepravy s vlastními vozy bez zbytečných mezipřekladek.</p>
+      </div>
+      <div class="service reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3 data-i18n="srv.3t">GPS monitoring</h3>
+        <p data-i18n="srv.3d">Veškerá vozidla jsou vybavena GPS — máte přehled o své zásilce.</p>
+      </div>
+      <div class="service reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6v6c0 5 4 9 9 10 5-1 9-5 9-10V6l-9-4z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3 data-i18n="srv.4t">Pojištěné zásilky</h3>
+        <p data-i18n="srv.4d">Veškeré zásilky jsou pojištěné pro vaše maximální bezpečí a klid.</p>
+      </div>
+      <div class="service reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M8 3v5M16 3v5"/></svg></div>
+        <h3 data-i18n="srv.5t">Pravidelné linky</h3>
+        <p data-i18n="srv.5d">Plánované rozvozy a dlouhodobé kontrakty pro vaši firmu.</p>
+      </div>
+      <div class="service reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3 data-i18n="srv.6t">Osobní přístup</h3>
+        <p data-i18n="srv.6d">Rodinná firma — jednáte přímo s majiteli, ne s korporátním oddělením.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O NÁS -->
+<section id="onas" class="section section-alt">
+  <div class="container">
+    <div class="two-col">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="about.eyebrow">O nás</span>
+        <h2 class="section-title" data-i18n="about.title">Rodinná firma s tradicí od roku <em>2004</em></h2>
+        <p class="lead" data-i18n="about.lead">Za dvacet let jsme si vybudovali stabilní zázemí a okruh spokojených zákazníků.</p>
+        <p data-i18n="about.p1">Na přelomu roku 2016 došlo k transformaci firmy na společnost <strong>Horáček s.r.o.</strong> Od té doby se neustále rozrůstáme a modernizujeme vozový park, abychom dokázali plnit i ty nejnáročnější požadavky.</p>
+        <p data-i18n="about.p2">Náš vozový park je vybaven <strong>GPS monitoringem</strong> a veškeré přepravované zásilky jsou pojištěné. Díky vlastním vozidlům zaručujeme rychlé doručení bez zbytečných mezipřekladek.</p>
+        <div class="facts">
+          <div class="fact"><strong data-count="2004" data-suffix="">0</strong><span data-i18n="fact.1">Rok založení</span></div>
+          <div class="fact"><strong data-count="10" data-suffix="+">0</strong><span data-i18n="fact.2">Vozidel ve flotile</span></div>
+          <div class="fact"><strong data-count="20" data-suffix="+">0</strong><span data-i18n="fact.3">Let zkušeností</span></div>
+          <div class="fact"><strong data-count="100" data-suffix=" %">0</strong><span data-i18n="fact.4">Pojištěné zásilky</span></div>
+        </div>
+      </div>
+      <div class="onas-visual reveal reveal-right">
+        <div class="onas-main"></div>
+        <div class="onas-sub"></div>
+        <div class="onas-stat-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L2 7 L12 12 L22 7 Z"/><path d="M2 17 L12 22 L22 17"/><path d="M2 12 L12 17 L22 12"/></svg>
+          <div>
+            <strong data-count="98" data-suffix=" %">0</strong>
+            <span data-i18n="about.stat">zásilek doručených včas</span>
+          </div>
+        </div>
+        <div class="onas-badge">
+          <strong>20+</strong>
+          <span data-i18n="about.badge">let na trhu</span>
+        </div>
+        <div class="onas-dots"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOZOVÝ PARK -->
+<section id="vozovypark" class="section">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="eyebrow" data-i18n="fleet.eyebrow">Naše flotila</span>
+      <h2 class="section-title center" data-i18n="fleet.title">Vozový <em>park</em></h2>
+      <p class="center-text" data-i18n="fleet.sub">Disponujeme různými typy nákladních vozidel pro přepravu od menších zásilek až po celokamionové náklady — vše vybavené GPS monitoringem.</p>
+    </div>
+    <div class="gallery">
+      <div class="gallery-item reveal">
+        <div class="gallery-img gallery-1"></div>
+        <div class="gallery-caption">
+          <h4 data-i18n="veh.1">Návěs Low-Deck <span class="gallery-count">7× ve flotile</span></h4>
+          <ul class="specs">
+            <li data-label-i18n="spec.loadArea" data-label="Ložná plocha"><strong>13,6 × 2,5 × 3 m</strong></li>
+            <li data-label-i18n="spec.capacity" data-label="Nosnost"><strong data-i18n="veh.1cap">až 25 tun</strong></li>
+            <li data-label-i18n="spec.pallets" data-label="Europalety"><strong>33 ks</strong></li>
+            <li data-label-i18n="spec.length" data-label="Celková délka"><strong>16,5 m</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="gallery-img gallery-2"></div>
+        <div class="gallery-caption">
+          <h4 data-i18n="veh.2">Vozidlo 12 t <span class="gallery-count">2× ve flotile</span></h4>
+          <ul class="specs">
+            <li data-label-i18n="spec.loadArea" data-label="Ložná plocha"><strong>7,20 × 2,48 × 2,70 m</strong></li>
+            <li data-label-i18n="spec.capacity" data-label="Nosnost"><strong data-i18n="veh.2cap">až 6 tun</strong></li>
+            <li data-label-i18n="spec.pallets" data-label="Europalety"><strong>18 ks</strong></li>
+            <li data-label-i18n="spec.length" data-label="Celková délka"><strong>12 m</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="gallery-img gallery-3"></div>
+        <div class="gallery-caption">
+          <h4 data-i18n="veh.3">Vozidlo 7,5 t + přívěs <span class="gallery-count">1× ve flotile</span></h4>
+          <ul class="specs">
+            <li data-label-i18n="spec.vehicle" data-label="Vozidlo"><strong>6,60 × 2,48 × 3 m</strong></li>
+            <li data-label-i18n="spec.trailer" data-label="Přívěs"><strong>8,20 × 2,48 × 3 m</strong></li>
+            <li data-label-i18n="spec.palletsTotal" data-label="Palety celkem"><strong>16 + 20 ks</strong></li>
+            <li data-label-i18n="spec.length" data-label="Délka"><strong>7,49 + 5,5 m</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="gallery-img gallery-4"></div>
+        <div class="gallery-caption">
+          <h4 data-i18n="veh.4t">Flotila v akci</h4>
+          <p data-i18n="veh.4d">Moderní vozidla připravená k nasazení po celé Evropě. Pravidelné servisy a údržba zaručují bezporuchový provoz.</p>
+        </div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="gallery-img gallery-5"></div>
+        <div class="gallery-caption">
+          <h4 data-i18n="veh.5t">Naše zázemí</h4>
+          <p data-i18n="veh.5d">Kvalitní servis a údržba zajišťují plynulý provoz 365 dní v roce, bez ohledu na sezonu nebo objem zakázek.</p>
+        </div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="gallery-img gallery-6"></div>
+        <div class="gallery-caption">
+          <h4 data-i18n="veh.6t">Spolehlivá technika</h4>
+          <p data-i18n="veh.6d">Vozidla s GPS monitoringem pro přehled o pohybu zásilky v reálném čase, 24 hodin denně.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNEŘI -->
+<section class="section section-alt partners-section">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="eyebrow" data-i18n="partners.eyebrow">Spolupracujeme</span>
+      <h2 class="section-title center" data-i18n="partners.title">Naši <em>partneři</em></h2>
+      <p class="center-text" data-i18n="partners.sub">Spolupracujeme s renomovanými dopravními a logistickými společnostmi po celé Evropě.</p>
+    </div>
+    <div class="partners-grid">
+      <a href="https://ewals.jobs.cz/o-ewalsu" target="_blank" rel="noopener" class="partner reveal">
+        <img src="img/partners/ewals.png" alt="Ewals" loading="lazy">
+        <span>Ewals Cargo Care</span>
+      </a>
+      <a href="https://www.multitrans.cz/" target="_blank" rel="noopener" class="partner reveal">
+        <img src="img/partners/multitrans.png" alt="Multitrans" loading="lazy">
+        <span>Multitrans</span>
+      </a>
+      <a href="https://www.mauriceward.com/" target="_blank" rel="noopener" class="partner reveal">
+        <img src="img/partners/mauriceward.png" alt="Maurice Ward" loading="lazy">
+        <span>Maurice Ward</span>
+      </a>
+      <a href="https://www.laetzsch.de/" target="_blank" rel="noopener" class="partner reveal">
+        <img src="img/partners/laetzsch.png" alt="Laetzsch" loading="lazy">
+        <span>Laetzsch</span>
+      </a>
+      <a href="https://www.sostmeier.com/en/" target="_blank" rel="noopener" class="partner reveal">
+        <img src="img/partners/sostmeier.png" alt="Sostmeier" loading="lazy">
+        <span>Sostmeier</span>
+      </a>
+      <a href="https://www.facebook.com/jirolsped" target="_blank" rel="noopener" class="partner reveal">
+        <img src="img/partners/jirolsped.png" alt="Jirolsped" loading="lazy">
+        <span>Jirolsped</span>
+      </a>
+      <a href="https://www.dhl.com/" target="_blank" rel="noopener" class="partner reveal">
+        <div class="partner-dhl">
+          <svg viewBox="0 0 200 64" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="64" fill="#ffcc00"/>
+            <text x="100" y="44" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="900" font-style="italic" fill="#d40511" text-anchor="middle" letter-spacing="-1">DHL</text>
+            <path d="M22 30 h28 M30 38 h24 M42 46 h22" stroke="#d40511" stroke-width="2" stroke-linecap="round"/>
+            <path d="M150 30 h28 M146 38 h32 M142 46 h36" stroke="#d40511" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span>DHL</span>
+      </a>
+      <a href="https://www.craiss.com/en/" target="_blank" rel="noopener" class="partner reveal">
+        <img src="img/partners/craiss.png" alt="Craiss" loading="lazy">
+        <span>Craiss Logistics</span>
+      </a>
+      <a href="https://www.noprosu.cz/" target="_blank" rel="noopener" class="partner reveal">
+        <img src="img/partners/noprosu.png" alt="Noprosu" loading="lazy">
+        <span>Noprosu</span>
+      </a>
+      <a href="https://en.pnlogistic.com/" target="_blank" rel="noopener" class="partner reveal">
+        <img src="img/partners/pnlogistic.png" alt="PN Logistic" loading="lazy">
+        <span>PN Logistic</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <div class="container cta-banner-inner">
+    <div>
+      <h2 data-i18n="cta.title">Potřebujete přepravit zásilku?</h2>
+      <p data-i18n="cta.sub">Zavolejte nám nebo pošlete nezávaznou poptávku — ozveme se do 24 hodin.</p>
+    </div>
+    <a href="#kontakt" class="btn btn-light" data-i18n="cta.btn">Kontaktujte nás <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<!-- KARIÉRA -->
+<section id="kariera" class="section section-dark">
+  <div class="container">
+    <div class="two-col">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--red-light);" data-i18n="career.eyebrow">Kariéra</span>
+        <h2 class="section-title" data-i18n="career.title">Staňte se součástí <em>našeho týmu</em></h2>
+        <p class="lead light" data-i18n="career.lead">Rádi přijmeme dalšího řidiče do kolektivu.</p>
+        <p class="light" data-i18n="career.p1">V případě zájmu nebo jakýchkoli dotazů nás neváhejte kontaktovat na uvedené e-mailové adrese, případně telefonním čísle.</p>
+        <h4 class="career-req-title" data-i18n="career.reqTitle">Požadujeme:</h4>
+        <ul class="benefits">
+          <li data-i18n="career.b1">Řidičský průkaz skupiny <strong>C+E</strong></li>
+          <li data-i18n="career.b2">Profesní průkaz</li>
+          <li data-i18n="career.b3">Kartu řidiče</li>
+          <li data-i18n="career.b4">Spolehlivost</li>
+        </ul>
+      </div>
+      <form class="career-form reveal reveal-right" id="careerForm">
+        <h3 data-i18n="careerForm.title">Pošlete nám svůj životopis</h3>
+        <p class="form-lead light" data-i18n="careerForm.lead">Ozveme se vám co nejdříve — obvykle do 48 hodin.</p>
+        <div class="form-row">
+          <input type="text" data-ph-i18n="form.name" placeholder="Jméno a příjmení *">
+          <input type="tel" data-ph-i18n="form.phone" placeholder="Telefon *">
+        </div>
+        <input type="email" data-ph-i18n="form.email" placeholder="E-mail *">
+        <textarea rows="5" data-ph-i18n="careerForm.msg" placeholder="Průvodní dopis — pár slov o sobě, zkušenostech, proč byste chtěli pracovat u nás…"></textarea>
+        <label class="file-upload" id="fileLabel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          <span class="file-upload-text" data-i18n="careerForm.upload">Nahrát životopis (PDF, DOC, DOCX)</span>
+          <input type="file" accept=".pdf,.doc,.docx" id="cvFile" hidden>
+        </label>
+        <button type="button" class="btn btn-primary" data-i18n="careerForm.submit">Odeslat životopis <span class="arrow">→</span></button>
+        <p class="career-form-note" data-i18n="careerForm.note">Nebo nám rovnou napište na <a href="mailto:jitkahorackova@seznam.cz?subject=Žádost o zaměstnání">jitkahorackova@seznam.cz</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt" class="section section-alt">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="eyebrow" data-i18n="contact.eyebrow">Spojte se s námi</span>
+      <h2 class="section-title center" data-i18n="contact.title">Kontaktujte <em>nás</em></h2>
+      <p class="center-text" data-i18n="contact.sub">Rádi s vámi probereme detaily vaší přepravy. Odpovíme co nejdříve.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Horáček s.r.o.</h3>
+        <div class="contact-cards">
+          <a href="tel:+420777156897" class="contact-card">
+            <div class="contact-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div><div class="contact-card-label" data-i18n="contact.phone">Telefon</div><div class="contact-card-value">+420 777 156 897</div></div>
+          </a>
+          <a href="tel:+420608420050" class="contact-card">
+            <div class="contact-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div><div class="contact-card-label" data-i18n="contact.dispatch">Dispečink</div><div class="contact-card-value">+420 608 420 050</div></div>
+          </a>
+          <a href="mailto:jitkahorackova@seznam.cz" class="contact-card">
+            <div class="contact-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><div class="contact-card-label" data-i18n="contact.email">E-mail</div><div class="contact-card-value">jitkahorackova@seznam.cz</div></div>
+          </a>
+          <div class="contact-card" style="cursor:default;">
+            <div class="contact-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><div class="contact-card-label" data-i18n="contact.hq">Sídlo</div><div class="contact-card-value">Na výsluní 622, 439 81 Kryry</div></div>
+          </div>
+        </div>
+        <div class="map-wrap">
+          <iframe src="https://maps.google.com/maps?q=Na%20v%C3%BDslun%C3%AD%20622%2C%20Kryry&t=&z=14&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+      <form class="form reveal reveal-right">
+        <h3 data-i18n="form.title">Nezávazná poptávka</h3>
+        <p class="form-lead" data-i18n="form.lead">Odpovíme co nejdříve — obvykle do 24 hodin.</p>
+        <div class="form-row">
+          <input type="text" data-ph-i18n="form.name" placeholder="Jméno a příjmení *">
+          <input type="tel" data-ph-i18n="form.phone" placeholder="Telefon *">
+        </div>
+        <input type="email" data-ph-i18n="form.email" placeholder="E-mail *">
+        <input type="text" data-ph-i18n="form.subject" placeholder="Předmět poptávky">
+        <textarea rows="5" data-ph-i18n="form.msg" placeholder="Popište prosím vaši přepravu — odkud, kam, hmotnost, rozměry"></textarea>
+        <button type="button" class="btn btn-primary" data-i18n="form.submit">Odeslat poptávku <span class="arrow">→</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-col">
+        <h5>Horáček s.r.o.</h5>
+        <p data-i18n="footer.about">Rodinná firma s tradicí od roku 2004. Vnitrostátní a mezinárodní autodoprava vlastními vozy.</p>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footer.menu">Menu</h5>
+        <a href="#onas" data-i18n="nav.about">O nás</a>
+        <a href="#vozovypark" data-i18n="nav.fleet">Vozový park</a>
+        <a href="#kariera" data-i18n="nav.career">Kariéra</a>
+        <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="nav.contact">Kontakt</h5>
+        <a href="tel:+420777156897">+420 777 156 897</a>
+        <a href="tel:+420608420050">+420 608 420 050</a>
+        <a href="mailto:jitkahorackova@seznam.cz">jitkahorackova@seznam.cz</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="contact.hq">Sídlo</h5>
+        <p>Na výsluní 622<br>439 81 Kryry<br><span data-i18n="footer.country">Česká republika</span></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div data-i18n="footer.copyright">© 2026 Horáček s.r.o. — Všechna práva vyhrazena</div>
+      <div data-i18n="footer.tagline">Vnitrostátní a mezinárodní autodoprava</div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Zpět nahoru">↑</button>
+
+<script>
+// =========== I18N TRANSLATIONS ===========
+const I18N = {
+  en: {
+    'meta.title': 'Horáček Ltd. — Domestic and international road transport',
+    'nav.home': 'Home', 'nav.about': 'About us', 'nav.fleet': 'Fleet', 'nav.career': 'Career', 'nav.contact': 'Contact',
+    'hero.tag': '● Since 2004',
+    'hero.h1': '<span>Transport</span> <span>you</span> <span>can</span> <span class="accent-text">rely on</span><span>.</span>',
+    'hero.sub': 'Family-run company with its own fleet providing reliable and fast deliveries across the Czech Republic and Europe.',
+    'hero.cta1': 'Request transport <span class="arrow">→</span>', 'hero.cta2': 'Our fleet',
+    'heroFact.1a': '10+ vehicles', 'heroFact.1b': 'in our own fleet',
+    'heroFact.2a': 'CZ + EU', 'heroFact.2b': 'all over Europe',
+    'heroFact.3a': 'GPS tracking', 'heroFact.3b': '24/7 monitoring',
+    'heroFact.4a': 'Insured shipments', 'heroFact.4b': 'maximum security',
+    'marquee.1': '✓ GPS tracking', 'marquee.2': '✓ Insured shipments', 'marquee.3': '✓ Since 2004', 'marquee.4': '✓ Own fleet', 'marquee.5': '✓ International transport', 'marquee.6': '✓ 33 euro-pallets', 'marquee.7': '✓ Pallet transport', 'marquee.8': '✓ Reliable delivery',
+    'bigCard.1eyebrow': 'Domestic', 'bigCard.1title': 'Transport in CZ', 'bigCard.1text': 'Need to ship a pallet or a full truck across the Czech Republic? We deliver fast and reliably with our own vehicles.',
+    'bigCard.2eyebrow': 'International', 'bigCard.2title': 'Transport in the EU', 'bigCard.2text': 'Regular and one-off transports across the entire European Union. Experienced in international routes and customs clearance.',
+    'common.readMore': 'Learn more <span>→</span>',
+    'services.eyebrow': 'Other services', 'services.title': 'What we <em>do</em>', 'services.sub': 'Comprehensive transport services with emphasis on reliability and safety of every shipment.',
+    'srv.1t': 'Pallet transport', 'srv.1d': 'Efficient transport of palletized shipments — up to 33 euro-pallets per vehicle.',
+    'srv.2t': 'Express delivery', 'srv.2d': 'Fast transport with our own vehicles, no unnecessary transhipment.',
+    'srv.3t': 'GPS tracking', 'srv.3d': 'All our vehicles are GPS-equipped — you always know where your shipment is.',
+    'srv.4t': 'Insured shipments', 'srv.4d': 'All shipments are insured for your maximum safety and peace of mind.',
+    'srv.5t': 'Regular lines', 'srv.5d': 'Scheduled deliveries and long-term contracts for your company.',
+    'srv.6t': 'Personal approach', 'srv.6d': 'Family business — you deal directly with the owners, not a corporate department.',
+    'about.eyebrow': 'About us', 'about.title': 'A family business with tradition since <em>2004</em>',
+    'about.lead': 'In twenty years we have built a stable background and a circle of satisfied customers.',
+    'about.p1': 'At the turn of 2016 the company was transformed into <strong>Horáček Ltd.</strong> Since then we have been growing and modernizing our fleet to meet even the most demanding requirements.',
+    'about.p2': 'Our fleet is equipped with <strong>GPS tracking</strong> and all shipments are insured. Thanks to our own vehicles, we guarantee fast delivery without unnecessary transhipment.',
+    'fact.1': 'Year founded', 'fact.2': 'Vehicles in fleet', 'fact.3': 'Years of experience', 'fact.4': 'Insured shipments',
+    'about.badge': 'years on the market',
+    'about.stat': 'shipments delivered on time',
+    'fleet.eyebrow': 'Our fleet', 'fleet.title': 'Vehicle <em>fleet</em>', 'fleet.sub': 'We operate various types of freight vehicles for shipments from small packages up to full-truckload cargo — all equipped with GPS tracking.',
+    'veh.1': 'Low-Deck semi-trailer <span class="gallery-count">7 in fleet</span>',
+    'veh.2': 'Vehicle 12 t <span class="gallery-count">2 in fleet</span>',
+    'veh.3': 'Vehicle 7.5 t + trailer <span class="gallery-count">1 in fleet</span>',
+    'veh.1cap': 'up to 25 tons', 'veh.2cap': 'up to 6 tons',
+    'spec.loadArea': 'Load area', 'spec.capacity': 'Capacity', 'spec.pallets': 'Euro-pallets', 'spec.length': 'Total length', 'spec.vehicle': 'Vehicle', 'spec.trailer': 'Trailer', 'spec.palletsTotal': 'Total pallets',
+    'veh.4t': 'Fleet in action', 'veh.4d': 'Modern vehicles ready to deploy across Europe. Regular servicing and maintenance guarantee trouble-free operation.',
+    'veh.5t': 'Our facilities', 'veh.5d': 'Quality service and maintenance ensure smooth operation 365 days a year, regardless of season or order volume.',
+    'veh.6t': 'Reliable technology', 'veh.6d': 'Vehicles with GPS tracking give you real-time visibility into your shipment, 24 hours a day.',
+    'cta.title': 'Need to transport a shipment?', 'cta.sub': 'Call us or send a non-binding inquiry — we will get back to you within 24 hours.', 'cta.btn': 'Contact us <span class="arrow">→</span>',
+    'career.eyebrow': 'Career', 'career.title': 'Become part of <em>our team</em>',
+    'career.lead': 'We are happy to welcome another driver to our team.',
+    'career.p1': 'If you are interested or have any questions, feel free to contact us at the e-mail address or phone number listed below.',
+    'career.reqTitle': 'Requirements:',
+    'career.b1': 'Driving licence category <strong>C+E</strong>',
+    'career.b2': 'Professional driver qualification card',
+    'career.b3': 'Driver tachograph card',
+    'career.b4': 'Reliability',
+    'career.btn': 'Send CV <span class="arrow">→</span>',
+    'careerForm.title': 'Send us your CV', 'careerForm.lead': "We'll get back to you as soon as possible — usually within 48 hours.",
+    'careerForm.msg': 'Cover letter — a few words about yourself, experience, why you want to work with us…',
+    'careerForm.upload': 'Upload CV (PDF, DOC, DOCX)',
+    'careerForm.submit': 'Send application <span class="arrow">→</span>',
+    'careerForm.note': 'Or simply e-mail us at <a href="mailto:jitkahorackova@seznam.cz?subject=Job application">jitkahorackova@seznam.cz</a>',
+    'careerForm.selected': 'Selected: ',
+    'contact.eyebrow': 'Get in touch', 'contact.title': 'Contact <em>us</em>', 'contact.sub': 'We are happy to discuss the details of your transport. We will reply as soon as possible.',
+    'contact.phone': 'Phone', 'contact.dispatch': 'Dispatch', 'contact.email': 'E-mail', 'contact.hq': 'Headquarters',
+    'form.title': 'Non-binding inquiry', 'form.lead': 'We will reply as soon as possible — usually within 24 hours.',
+    'form.name': 'Full name *', 'form.phone': 'Phone *', 'form.email': 'E-mail *', 'form.subject': 'Subject', 'form.msg': 'Please describe your transport — from, to, weight, dimensions', 'form.submit': 'Send inquiry <span class="arrow">→</span>',
+    'footer.about': 'Family business with tradition since 2004. Domestic and international road transport with our own vehicles.',
+    'footer.menu': 'Menu', 'footer.country': 'Czech Republic', 'footer.copyright': '© 2026 Horáček Ltd. — All rights reserved', 'footer.tagline': 'Domestic and international road transport',
+    'partners.eyebrow': 'We collaborate', 'partners.title': 'Our <em>partners</em>', 'partners.sub': 'We collaborate with reputable transport and logistics companies across Europe.'
+  },
+  de: {
+    'meta.title': 'Horáček GmbH — Nationaler und internationaler Güterverkehr',
+    'nav.home': 'Start', 'nav.about': 'Über uns', 'nav.fleet': 'Fuhrpark', 'nav.career': 'Karriere', 'nav.contact': 'Kontakt',
+    'hero.tag': '● Seit 2004',
+    'hero.h1': '<span>Transport,</span> <span>auf</span> <span>den</span> <span>Sie</span> <span class="accent-text">zählen können</span><span>.</span>',
+    'hero.sub': 'Familienunternehmen mit eigenem Fuhrpark für zuverlässige und schnelle Transporte in der Tschechischen Republik und ganz Europa.',
+    'hero.cta1': 'Transport anfragen <span class="arrow">→</span>', 'hero.cta2': 'Unser Fuhrpark',
+    'heroFact.1a': '10+ Fahrzeuge', 'heroFact.1b': 'im eigenen Fuhrpark',
+    'heroFact.2a': 'CZ + EU', 'heroFact.2b': 'in ganz Europa',
+    'heroFact.3a': 'GPS-Ortung', 'heroFact.3b': '24/7 Überwachung',
+    'heroFact.4a': 'Versicherte Sendungen', 'heroFact.4b': 'maximale Sicherheit',
+    'marquee.1': '✓ GPS-Ortung', 'marquee.2': '✓ Versicherte Sendungen', 'marquee.3': '✓ Seit 2004', 'marquee.4': '✓ Eigener Fuhrpark', 'marquee.5': '✓ Internationaler Transport', 'marquee.6': '✓ 33 Europaletten', 'marquee.7': '✓ Palettentransport', 'marquee.8': '✓ Zuverlässige Lieferung',
+    'bigCard.1eyebrow': 'National', 'bigCard.1title': 'Transport in Tschechien', 'bigCard.1text': 'Sie müssen eine Palette oder einen ganzen LKW in Tschechien versenden? Wir liefern schnell und zuverlässig mit eigenen Fahrzeugen.',
+    'bigCard.2eyebrow': 'International', 'bigCard.2title': 'Transport in der EU', 'bigCard.2text': 'Regelmäßige und einmalige Transporte in der gesamten Europäischen Union. Erfahrung mit internationalen Routen und Zollabfertigung.',
+    'common.readMore': 'Mehr erfahren <span>→</span>',
+    'services.eyebrow': 'Weitere Leistungen', 'services.title': 'Was wir <em>können</em>', 'services.sub': 'Umfassende Transportdienstleistungen mit Fokus auf Zuverlässigkeit und Sicherheit jeder Sendung.',
+    'srv.1t': 'Palettentransport', 'srv.1d': 'Effizienter Transport palettierter Sendungen — bis zu 33 Europaletten pro Fahrzeug.',
+    'srv.2t': 'Expresslieferung', 'srv.2d': 'Schnelle Transporte mit eigenen Fahrzeugen, ohne unnötige Umladungen.',
+    'srv.3t': 'GPS-Ortung', 'srv.3d': 'Alle unsere Fahrzeuge sind mit GPS ausgestattet — Sie haben Ihre Sendung immer im Blick.',
+    'srv.4t': 'Versicherte Sendungen', 'srv.4d': 'Alle Sendungen sind versichert — für Ihre maximale Sicherheit und Ruhe.',
+    'srv.5t': 'Regelmäßige Linien', 'srv.5d': 'Geplante Lieferungen und langfristige Verträge für Ihr Unternehmen.',
+    'srv.6t': 'Persönlicher Ansatz', 'srv.6d': 'Familienbetrieb — Sie sprechen direkt mit den Eigentümern, nicht mit einer Unternehmensabteilung.',
+    'about.eyebrow': 'Über uns', 'about.title': 'Familienbetrieb mit Tradition seit <em>2004</em>',
+    'about.lead': 'In zwanzig Jahren haben wir ein stabiles Fundament und einen Kreis zufriedener Kunden aufgebaut.',
+    'about.p1': 'Zur Jahreswende 2016 wurde die Firma in die <strong>Horáček GmbH</strong> umgewandelt. Seitdem wachsen wir kontinuierlich und modernisieren unseren Fuhrpark, um auch anspruchsvollste Anforderungen zu erfüllen.',
+    'about.p2': 'Unser Fuhrpark ist mit <strong>GPS-Ortung</strong> ausgestattet und alle Sendungen sind versichert. Dank eigener Fahrzeuge garantieren wir schnelle Lieferung ohne unnötige Umladungen.',
+    'fact.1': 'Gründungsjahr', 'fact.2': 'Fahrzeuge im Fuhrpark', 'fact.3': 'Jahre Erfahrung', 'fact.4': 'Versicherte Sendungen',
+    'about.badge': 'Jahre am Markt',
+    'about.stat': 'pünktlich gelieferte Sendungen',
+    'fleet.eyebrow': 'Unser Fuhrpark', 'fleet.title': 'Fahrzeug<em>park</em>', 'fleet.sub': 'Wir verfügen über verschiedene Fahrzeugtypen für Transporte von kleineren Sendungen bis zu Komplettladungen — alle mit GPS-Ortung.',
+    'veh.1': 'Low-Deck-Auflieger <span class="gallery-count">7× im Fuhrpark</span>',
+    'veh.2': 'Fahrzeug 12 t <span class="gallery-count">2× im Fuhrpark</span>',
+    'veh.3': 'Fahrzeug 7,5 t + Anhänger <span class="gallery-count">1× im Fuhrpark</span>',
+    'veh.1cap': 'bis zu 25 Tonnen', 'veh.2cap': 'bis zu 6 Tonnen',
+    'spec.loadArea': 'Ladefläche', 'spec.capacity': 'Nutzlast', 'spec.pallets': 'Europaletten', 'spec.length': 'Gesamtlänge', 'spec.vehicle': 'Fahrzeug', 'spec.trailer': 'Anhänger', 'spec.palletsTotal': 'Paletten gesamt',
+    'veh.4t': 'Fuhrpark in Aktion', 'veh.4d': 'Moderne Fahrzeuge einsatzbereit in ganz Europa. Regelmäßige Wartung garantiert störungsfreien Betrieb.',
+    'veh.5t': 'Unsere Infrastruktur', 'veh.5d': 'Qualitativer Service und Wartung sorgen für reibungslosen Betrieb 365 Tage im Jahr.',
+    'veh.6t': 'Zuverlässige Technik', 'veh.6d': 'Fahrzeuge mit GPS-Ortung für Echtzeit-Übersicht über Ihre Sendung, 24 Stunden täglich.',
+    'cta.title': 'Müssen Sie eine Sendung transportieren?', 'cta.sub': 'Rufen Sie uns an oder senden Sie eine unverbindliche Anfrage — wir melden uns innerhalb von 24 Stunden.', 'cta.btn': 'Kontaktieren Sie uns <span class="arrow">→</span>',
+    'career.eyebrow': 'Karriere', 'career.title': 'Werden Sie Teil <em>unseres Teams</em>',
+    'career.lead': 'Wir freuen uns über einen weiteren Fahrer in unserem Team.',
+    'career.p1': 'Bei Interesse oder Fragen kontaktieren Sie uns bitte unter der angegebenen E-Mail-Adresse oder Telefonnummer.',
+    'career.reqTitle': 'Wir verlangen:',
+    'career.b1': 'Führerschein Klasse <strong>C+E</strong>',
+    'career.b2': 'Berufskraftfahrerqualifikation',
+    'career.b3': 'Fahrerkarte',
+    'career.b4': 'Zuverlässigkeit',
+    'career.btn': 'Lebenslauf senden <span class="arrow">→</span>',
+    'careerForm.title': 'Senden Sie uns Ihren Lebenslauf', 'careerForm.lead': 'Wir melden uns so schnell wie möglich — üblich innerhalb von 48 Stunden.',
+    'careerForm.msg': 'Anschreiben — ein paar Worte über Sie, Ihre Erfahrung und warum Sie bei uns arbeiten möchten…',
+    'careerForm.upload': 'Lebenslauf hochladen (PDF, DOC, DOCX)',
+    'careerForm.submit': 'Bewerbung senden <span class="arrow">→</span>',
+    'careerForm.note': 'Oder schreiben Sie uns direkt an <a href="mailto:jitkahorackova@seznam.cz?subject=Bewerbung">jitkahorackova@seznam.cz</a>',
+    'careerForm.selected': 'Ausgewählt: ',
+    'contact.eyebrow': 'Verbinden Sie sich mit uns', 'contact.title': 'Kontaktieren Sie <em>uns</em>', 'contact.sub': 'Wir besprechen gerne die Details Ihres Transports. Wir antworten so schnell wie möglich.',
+    'contact.phone': 'Telefon', 'contact.dispatch': 'Disposition', 'contact.email': 'E-Mail', 'contact.hq': 'Firmensitz',
+    'form.title': 'Unverbindliche Anfrage', 'form.lead': 'Wir antworten so schnell wie möglich — üblich innerhalb von 24 Stunden.',
+    'form.name': 'Vor- und Nachname *', 'form.phone': 'Telefon *', 'form.email': 'E-Mail *', 'form.subject': 'Betreff', 'form.msg': 'Bitte beschreiben Sie Ihren Transport — von, nach, Gewicht, Maße', 'form.submit': 'Anfrage senden <span class="arrow">→</span>',
+    'footer.about': 'Familienbetrieb mit Tradition seit 2004. Nationaler und internationaler Güterverkehr mit eigenen Fahrzeugen.',
+    'footer.menu': 'Menü', 'footer.country': 'Tschechische Republik', 'footer.copyright': '© 2026 Horáček GmbH — Alle Rechte vorbehalten', 'footer.tagline': 'Nationaler und internationaler Güterverkehr',
+    'partners.eyebrow': 'Wir arbeiten zusammen', 'partners.title': 'Unsere <em>Partner</em>', 'partners.sub': 'Wir arbeiten mit renommierten Transport- und Logistikunternehmen in ganz Europa zusammen.'
+  }
+};
+
+// Build marquee items from keys
+const marqueeKeys = ['marquee.1','marquee.2','marquee.3','marquee.4','marquee.5','marquee.6','marquee.7','marquee.8'];
+const marqueeDefaults = ['✓ GPS monitoring','✓ Pojištěné zásilky','✓ Od roku 2004','✓ Vlastní flotila','✓ Mezinárodní doprava','✓ 33 europalet','✓ Paletová přeprava','✓ Spolehlivé dodání'];
+const mqTrack = document.getElementById('marqueeTrack');
+function buildMarquee(texts) {
+  const html = texts.map(t => `<span>${t}</span><span>●</span>`).join('');
+  mqTrack.innerHTML = html + html; // duplicate for seamless loop
+}
+buildMarquee(marqueeDefaults);
+
+// Store originals
+document.querySelectorAll('[data-i18n]').forEach(el => el.dataset.i18nOrig = el.innerHTML);
+document.querySelectorAll('[data-ph-i18n]').forEach(el => el.dataset.phOrig = el.placeholder);
+document.querySelectorAll('[data-label-i18n]').forEach(el => el.dataset.labelOrig = el.getAttribute('data-label'));
+
+function setLang(lang) {
+  document.documentElement.lang = lang === 'cs' ? 'cs' : lang;
+  const dict = I18N[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    el.innerHTML = (dict && dict[key]) ? dict[key] : el.dataset.i18nOrig;
+  });
+  document.querySelectorAll('[data-ph-i18n]').forEach(el => {
+    const key = el.dataset.phI18n;
+    el.placeholder = (dict && dict[key]) ? dict[key] : el.dataset.phOrig;
+  });
+  document.querySelectorAll('[data-label-i18n]').forEach(el => {
+    const key = el.dataset.labelI18n;
+    el.setAttribute('data-label', (dict && dict[key]) ? dict[key] : el.dataset.labelOrig);
+  });
+  // Marquee
+  if (dict) {
+    const texts = marqueeKeys.map((k,i) => dict[k] || marqueeDefaults[i]);
+    buildMarquee(texts);
+  } else {
+    buildMarquee(marqueeDefaults);
+  }
+  // Update title
+  if (dict && dict['meta.title']) document.title = dict['meta.title'];
+  else document.title = 'Horáček s.r.o. — Vnitrostátní a mezinárodní autodoprava';
+  // Switch active (both desktop + mobile lang switches)
+  document.querySelectorAll('.lang-switch button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  localStorage.setItem('lang', lang);
+  // Re-trigger H1 split animation
+  const h1 = document.querySelector('.h1-split');
+  if (h1) { h1.style.animation = 'none'; void h1.offsetWidth; h1.style.animation = ''; }
+}
+
+document.querySelectorAll('.lang-switch').forEach(sw => sw.addEventListener('click', (e) => {
+  if (e.target.tagName === 'BUTTON') setLang(e.target.dataset.lang);
+}));
+
+const savedLang = localStorage.getItem('lang');
+if (savedLang && savedLang !== 'cs') setLang(savedLang);
+
+// =========== EXISTING FUNCTIONALITY ===========
+const progressBar = document.getElementById('scrollProgress');
+const backToTop = document.getElementById('backToTop');
+const header = document.querySelector('.header');
+const heroBg = document.getElementById('heroBg');
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  progressBar.style.width = scrolled + '%';
+  backToTop.classList.toggle('show', h.scrollTop > 400);
+  header.classList.toggle('scrolled', h.scrollTop > 40);
+  if (heroBg) heroBg.style.transform = `translateY(${h.scrollTop * 0.3}px)`;
+}, { passive: true });
+
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// HERO SLIDESHOW
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.hero-dot');
+let slideIdx = 0;
+let slideTimer;
+function showSlide(i) {
+  slides.forEach((s, n) => s.classList.toggle('active', n === i));
+  dots.forEach((d, n) => d.classList.toggle('active', n === i));
+  slideIdx = i;
+}
+function startSlideshow() {
+  clearInterval(slideTimer);
+  slideTimer = setInterval(() => showSlide((slideIdx + 1) % slides.length), 5000);
+}
+dots.forEach((d, i) => d.addEventListener('click', () => { showSlide(i); startSlideshow(); }));
+startSlideshow();
+
+const hamburger = document.getElementById('hamburger');
+const mainnav = document.getElementById('mainnav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mainnav.classList.toggle('open');
+  document.body.classList.toggle('nav-open');
+});
+mainnav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  hamburger.classList.remove('active');
+  mainnav.classList.remove('open');
+  document.body.classList.remove('nav-open');
+}));
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+const counters = document.querySelectorAll('[data-count]');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = parseInt(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1600;
+    const start = performance.now();
+    const step = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(eased * target).toLocaleString('cs-CZ') + suffix;
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target.toLocaleString('cs-CZ') + suffix;
+    };
+    requestAnimationFrame(step);
+    counterObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+counters.forEach(c => counterObserver.observe(c));
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('#mainnav a');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    }
+  });
+}, { rootMargin: '-45% 0px -50% 0px' });
+sections.forEach(s => navObserver.observe(s));
+
+document.querySelectorAll('.tilt').forEach(card => {
+  let rect;
+  card.addEventListener('mouseenter', () => { rect = card.getBoundingClientRect(); });
+  card.addEventListener('mousemove', (e) => {
+    if (!rect) rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-6px)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+
+const imgObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); imgObserver.unobserve(entry.target); } });
+}, { threshold: 0.2 });
+document.querySelectorAll('.onas-image, .kariera-image').forEach(el => imgObserver.observe(el));
+
+const sectionVisibleObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible-section'); });
+}, { threshold: 0.2 });
+document.querySelectorAll('section').forEach(s => sectionVisibleObserver.observe(s));
+
+document.querySelectorAll('.btn-primary').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width/2) * 0.25;
+    const y = (e.clientY - rect.top - rect.height/2) * 0.25;
+    btn.style.transform = `translate(${x}px, ${y - 2}px)`;
+  });
+  btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+});
+
+// CAREER FORM — file upload feedback + submit
+const cvFile = document.getElementById('cvFile');
+const fileLabel = document.getElementById('fileLabel');
+const fileText = fileLabel?.querySelector('.file-upload-text');
+const fileOriginalText = fileText?.textContent;
+cvFile?.addEventListener('change', () => {
+  if (cvFile.files[0]) {
+    fileLabel.classList.add('has-file');
+    const lang = document.documentElement.lang;
+    const prefix = lang === 'en' ? 'Selected: ' : lang === 'de' ? 'Ausgewählt: ' : 'Vybráno: ';
+    fileText.textContent = prefix + cvFile.files[0].name;
+  }
+});
+
+document.querySelector('#careerForm button').addEventListener('click', (e) => {
+  const form = e.target.closest('#careerForm');
+  const inputs = form.querySelectorAll('input[placeholder*="*"], input[type=email]');
+  let valid = true;
+  inputs.forEach(i => {
+    if (!i.value.trim()) { i.classList.add('error'); valid = false; } else i.classList.remove('error');
+  });
+  if (valid) {
+    const lang = document.documentElement.lang;
+    const sentText = lang === 'en' ? '✓ Application sent' : lang === 'de' ? '✓ Bewerbung gesendet' : '✓ Životopis odeslán';
+    e.target.innerHTML = sentText;
+    e.target.classList.add('sent');
+    form.querySelectorAll('input, textarea').forEach(i => { i.value = ''; });
+    fileLabel?.classList.remove('has-file');
+    if (fileText && fileOriginalText) fileText.textContent = fileOriginalText;
+    setTimeout(() => { setLang(localStorage.getItem('lang') || 'cs'); e.target.classList.remove('sent'); }, 3500);
+  }
+});
+
+document.querySelector('.form button').addEventListener('click', (e) => {
+  const form = e.target.closest('.form');
+  const inputs = form.querySelectorAll('input[placeholder*="*"], input[type=email]');
+  let valid = true;
+  inputs.forEach(i => {
+    if (!i.value.trim()) { i.classList.add('error'); valid = false; } else i.classList.remove('error');
+  });
+  if (valid) {
+    e.target.innerHTML = '✓ ' + (document.documentElement.lang === 'en' ? 'Sent' : document.documentElement.lang === 'de' ? 'Gesendet' : 'Odesláno');
+    e.target.classList.add('sent');
+    form.querySelectorAll('input, textarea').forEach(i => i.value = '');
+    setTimeout(() => { setLang(localStorage.getItem('lang') || 'cs'); e.target.classList.remove('sent'); }, 3000);
+  }
+});
+</script>
+
+</body>
+</html>

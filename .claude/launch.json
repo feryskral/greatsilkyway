@@ -12,6 +12,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", "-l", "5500", "C:/Users/fery/Documents/Weby/Horacek"],
       "port": 5500
+    },
+    {
+      "name": "rozchody-ebook",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", "-l", "4173", "C:/Users/fery/rozchody-ebook"],
+      "port": 4173
     }
   ]
 }

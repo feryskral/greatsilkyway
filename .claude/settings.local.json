@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:perrylandpups.com)"
+      "WebFetch(domain:perrylandpups.com)",
+      "Bash(python3 -c \"from PIL import Image; print\\('PIL OK'\\)\")",
+      "Bash(pip install *)",
+      "Bash(where python *)",
+      "Bash(where python3 *)",
+      "PowerShell(python --version)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }

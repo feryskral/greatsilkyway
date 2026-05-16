@@ -165,6 +165,7 @@
 
             <form id="contactForm" novalidate>
               <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true" />
+              <input type="hidden" name="ts" id="formTs" value="" />
               <div class="form-row">
                 <div class="form-group">
                   <label for="firstName" data-i18n="form_firstname">Jméno *</label>
@@ -290,6 +291,9 @@
     const success = document.getElementById('formSuccess');
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.textContent;
+
+    // Antispam: ulozit cas nacteni stranky (server overi, ze formular nebyl vyplnen botem za <3s)
+    document.getElementById('formTs').value = Math.floor(Date.now() / 1000);
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();

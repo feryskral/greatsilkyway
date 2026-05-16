@@ -164,6 +164,7 @@
             <p style="font-size:0.88rem; margin-bottom:28px;" data-i18n="form_desc">Vyplňte formulář a ozveme se vám co nejdříve.</p>
 
             <form id="contactForm" novalidate>
+              <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true" />
               <div class="form-row">
                 <div class="form-group">
                   <label for="firstName" data-i18n="form_firstname">Jméno *</label>
@@ -284,17 +285,41 @@
     const menu = document.getElementById('mobileMenu');
     burger.addEventListener('click', () => menu.classList.toggle('open'));
 
-    // Form submit (demo — no backend)
+    // Form submit -> contact.php
     const form = document.getElementById('contactForm');
     const success = document.getElementById('formSuccess');
-    form.addEventListener('submit', (e) => {
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
-      form.style.display = 'none';
-      success.style.display = 'block';
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Odesílám…';
+
+      try {
+        const res = await fetch('contact.php', {
+          method: 'POST',
+          body: new FormData(form),
+        });
+        const data = await res.json().catch(() => ({ ok: false, error: 'Neplatná odpověď serveru.' }));
+        if (res.ok && data.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          alert(data.error || 'Odeslání selhalo. Zkuste to prosím znovu nebo napište přímo na info@greatsilkyway.cz.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }
+      } catch (err) {
+        alert('Síťová chyba. Zkontrolujte připojení a zkuste to znovu.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      }
     });
   </script>
 <script src="animations.js"></script>

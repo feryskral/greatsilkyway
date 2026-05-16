@@ -1,0 +1,70 @@
+# ==============================
+#  GREAT SILKYWAY - .htaccess
+#  Bezpecnostni pravidla
+# ==============================
+
+# --- Zakaz vypisu obsahu slozek ---
+Options -Indexes
+
+# --- Skryt podpisy serveru ---
+ServerSignature Off
+
+# --- Blokovat citlive soubory podle nazvu / pripony ---
+<FilesMatch "(^\.|\.(env|env\..*|db|sqlite|sqlite3|sql|log|bak|old|swp|tmp|ini|conf|key|pem|crt|cer|p12|pfx|ps1|bat|sh|mjs|ts|tsx|md|yml|yaml|toml|lock|gitignore|gitattributes|npmrc|prettierrc.*|gitconfig|htpasswd|DS_Store)$|composer\.(json|lock)|package(-lock)?\.json|payload\.db|webpack\.config\.|tsconfig\.|vitest\.|playwright\.)">
+  Require all denied
+</FilesMatch>
+
+# --- Blokovat cele citlive slozky ---
+RedirectMatch 404 ^/\.git(/.*)?$
+RedirectMatch 404 ^/cms(/.*)?$
+RedirectMatch 404 ^/node_modules(/.*)?$
+RedirectMatch 404 ^/tests(/.*)?$
+RedirectMatch 404 ^/\.vscode(/.*)?$
+RedirectMatch 404 ^/\.claude(/.*)?$
+RedirectMatch 404 ^/media(/.*)?$
+
+# --- Bezpecnostni hlavicky ---
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  # HSTS - zapni az bude jistota, ze HTTPS jede stabilne (zakomentovano)
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # Skryt PHP signaturu
+  Header unset X-Powered-By
+  Header always unset X-Powered-By
+</IfModule>
+
+# --- Vypnout PHP exposed header ---
+<IfModule mod_php.c>
+  php_flag expose_php Off
+</IfModule>
+
+# --- Vynutit HTTPS (zapnout az bude Let's Encrypt certifikat aktivni) ---
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} !=on
+#   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+# </IfModule>
+
+# --- Vychozi stranka ---
+DirectoryIndex index.html index.php
+
+# --- Ochrana admin rozhrani HTTP Basic Auth ---
+<Files "admin.html">
+  AuthType Basic
+  AuthName "Great Silkyway - Admin"
+  AuthUserFile /data/web/virtuals/397564/virtual/www/domains/greatsilkyway.cz/.htpasswd-admin
+  Require valid-user
+</Files>
+
+# --- Cache statickych souboru ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+</IfModule>

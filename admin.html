@@ -286,15 +286,11 @@
 </head>
 <body>
 
-  <!-- LOGIN -->
-  <div class="admin-login" id="loginScreen">
+  <!-- LOGIN obrazovka odstranena - autentizace probiha pres HTTP Basic Auth na urovni serveru -->
+  <div class="admin-login" id="loginScreen" style="display:none;">
     <div class="admin-login__box">
       <div class="admin-login__icon">🔐</div>
       <div class="admin-login__title">Great Silkyway – Admin</div>
-      <div class="admin-login__sub">Přihlaste se pro správu obsahu</div>
-      <input type="password" id="loginPass" class="admin-input" placeholder="Heslo" autocomplete="current-password" />
-      <button class="admin-btn admin-btn--primary" style="width:100%; justify-content:center;" onclick="login()">Přihlásit</button>
-      <div class="admin-error" id="loginErr"></div>
     </div>
   </div>
 
@@ -389,8 +385,8 @@
 
   <script>
     // ===== CONFIG =====
-    // Heslo pro přihlášení - ZMĚŇTE NA SVÉ VLASTNÍ!
-    const ADMIN_PASS = 'greatsilky2026';
+    // Autentizace probíhá na úrovni serveru přes HTTP Basic Auth (.htaccess + .htpasswd-admin)
+    // JS heslo bylo odstraněno - bylo veřejně viditelné ve zdrojovém kódu
     const STORAGE_KEY = 'gs_admin_content';
 
     // ===== STATE =====
@@ -400,36 +396,24 @@
     };
 
     // ===== AUTH =====
-    function login() {
-      const pass = document.getElementById('loginPass').value;
-      if (pass === ADMIN_PASS) {
-        sessionStorage.setItem('gs_admin_auth', '1');
-        showDashboard();
-      } else {
-        document.getElementById('loginErr').textContent = 'Nesprávné heslo';
-      }
-    }
-
+    // Pristup k teto strance je chranen HTTP Basic Auth na urovni serveru (.htaccess).
+    // Pokud jste se sem dostali, jste prihlaseni.
     function logout() {
-      sessionStorage.removeItem('gs_admin_auth');
-      location.reload();
+      // Pro plne odhlaseni je nutne zavrit prohlizec (Basic Auth nelze v JS spolehlive zrusit).
+      // Pokusime se vynutit reauth pomoci fake creds.
+      fetch(location.href, { headers: { 'Authorization': 'Basic ' + btoa('logout:logout') } })
+        .finally(() => { location.href = 'index.html'; });
     }
-
-    document.getElementById('loginPass').addEventListener('keydown', e => {
-      if (e.key === 'Enter') login();
-    });
 
     function showDashboard() {
-      document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('dashboard').classList.add('active');
       loadContent();
       renderPuppies();
       loadTexts();
     }
 
-    if (sessionStorage.getItem('gs_admin_auth') === '1') {
-      showDashboard();
-    }
+    // Dashboard se zobrazi automaticky - autorizace jiz probehla na urovni serveru
+    showDashboard();
 
     // ===== TABS =====
     function switchTab(id) {

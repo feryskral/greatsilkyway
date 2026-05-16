@@ -94,6 +94,91 @@ $byRef = q($db, "
     GROUP BY referrer ORDER BY n DESC LIMIT 10
 ", [$since]);
 
+// === Klasifikace zdroju (socialni site, vyhledavace) ===
+$allRefs = q($db, "
+    SELECT referrer, COUNT(*) AS n
+    FROM visits WHERE ts >= ? AND referrer != ''
+    GROUP BY referrer
+", [$since]);
+
+$totalVisits = q($db, "SELECT COUNT(*) AS n FROM visits WHERE ts >= ?", [$since])[0]['n'];
+$directVisits = q($db, "SELECT COUNT(*) AS n FROM visits WHERE ts >= ? AND referrer = ''", [$since])[0]['n'];
+
+$socialMap = [
+    'facebook'   => ['name' => 'Facebook',   'icon' => '📘', 'color' => '#1877f2', 'domains' => ['facebook.com','fb.com','fb.me','m.facebook.com','l.facebook.com','lm.facebook.com']],
+    'instagram'  => ['name' => 'Instagram',  'icon' => '📷', 'color' => '#e4405f', 'domains' => ['instagram.com','l.instagram.com']],
+    'tiktok'     => ['name' => 'TikTok',     'icon' => '🎵', 'color' => '#000000', 'domains' => ['tiktok.com','vm.tiktok.com']],
+    'youtube'    => ['name' => 'YouTube',    'icon' => '▶️', 'color' => '#ff0000', 'domains' => ['youtube.com','m.youtube.com','youtu.be']],
+    'twitter'    => ['name' => 'X (Twitter)','icon' => '🐦', 'color' => '#1da1f2', 'domains' => ['twitter.com','x.com','t.co']],
+    'whatsapp'   => ['name' => 'WhatsApp',   'icon' => '💬', 'color' => '#25d366', 'domains' => ['whatsapp.com','wa.me','api.whatsapp.com']],
+    'telegram'   => ['name' => 'Telegram',   'icon' => '✈️', 'color' => '#0088cc', 'domains' => ['t.me','telegram.org']],
+    'linkedin'   => ['name' => 'LinkedIn',   'icon' => '💼', 'color' => '#0a66c2', 'domains' => ['linkedin.com','lnkd.in']],
+    'pinterest'  => ['name' => 'Pinterest',  'icon' => '📌', 'color' => '#bd081c', 'domains' => ['pinterest.com','pinterest.cz','pin.it']],
+    'reddit'     => ['name' => 'Reddit',     'icon' => '🤖', 'color' => '#ff4500', 'domains' => ['reddit.com','redd.it']],
+    'threads'    => ['name' => 'Threads',    'icon' => '🧵', 'color' => '#000000', 'domains' => ['threads.net']],
+    'snapchat'   => ['name' => 'Snapchat',   'icon' => '👻', 'color' => '#fffc00', 'domains' => ['snapchat.com']],
+    'discord'    => ['name' => 'Discord',    'icon' => '🎮', 'color' => '#5865f2', 'domains' => ['discord.com','discord.gg']],
+    'messenger'  => ['name' => 'Messenger',  'icon' => '💌', 'color' => '#0078ff', 'domains' => ['messenger.com','m.me']],
+];
+$searchEngines = [
+    'google'  => ['name' => 'Google',  'icon' => '🔍', 'domains' => ['google.com','google.cz','google.sk','google.de','google.co.uk','www.google.com','www.google.cz']],
+    'seznam'  => ['name' => 'Seznam',  'icon' => '🔎', 'domains' => ['seznam.cz','search.seznam.cz']],
+    'bing'    => ['name' => 'Bing',    'icon' => '🅱️', 'domains' => ['bing.com','www.bing.com']],
+    'duckduckgo' => ['name' => 'DuckDuckGo', 'icon' => '🦆', 'domains' => ['duckduckgo.com']],
+    'yahoo'   => ['name' => 'Yahoo',   'icon' => '🔭', 'domains' => ['yahoo.com','search.yahoo.com']],
+    'yandex'  => ['name' => 'Yandex',  'icon' => '🇷🇺', 'domains' => ['yandex.com','yandex.ru']],
+    'centrum' => ['name' => 'Centrum', 'icon' => '🔍', 'domains' => ['centrum.cz','search.centrum.cz']],
+];
+
+function classifyRef($host, $socialMap, $searchEngines) {
+    $host = strtolower($host);
+    foreach ($socialMap as $key => $s) {
+        foreach ($s['domains'] as $d) {
+            if ($host === $d || str_ends_with($host, '.' . $d)) return ['social', $key];
+        }
+    }
+    foreach ($searchEngines as $key => $s) {
+        foreach ($s['domains'] as $d) {
+            if ($host === $d || str_ends_with($host, '.' . $d)) return ['search', $key];
+        }
+    }
+    return ['other', $host];
+}
+
+$socialStats = [];   // key => count
+$searchStats = [];
+$otherStats = [];
+$otherTotal = 0;
+$socialTotal = 0;
+$searchTotal = 0;
+
+foreach ($allRefs as $r) {
+    [$type, $key] = classifyRef($r['referrer'], $socialMap, $searchEngines);
+    if ($type === 'social') {
+        $socialStats[$key] = ($socialStats[$key] ?? 0) + $r['n'];
+        $socialTotal += $r['n'];
+    } elseif ($type === 'search') {
+        $searchStats[$key] = ($searchStats[$key] ?? 0) + $r['n'];
+        $searchTotal += $r['n'];
+    } else {
+        $otherStats[$key] = ($otherStats[$key] ?? 0) + $r['n'];
+        $otherTotal += $r['n'];
+    }
+}
+arsort($socialStats);
+arsort($searchStats);
+arsort($otherStats);
+
+// Souhrn pro velky donut "odkud chodi navstevnici"
+$trafficSources = [
+    ['name' => 'Přímé',      'icon' => '🔗', 'color' => '#94a3b8', 'n' => $directVisits],
+    ['name' => 'Vyhledávače','icon' => '🔍', 'color' => '#3b82f6', 'n' => $searchTotal],
+    ['name' => 'Soc. sítě',  'icon' => '📱', 'color' => '#ec4899', 'n' => $socialTotal],
+    ['name' => 'Ostatní',    'icon' => '🌐', 'color' => '#a78bfa', 'n' => $otherTotal],
+];
+$trafficSources = array_filter($trafficSources, fn($s) => $s['n'] > 0);
+$trafficTotal = array_sum(array_column($trafficSources, 'n')) ?: 1;
+
 $byDevice = q($db, "SELECT device, COUNT(*) AS n FROM visits WHERE ts >= ? GROUP BY device ORDER BY n DESC", [$since]);
 $byBrowser = q($db, "SELECT browser, COUNT(*) AS n FROM visits WHERE ts >= ? GROUP BY browser ORDER BY n DESC", [$since]);
 $byOS = q($db, "SELECT os, COUNT(*) AS n FROM visits WHERE ts >= ? GROUP BY os ORDER BY n DESC", [$since]);
@@ -606,24 +691,109 @@ function donutPath($cx, $cy, $rOuter, $rInner, $startAngle, $endAngle) {
       <?php else: ?><div class="empty">Žádná data</div><?php endif; ?>
     </div>
 
-    <!-- REFERRERS -->
+    <!-- TRAFFIC SOURCES DONUT -->
     <div class="card span-4">
-      <h2>🔗 Zdroje návštěv</h2>
-      <?php if ($byRef):
-        $maxR = max(array_column($byRef, 'n')) ?: 1;
-      ?>
-        <div class="bar-list">
-          <?php foreach ($byRef as $r): $w = ($r['n'] / $maxR) * 100; ?>
-            <div class="bar-row">
-              <div class="bar-track">
-                <div class="bar-fill" data-width="<?= $w ?>"></div>
-                <div class="bar-label">🌐 <?= htmlspecialchars($r['referrer']) ?></div>
-              </div>
-              <div class="bar-value"><?= $r['n'] ?></div>
+      <h2>🚦 Odkud chodí návštěvníci</h2>
+      <?php if ($trafficTotal > 0 && count($trafficSources) > 0): ?>
+      <div class="donut-wrap">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <?php
+            $angle = 0;
+            $topSrc = reset($trafficSources);
+            $topPct = round(($topSrc['n'] / $trafficTotal) * 100);
+            foreach ($trafficSources as $s):
+              $slice = ($s['n'] / $trafficTotal) * 360;
+              if ($slice < 0.5) continue;
+              $path = donutPath(70, 70, 60, 40, $angle, $angle + $slice);
+              $angle += $slice;
+          ?>
+            <path class="donut-segment" d="<?= $path ?>" fill="<?= $s['color'] ?>"/>
+          <?php endforeach; ?>
+          <text class="donut-center" x="70" y="64"><?= $topPct ?>%</text>
+          <text class="donut-center-label" x="70" y="82"><?= htmlspecialchars($topSrc['name']) ?></text>
+        </svg>
+        <div class="donut-legend">
+          <?php foreach ($trafficSources as $s):
+            $pct = round(($s['n'] / $trafficTotal) * 100);
+          ?>
+            <div class="item">
+              <span class="swatch" style="background: <?= $s['color'] ?>"></span>
+              <span><?= $s['icon'] ?> <?= htmlspecialchars($s['name']) ?>
+                <small style="color: var(--text-dim)"><?= $s['n'] ?> · <?= $pct ?>%</small></span>
             </div>
           <?php endforeach; ?>
         </div>
-      <?php else: ?><div class="empty">Přímé návštěvy<br>(bez referreru)</div><?php endif; ?>
+      </div>
+      <?php else: ?><div class="empty">Žádná data</div><?php endif; ?>
+    </div>
+
+    <!-- SOCIAL NETWORKS -->
+    <div class="card span-4">
+      <h2>📱 Sociální sítě <span class="badge"><?= $socialTotal ?> návštěv</span></h2>
+      <?php if (!empty($socialStats)):
+        $maxSoc = max($socialStats) ?: 1;
+      ?>
+        <div class="bar-list">
+          <?php foreach ($socialStats as $key => $n):
+            $w = ($n / $maxSoc) * 100;
+            $s = $socialMap[$key];
+            $pct = $socialTotal ? round(($n / $socialTotal) * 100) : 0;
+          ?>
+            <div class="bar-row">
+              <div class="bar-track">
+                <div class="bar-fill" data-width="<?= $w ?>" style="background: linear-gradient(90deg, <?= $s['color'] ?>55, <?= $s['color'] ?>11);"></div>
+                <div class="bar-label"><?= $s['icon'] ?> <?= htmlspecialchars($s['name']) ?></div>
+              </div>
+              <div class="bar-value"><?= $n ?><small><?= $pct ?>%</small></div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php else: ?><div class="empty">Zatím žádné návštěvy<br>ze sociálních sítí</div><?php endif; ?>
+    </div>
+
+    <!-- SEARCH ENGINES -->
+    <div class="card span-4">
+      <h2>🔍 Vyhledávače <span class="badge"><?= $searchTotal ?> návštěv</span></h2>
+      <?php if (!empty($searchStats)):
+        $maxSe = max($searchStats) ?: 1;
+      ?>
+        <div class="bar-list">
+          <?php foreach ($searchStats as $key => $n):
+            $w = ($n / $maxSe) * 100;
+            $s = $searchEngines[$key];
+            $pct = $searchTotal ? round(($n / $searchTotal) * 100) : 0;
+          ?>
+            <div class="bar-row">
+              <div class="bar-track">
+                <div class="bar-fill" data-width="<?= $w ?>"></div>
+                <div class="bar-label"><?= $s['icon'] ?> <?= htmlspecialchars($s['name']) ?></div>
+              </div>
+              <div class="bar-value"><?= $n ?><small><?= $pct ?>%</small></div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php else: ?><div class="empty">Zatím žádné návštěvy<br>z vyhledávačů</div><?php endif; ?>
+    </div>
+
+    <!-- OTHER REFERRERS -->
+    <div class="card span-12">
+      <h2>🌐 Ostatní zdroje (cizí weby) <span class="badge">top 10</span></h2>
+      <?php if (!empty($otherStats)):
+        $shown = array_slice($otherStats, 0, 10, true);
+        $maxO2 = max($shown) ?: 1;
+      ?>
+        <div class="bar-list">
+          <?php foreach ($shown as $host => $n): $w = ($n / $maxO2) * 100; ?>
+            <div class="bar-row">
+              <div class="bar-track">
+                <div class="bar-fill" data-width="<?= $w ?>"></div>
+                <div class="bar-label">🌐 <?= htmlspecialchars($host) ?></div>
+              </div>
+              <div class="bar-value"><?= $n ?></div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php else: ?><div class="empty">Žádné externí odkazy<br>(návštěvníci přicházejí přímo, ze soc. sítí nebo z vyhledávačů)</div><?php endif; ?>
     </div>
 
     <!-- BROWSERS -->

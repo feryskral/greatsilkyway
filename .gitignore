@@ -15,3 +15,8 @@ site-api.js
 _*.png
 _*.jpg
 _*.mjs
+
+# FTP sync (citlive - heslo a timestamp)
+.ftp-pwd
+.last-sync
+_sync-ftp.ps1

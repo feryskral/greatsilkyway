@@ -52,12 +52,12 @@ RedirectMatch 404 ^/media(/.*)?$
 DirectoryIndex index.html index.php
 
 # --- Ochrana admin rozhrani HTTP Basic Auth ---
-<Files "admin.html">
+<FilesMatch "^(admin\.html|stats\.php)$">
   AuthType Basic
   AuthName "Great Silkyway - Admin"
   AuthUserFile /data/web/virtuals/397564/virtual/www/domains/greatsilkyway.cz/.htpasswd-admin
   Require valid-user
-</Files>
+</FilesMatch>
 
 # --- Cache statickych souboru ---
 <IfModule mod_expires.c>

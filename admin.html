@@ -286,8 +286,9 @@
     <div class="admin-header">
       <div class="admin-header__title">🐶 Great Silkyway – Admin</div>
       <div class="admin-header__actions">
-        <button class="admin-btn admin-btn--primary" onclick="saveChanges()">💾 Uložit změny</button>
-        <button class="admin-btn admin-btn--ghost" onclick="exportContent()">📥 Stáhnout content.json</button>
+        <button class="admin-btn admin-btn--primary" onclick="publishToWeb()" id="publishBtn">🚀 Publikovat na web</button>
+        <button class="admin-btn admin-btn--ghost" onclick="saveChanges()">💾 Uložit jen u sebe</button>
+        <button class="admin-btn admin-btn--ghost" onclick="exportContent()">📥 Stáhnout</button>
         <button class="admin-btn admin-btn--ghost" onclick="logout()">Odhlásit</button>
       </div>
     </div>
@@ -383,12 +384,10 @@
           <h3>ℹ️ Jak to funguje</h3>
           <ol>
             <li>Přidávejte/upravujte obsah v jednotlivých záložkách.</li>
-            <li>Stiskněte <strong>💾 Uložit změny</strong> nahoře — vše se uloží do vašeho prohlížeče (i fotky).</li>
-            <li>Klikněte na <strong>Stáhnout content.json</strong>.</li>
-            <li>Otevřete FileZillu, připojte se na <code>397564.w64.wedos.net</code> jako <code>w397564</code>.</li>
-            <li>Nahrajte <code>content.json</code> do kořenové složky webu (vedle <code>index.html</code>).</li>
-            <li>Hotovo — stránky teď ukazují váš aktualizovaný obsah všem návštěvníkům.</li>
+            <li>Stiskněte <strong>🚀 Publikovat na web</strong> nahoře — změny se odešlou rovnou na server (žádná FileZilla není potřeba).</li>
+            <li>Hotovo — návštěvníci uvidí nový obsah do 5 minut (cache).</li>
           </ol>
+          <p style="margin-top:10px;"><strong>Záložní postup</strong> (kdyby publikace selhala): <em>💾 Uložit jen u sebe</em> → <em>📥 Stáhnout</em> → nahrát <code>content.json</code> přes FileZillu na <code>397564.w64.wedos.net</code> (uživatel <code>w397564</code>) do kořenové složky webu.</p>
           <p style="margin-top:14px; color:#a93226;"><strong>Upozornění:</strong> Fotky se ukládají přímo do JSON jako data (base64). Pokud nahrajete moc velkých fotek (zejména do galerie), soubor může nabobtnat. Doporučuji fotky před nahráním zmenšit na max 1200×1200 px.</p>
         </div>
       </div>
@@ -814,6 +813,37 @@
         showToast('⚠ Úložiště je plné. Stáhněte content.json a smažte nepoužívané fotky.', 'error');
       }
     }
+    async function publishToWeb() {
+      collectTexts();
+      const btn = document.getElementById('publishBtn');
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = '⏳ Publikuji…';
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(content));
+      } catch {}
+      try {
+        const res = await fetch('save-content.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(content),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          const kb = Math.round((data.bytes || 0) / 1024);
+          showToast('🚀 Publikováno na web! (' + kb + ' KB)', 'success');
+        } else {
+          showToast('⚠ Chyba: ' + (data.error || res.status), 'error');
+        }
+      } catch (e) {
+        showToast('⚠ Spojení selhalo: ' + e.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    }
+
     function exportContent() {
       collectTexts();
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(content)); } catch {}

@@ -100,7 +100,7 @@ RedirectMatch 404 ^/media(/.*)?$
 DirectoryIndex index.html index.php
 
 # --- Ochrana admin rozhrani HTTP Basic Auth ---
-<FilesMatch "^(admin\.html|stats\.php)$">
+<FilesMatch "^(admin\.html|stats\.php|save-content\.php)$">
   AuthType Basic
   AuthName "Great Silkyway - Admin"
   AuthUserFile /data/web/virtuals/397564/virtual/www/domains/greatsilkyway.cz/.htpasswd-admin

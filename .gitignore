@@ -20,3 +20,7 @@ _*.mjs
 .ftp-pwd
 .last-sync
 _sync-ftp.ps1
+
+# Claude Code worktrees a state
+.claude/
+

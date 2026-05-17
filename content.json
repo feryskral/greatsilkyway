@@ -1,0 +1,157 @@
+{
+  "dogs": [
+    {
+      "name": "Ti Amo Romantico Senorita",
+      "gender": "female",
+      "breed": "Yorkshire teriér",
+      "titles": "",
+      "health": "V pořádku",
+      "description": "Nádherná fena s výjimečně hedvábnou srstí a typickým výstavním výrazem. Senorita je elegantní, temperamentní a plná energie.",
+      "photo": "York1.jpg",
+      "achievements": [
+        { "title": "Posudek z výstavy", "detail": "Ti Amo Romantico Senorita", "medal": "" }
+      ]
+    },
+    {
+      "name": "Enchanting Michelle Angel Of My Heart",
+      "gender": "female",
+      "breed": "Yorkshire teriér",
+      "titles": "",
+      "health": "V pořádku",
+      "description": "Okouzlující fena s nádhernou srstí a výraznou osobností. Michelle je elegantní, klidná a do každého vrhu předává ty nejlepší vlastnosti.",
+      "photo": "topfoto.jpg",
+      "achievements": [
+        { "title": "Certifikát z výstavy", "detail": "25. 11. 2023", "medal": "" },
+        { "title": "Certifikát z výstavy", "detail": "25. 11. 2023", "medal": "" },
+        { "title": "Certifikát z výstavy", "detail": "01. 06. 2024", "medal": "" }
+      ]
+    },
+    {
+      "name": "Oxygen Fresh Stream",
+      "gender": "female",
+      "breed": "Yorkshire teriér",
+      "titles": "",
+      "health": "V pořádku",
+      "description": "Elegantní fena s výjimečnou povahou a nádhernou srstí. Oxygen Fresh Stream je klidná, laskavá a svým potomkům předává ty nejlepší vlastnosti.",
+      "photo": "oxygen_foto2.png",
+      "achievements": [
+        { "title": "Diplom „Триумф\" – Národní výstava CAC", "detail": "Starý Oskol · 05. 09. 2021", "medal": "gold" },
+        { "title": "Diplom – Národní výstava CAC / Champion Federace", "detail": "Gubkin · 04. 09. 2021", "medal": "gold" }
+      ]
+    },
+    {
+      "name": "Earl Matteo Angel Of My Heart",
+      "gender": "male",
+      "breed": "Yorkshire teriér",
+      "titles": "JCH EARL",
+      "health": "V pořádku",
+      "description": "Výjimečný pes s titulem Junior Champion. Matteo disponuje dokonalou stavbou těla, nádhernou srstí a sebevědomou povahou výstavního psa nejvyšší kvality.",
+      "photo": "mateo.jpg",
+      "achievements": [
+        { "title": "Junior Autumn Winner 2023", "detail": "Bosna a Hercegovina · říjen 2023", "medal": "gold" },
+        { "title": "Autumn Winner 2023", "detail": "Bosna a Hercegovina · říjen 2023", "medal": "gold" },
+        { "title": "Certifikát z výstavy", "detail": "28. 10. 2023", "medal": "" },
+        { "title": "Rozhodčí zpráva", "detail": "28. 10. 2023", "medal": "" },
+        { "title": "Certifikát z výstavy", "detail": "28. 10. 2023", "medal": "" },
+        { "title": "Certifikát z výstavy", "detail": "29. 10. 2023", "medal": "" }
+      ]
+    }
+  ],
+  "puppies": [
+    {
+      "name": "Citrine",
+      "gender": "female",
+      "status": "available",
+      "photo": "Citrine.jpg",
+      "description": "Yorkshire teriér"
+    },
+    {
+      "name": "Coral",
+      "gender": "male",
+      "status": "available",
+      "photo": "Coral.jpg",
+      "description": "Yorkshire teriér"
+    }
+  ],
+  "litters": [
+    {
+      "name": "Vrh C",
+      "status": "available",
+      "cover": "VRH_C.jpg",
+      "description": "Štěňata z vrhu C naší chovatelské stanice.",
+      "sire": "",
+      "dame": "",
+      "dob": ""
+    },
+    {
+      "name": "Vrh B",
+      "status": "unavailable",
+      "cover": "VRH_B.jpg",
+      "description": "Štěňata z vrhu B naší chovatelské stanice.",
+      "sire": "",
+      "dame": "",
+      "dob": ""
+    },
+    {
+      "name": "Vrh A",
+      "status": "unavailable",
+      "cover": "VRH_A.jpg",
+      "description": "Štěňata z vrhu A naší chovatelské stanice.",
+      "sire": "",
+      "dame": "",
+      "dob": ""
+    }
+  ],
+  "gallery": [
+    { "caption": "Ti Amo Romantico Senorita", "category": "senorita", "photo": "York1.jpg", "wide": true, "objectPosition": "center center" },
+    { "caption": "Ti Amo Romantico Senorita — profil", "category": "senorita", "photo": "york_best.png", "wide": false, "objectPosition": "top center" },
+    { "caption": "Ti Amo Romantico Senorita — portrét", "category": "senorita", "photo": "York3.jpg", "wide": false, "objectPosition": "top center" },
+    { "caption": "Ti Amo Romantico Senorita — elegance", "category": "senorita", "photo": "York4.jpg", "wide": false, "objectPosition": "top center" },
+    { "caption": "Ti Amo Romantico Senorita — výstavní póza", "category": "senorita", "photo": "York5.jpg", "wide": false, "objectPosition": "top center" },
+
+    { "caption": "Earl Matteo Angel Of My Heart", "category": "matteo", "photo": "mateo.jpg", "wide": true, "objectPosition": "center center" },
+    { "caption": "Earl Matteo Angel Of My Heart", "category": "matteo", "photo": "18a6b3d3-2eda-4a88-832d-6e29e15ee64a.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Earl Matteo Angel Of My Heart", "category": "matteo", "photo": "2928d145-5d0d-42c3-8b26-bf80f2242234.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Earl Matteo Angel Of My Heart", "category": "matteo", "photo": "90b9ca61-d34a-4917-8e88-e375793248f8.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Earl Matteo Angel Of My Heart", "category": "matteo", "photo": "c0bc6276-63e4-45cd-9093-7282fb8b5bfc.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Earl Matteo Angel Of My Heart", "category": "matteo", "photo": "dcb54419-effe-4af7-afd3-37114aaa9727.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Earl Matteo Angel Of My Heart", "category": "matteo", "photo": "e0702e68-70ce-4361-b262-9a0dde7a2e57.jpg", "wide": false, "objectPosition": "center center" },
+
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "topfoto.jpg", "wide": true, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "01500af5-a0a4-4807-92a8-fb1d67e32d2a.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "058bb08c-6396-4109-a50a-852d10f33263.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "2184623e-a27b-46d1-acd1-f30c1601d9b3.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "2a14fcc4-7cfb-4855-b555-1805e1f458ec.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "396b7244-1dbc-47ca-b1d6-f8e8c6ad2e24.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "39f3bec8-2275-4b2d-a6d2-f23404abfa82.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "3e73579c-47cc-4c8e-8a69-af6462236053.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "598149e8-da3c-4488-b60f-f64a9a28ef31.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "76274b8e-4a59-49e4-8ec0-11df605a25ad.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "8293844c-8379-49a5-a698-f9656048936f.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "969cf9f2-337c-4355-8183-b4fffb3832f9.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "9db38f3c-3412-43f5-9bbe-c524b5d12e64.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "a5f4d1b6-341f-4f81-986c-b8a4de51ad6e.jpg", "wide": false, "objectPosition": "center center" },
+    { "caption": "Enchanting Michelle Angel Of My Heart", "category": "michelle", "photo": "e4ed64f6-55c0-4b0b-a1ba-c6abc5f4dff7.jpg", "wide": false, "objectPosition": "center center" },
+
+    { "caption": "Oxygen Fresh Stream — portrét", "category": "oxygen", "photo": "Oxygen_foto3.png", "wide": false, "objectPosition": "center top" },
+    { "caption": "Oxygen Fresh Stream", "category": "oxygen", "photo": "33bba485-de82-4688-93c0-4351fcdef2a2.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Oxygen Fresh Stream", "category": "oxygen", "photo": "56b0b3a5-9999-406c-8552-c4d546163dec.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Oxygen Fresh Stream", "category": "oxygen", "photo": "71efe63f-d4b6-4b6b-a0a9-8d496e4eddb0.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Oxygen Fresh Stream", "category": "oxygen", "photo": "9190f211-e86d-4eb8-bb7b-74b02e247228.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Oxygen Fresh Stream", "category": "oxygen", "photo": "bfd67bd6-a1bc-488b-9be8-2c9582106c43.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Oxygen Fresh Stream", "category": "oxygen", "photo": "c9b2806a-9a26-4f09-b2b3-7ac9c8c95003.jpg", "wide": false, "objectPosition": "center top" },
+
+    { "caption": "Štěňátko", "category": "stenata", "photo": "0dd5dcf3-c2c6-4496-ac4b-2d54ce6410d2.jpg", "wide": true, "objectPosition": "center top" },
+    { "caption": "Štěňátko", "category": "stenata", "photo": "1ffaf9ae-f79c-452f-b563-f2abcef06400.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Štěňátko", "category": "stenata", "photo": "2b487db9-280d-4cf8-aaee-99f259c6b146.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Amulet", "category": "stenata", "photo": "93bd674d-990e-473e-89e8-c274205daeab.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Barron", "category": "stenata", "photo": "Barron_2.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Barron", "category": "stenata", "photo": "Barron_3.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Štěňátko", "category": "stenata", "photo": "b6476018-3fa9-4742-9042-96954266c836.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Štěňátko", "category": "stenata", "photo": "c5b7f4be-68eb-4008-ad13-716dc24d43fc.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "S chovatelkou", "category": "stenata", "photo": "4c8b0faa-2614-423d-af59-9cfd00f64e3d.jpg", "wide": true, "objectPosition": "center top" },
+    { "caption": "S chovatelkou", "category": "stenata", "photo": "7f30869d-c3d9-4c62-9981-3b4555f13cc7.jpg", "wide": false, "objectPosition": "center top" },
+    { "caption": "Barron s chovatelkou", "category": "stenata", "photo": "Barron_1.jpg", "wide": false, "objectPosition": "center top" }
+  ],
+  "texts": {}
+}

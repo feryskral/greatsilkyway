@@ -466,16 +466,52 @@
       return String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
     }
 
+    const MAX_FILE_BYTES = 10 * 1024 * 1024;
+    const MAX_DIMENSION = 1600;
+    const JPEG_QUALITY = 0.85;
+
     function uploadPhoto(callback) {
       const inp = document.createElement('input');
-      inp.type = 'file'; inp.accept = 'image/*';
+      inp.type = 'file'; inp.accept = 'image/jpeg,image/png,image/webp';
       inp.onchange = () => {
         const f = inp.files[0]; if (!f) return;
-        const reader = new FileReader();
-        reader.onload = e => callback(e.target.result);
-        reader.readAsDataURL(f);
+        if (!/^image\/(jpeg|png|webp)$/.test(f.type)) {
+          showToast('⚠ Pouze JPG, PNG nebo WebP fotky', 'error'); return;
+        }
+        if (f.size > MAX_FILE_BYTES) {
+          showToast('⚠ Fotka je vetsi nez 10 MB. Vyberte mensi.', 'error'); return;
+        }
+        resizeImage(f).then(callback).catch(() => {
+          const reader = new FileReader();
+          reader.onload = e => callback(e.target.result);
+          reader.readAsDataURL(f);
+        });
       };
       inp.click();
+    }
+
+    function resizeImage(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = e => { img.src = e.target.result; };
+        reader.onerror = reject;
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+            const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
+            width = Math.round(width * ratio);
+            height = Math.round(height * ratio);
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width; canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          const isPng = file.type === 'image/png';
+          resolve(canvas.toDataURL(isPng ? 'image/png' : 'image/jpeg', JPEG_QUALITY));
+        };
+        img.onerror = reject;
+        reader.readAsDataURL(file);
+      });
     }
 
     function moveItem(arr, i, dir) {

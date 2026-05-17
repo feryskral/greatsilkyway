@@ -425,8 +425,8 @@
         .finally(() => { location.href = 'index.html'; });
     }
 
-    function showDashboard() {
-      loadContent();
+    async function showDashboard() {
+      await loadContent();
       renderAll();
       loadTexts();
     }
@@ -438,24 +438,39 @@
     }
 
     // ===== STORAGE =====
-    function loadContent() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try { content = Object.assign({ dogs: [], puppies: [], litters: [], gallery: [], texts: {} }, JSON.parse(saved)); } catch {}
-      }
-      // Migrace ze starého klíče
-      if (!saved) {
-        const old = localStorage.getItem('gs_admin_content');
-        if (old) {
-          try {
-            const oldContent = JSON.parse(old);
-            if (oldContent.puppies) content.puppies = oldContent.puppies;
-            if (oldContent.texts) content.texts = oldContent.texts;
-          } catch {}
+    // Pri otevreni adminu nejprv stahnout aktualni content.json ze serveru,
+    // aby admin videl ZIVA data a publikovani neprepisalo predchozi obsah.
+    async function loadContent() {
+      let serverContent = null;
+      try {
+        const res = await fetch('content.json?_=' + Date.now(), { cache: 'no-store' });
+        if (res.ok) serverContent = await res.json();
+      } catch {}
+
+      if (serverContent && typeof serverContent === 'object') {
+        content = Object.assign({ dogs: [], puppies: [], litters: [], gallery: [], texts: {} }, serverContent);
+      } else {
+        // Server nevratil nic - pouzij lokalni zalohu
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          try { content = Object.assign({ dogs: [], puppies: [], litters: [], gallery: [], texts: {} }, JSON.parse(saved)); } catch {}
+        } else {
+          // Migrace ze stareho klice
+          const old = localStorage.getItem('gs_admin_content');
+          if (old) {
+            try {
+              const oldContent = JSON.parse(old);
+              if (oldContent.puppies) content.puppies = oldContent.puppies;
+              if (oldContent.texts) content.texts = oldContent.texts;
+            } catch {}
+          }
         }
       }
       ['dogs','puppies','litters','gallery'].forEach(k => { if (!Array.isArray(content[k])) content[k] = []; });
       if (!content.texts) content.texts = {};
+
+      // Lokalni zalohu vzdy aktualizujeme tim co je na serveru
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(content)); } catch {}
     }
 
     function renderAll() { renderDogs(); renderPuppies(); renderLitters(); renderGallery(); }

@@ -267,6 +267,149 @@
     </div>
   </section>
 
+  <!-- PUPPY ALERT - upoutavka na dostupna stenata -->
+  <style>
+    .puppy-alert-section { padding: 46px 0 6px; }
+    .puppy-alert {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 28px;
+      position: relative;
+      overflow: hidden;
+      padding: 26px 32px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(120deg, #16223f 0%, #22315a 52%, #33456f 100%);
+      border: 1px solid rgba(201,147,58,0.38);
+      box-shadow: 0 18px 46px rgba(20,30,60,0.28);
+      color: #fff;
+      text-decoration: none;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .puppy-alert:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 26px 60px rgba(20,30,60,0.38);
+    }
+    /* Pomalu prejizdejici odlesk */
+    .puppy-alert::after {
+      content: '';
+      position: absolute;
+      top: -60%; left: -70%;
+      width: 45%; height: 220%;
+      background: linear-gradient(100deg, transparent, rgba(255,255,255,0.13), transparent);
+      transform: rotate(14deg);
+      animation: gsSheen 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes gsSheen {
+      0%, 62%  { left: -70%; }
+      100%     { left: 130%; }
+    }
+
+    .puppy-alert__avatars { display: flex; flex-shrink: 0; padding-left: 16px; }
+    .puppy-alert__avatar {
+      width: 74px; height: 74px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255,255,255,0.92);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+      margin-left: -16px;
+      background: var(--color-navy);
+      animation: gsPopIn 0.5s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+    }
+    .puppy-alert__avatar--more {
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head);
+      font-weight: 700; font-size: 0.95rem;
+      background: var(--color-gold);
+      color: #16223f;
+    }
+    @keyframes gsPopIn {
+      from { opacity: 0; transform: scale(0.6) translateY(10px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Text nesmi zkolabovat mezi avatary a tlacitkem - drzi si minimum
+       a pri nedostatku mista se cely blok zalomi */
+    .puppy-alert__text { flex: 1 1 300px; min-width: 260px; }
+    .puppy-alert__badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(201,147,58,0.2);
+      border: 1px solid rgba(232,185,106,0.5);
+      color: var(--color-gold-light);
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    /* Tepajici tecka - signal "je to aktualni" */
+    .puppy-alert__dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #5fd39a;
+      box-shadow: 0 0 0 0 rgba(95,211,154,0.7);
+      animation: gsPulse 2s ease-out infinite;
+    }
+    @keyframes gsPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(95,211,154,0.7); }
+      70%  { box-shadow: 0 0 0 9px rgba(95,211,154,0); }
+      100% { box-shadow: 0 0 0 0 rgba(95,211,154,0); }
+    }
+
+    .puppy-alert__title {
+      font-family: var(--font-head);
+      font-size: 1.5rem; font-weight: 700;
+      line-height: 1.25; margin-bottom: 6px;
+    }
+    .puppy-alert__title em { color: var(--color-gold-light); font-style: normal; }
+    .puppy-alert__desc {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.55;
+    }
+
+    .puppy-alert__cta {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 26px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold));
+      color: #16223f;
+      font-family: var(--font-head);
+      font-weight: 700; font-size: 0.95rem;
+      box-shadow: 0 6px 20px rgba(201,147,58,0.42);
+      white-space: nowrap;
+    }
+    .puppy-alert__arrow { transition: transform var(--transition); }
+    .puppy-alert:hover .puppy-alert__arrow { transform: translateX(5px); }
+
+    @media (max-width: 1000px) {
+      .puppy-alert { flex-direction: column; text-align: center; gap: 20px; padding: 28px 22px; }
+      .puppy-alert__avatars { padding-left: 16px; justify-content: center; }
+      .puppy-alert__text { flex: 1 1 auto; min-width: 0; }
+      .puppy-alert__title { font-size: 1.35rem; }
+      .puppy-alert__cta { width: 100%; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .puppy-alert__avatar { width: 58px; height: 58px; }
+    }
+
+    /* Uzivatel s omezenim animaci dostane stejny obsah, jen bez pohybu */
+    @media (prefers-reduced-motion: reduce) {
+      .puppy-alert::after { animation: none; display: none; }
+      .puppy-alert__avatar { animation: none; }
+      .puppy-alert__dot { animation: none; }
+      .puppy-alert, .puppy-alert__arrow { transition: none; }
+      .puppy-alert:hover { transform: none; }
+    }
+  </style>
+
+  <section class="puppy-alert-section" id="puppyAlertSection" hidden>
+    <div class="container">
+      <a href="stena.html" class="puppy-alert" id="puppyAlert"></a>
+    </div>
+  </section>
+
   <!-- FEATURES STRIP -->
   <section class="features">
     <div class="container">
@@ -890,8 +1033,8 @@
     });
   </script>
 <script src="animations.js"></script>
-<script src="content-loader.js?v=5"></script>
 <script src="lang.js"></script>
+<script src="content-loader.js?v=6"></script>
 
 <script>(function(){new Image().src='track.php?p='+encodeURIComponent(location.pathname)+'&r='+encodeURIComponent(document.referrer);})();</script>
 </body>

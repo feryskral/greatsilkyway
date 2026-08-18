@@ -23,8 +23,10 @@
     });
 
   function apply(c) {
+    hookLangSwitch();
     if (Array.isArray(c.dogs) && c.dogs.length) applyDogs(c.dogs);
     if (Array.isArray(c.puppies) && c.puppies.length) applyPuppies(c.puppies);
+    applyPuppyAlert(Array.isArray(c.puppies) ? c.puppies : []);
     if (Array.isArray(c.litters) && c.litters.length) applyLitters(c.litters);
     // Podkategorie musi byt vyrenderovane driv nez galerie -
     // applyGallery na konci znovu naviaze filtry a aplikuje hash z URL.
@@ -56,15 +58,20 @@
     return obj[baseKey] || '';
   }
 
-  // Po prepnuti jazyka znovu vyrenderovat karty (kvuli dynamickym popisum/popiskum)
-  if (typeof window.setLang === 'function' && !window._gsLangHooked) {
+  // Po prepnuti jazyka znovu vyrenderovat karty (kvuli dynamickym popisum/popiskum).
+  // Vola se i z apply(), protoze na nekterych strankach se content-loader.js
+  // nacita driv nez lang.js - pri evaluaci by window.setLang jeste neexistoval.
+  function hookLangSwitch() {
+    if (window._gsLangHooked) return;
+    if (typeof window.setLang !== 'function') return;
     window._gsLangHooked = true;
     const _origSetLang = window.setLang;
-    window.setLang = function(lang) {
+    window.setLang = function (lang) {
       _origSetLang(lang);
       if (content) apply(content);
     };
   }
+  hookLangSwitch();
 
   function escapeHtml(s) {
     return String(s ?? '').replace(/[&<>"']/g, c => ({
@@ -310,6 +317,51 @@
           ${btn}
         </div>
       </div>`;
+  }
+
+  // ===== UPOUTAVKA NA DOSTUPNA STENATA (uvodni stranka) =====
+  // Cisla i fotky se berou z aktualnich dat. Kdyz volne stene neni,
+  // upoutavka se vubec nezobrazi - at neslibuje neco, co neplati.
+  function applyPuppyAlert(puppies) {
+    const section = document.getElementById('puppyAlertSection');
+    const box = document.getElementById('puppyAlert');
+    if (!section || !box) return;
+
+    const free = (puppies || []).filter(p => p && p.status !== 'reserved');
+    if (!free.length) { section.hidden = true; return; }
+
+    const en = gsLang() === 'en';
+    const n = free.length;
+    // 1 stenatko / 2-4 stenatka / 5+ stenatek
+    const word = en ? (n === 1 ? 'puppy' : 'puppies')
+                    : (n === 1 ? 'štěňátko' : (n <= 4 ? 'štěňátka' : 'štěňátek'));
+    const adj = en ? '' : (n === 1 ? 'volné ' : (n <= 4 ? 'volná ' : 'volných '));
+
+    const badge = en ? 'Puppies available' : 'Volná štěňátka';
+    const title = en
+      ? `<em>${n} ${word} available</em> looking for a home`
+      : `<em>${n} ${adj}${word}</em> čeká na svůj domov`;
+    const desc = en
+      ? 'Yorkshire Terriers with FCI pedigree, vaccinated and dewormed. Come and meet them.'
+      : 'Yorkshire teriéři s průkazem původu FCI, očkovaní a odčervení. Podívejte se, kdo na vás čeká.';
+    const cta = en ? 'Meet the puppies' : 'Prohlédnout štěňátka';
+
+    const shown = free.filter(p => p.photo).slice(0, 4);
+    const rest = n - shown.length;
+    const avatars = shown.map((p, i) =>
+      `<img class="puppy-alert__avatar" src="${escapeHtml(p.photo)}" alt="${escapeHtml(p.name || '')}"
+            style="animation-delay:${i * 0.09}s;" loading="lazy" />`).join('')
+      + (rest > 0 ? `<span class="puppy-alert__avatar puppy-alert__avatar--more" style="animation-delay:${shown.length * 0.09}s;">+${rest}</span>` : '');
+
+    box.innerHTML = `
+      ${avatars ? `<div class="puppy-alert__avatars">${avatars}</div>` : ''}
+      <div class="puppy-alert__text">
+        <span class="puppy-alert__badge"><span class="puppy-alert__dot"></span>${escapeHtml(badge)}</span>
+        <div class="puppy-alert__title">${title}</div>
+        <p class="puppy-alert__desc">${escapeHtml(desc)}</p>
+      </div>
+      <span class="puppy-alert__cta">${escapeHtml(cta)} <span class="puppy-alert__arrow">→</span></span>`;
+    section.hidden = false;
   }
 
   // ===== PROPOJENI KARTA -> ALBUM V GALERII =====

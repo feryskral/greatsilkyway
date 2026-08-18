@@ -417,6 +417,7 @@
     <div class="admin-header">
       <div class="admin-header__title">🐶 <span class="header-label-full">Great Silkyway – Admin</span><span class="header-label-short">Admin</span></div>
       <div class="admin-header__actions">
+        <span id="dirtyBadge" style="display:none;align-items:center;gap:6px;background:#fff4d4;color:#6b4d10;border:1px solid #f0d27a;border-radius:999px;padding:5px 12px;font-size:0.78rem;font-weight:700;white-space:nowrap;" title="Změny zatím nejsou na webu — klikněte na Publikovat na web">● <span class="btn-label-full">Nepublikované změny</span><span class="btn-label-short">Nepublikováno</span></span>
         <button class="admin-btn admin-btn--ghost" onclick="translateAll(this)" title="Auto-překlad všech českých textů do EN">🌐 <span class="btn-label-full">Přeložit vše do EN</span><span class="btn-label-short">EN</span></button>
         <button class="admin-btn admin-btn--primary" onclick="publishToWeb()" id="publishBtn">🚀 <span class="btn-label-full">Publikovat na web</span><span class="btn-label-short">Publikovat</span></button>
         <button class="admin-btn admin-btn--ghost" onclick="location.href='logout.php'"><span class="btn-label-full">Odhlásit</span><span class="btn-label-short">Odhlásit</span></button>
@@ -552,10 +553,45 @@
       renderAll();
       loadTexts();
       contentLoaded = true;
+      markSaved();
       publishBtn.disabled = false;
       publishBtn.innerHTML = PUBLISH_BTN_HTML;
     }
     showDashboard();
+
+    // ===== NEULOZENE ZMENY =====
+    // Smazani/uprava zije jen v pameti prohlizece, dokud se neklikne na
+    // "Publikovat na web". Bez tehle pojistky se zmena pri odchodu tise ztrati.
+    let lastSavedJson = '';
+    function markSaved() {
+      try { lastSavedJson = JSON.stringify(content); } catch { lastSavedJson = ''; }
+      updateDirtyBadge();
+    }
+    function isDirty() {
+      if (!contentLoaded || !lastSavedJson) return false;
+      try { return JSON.stringify(content) !== lastSavedJson; } catch { return false; }
+    }
+    function updateDirtyBadge() {
+      const el = document.getElementById('dirtyBadge');
+      if (el) el.style.display = isDirty() ? 'inline-flex' : 'none';
+    }
+    // Po kazde zmene v UI prekreslit indikator (bez cekani na dalsi render)
+    document.addEventListener('input', () => setTimeout(updateDirtyBadge, 0));
+    document.addEventListener('change', () => setTimeout(updateDirtyBadge, 0));
+    document.addEventListener('click', () => setTimeout(updateDirtyBadge, 0));
+
+    window.addEventListener('beforeunload', (e) => {
+      if (!isDirty()) return;
+      e.preventDefault();
+      e.returnValue = '';
+      return '';
+    });
+
+    // Pripomenout publikaci po mazani - nejcastejsi zdroj "ono se to neulozilo"
+    function remindPublish(what) {
+      updateDirtyBadge();
+      showToast('🗑 ' + what + ' smazáno — změnu dokončíte tlačítkem „Publikovat na web"', 'success');
+    }
 
     function switchTab(id) {
       document.querySelectorAll('.admin-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === id));
@@ -783,8 +819,9 @@
       renderDogs();
     }
     function deleteDog(i) {
+      const name = content.dogs[i]?.name || 'Pes';
       if (!confirm('Smazat tohoto psa?')) return;
-      content.dogs.splice(i, 1); renderDogs();
+      content.dogs.splice(i, 1); renderDogs(); remindPublish(name);
     }
     function moveDog(i, dir) { moveItem(content.dogs, i, dir); renderDogs(); }
     function updDog(i, f, v) { content.dogs[i][f] = v; }
@@ -947,8 +984,9 @@
       renderPuppies();
     }
     function deletePuppy(i) {
-      if (!confirm('Smazat toto štěňátko?')) return;
-      content.puppies.splice(i, 1); renderPuppies();
+      const name = content.puppies[i]?.name || 'Štěňátko';
+      if (!confirm('Smazat štěňátko „' + name + '"?')) return;
+      content.puppies.splice(i, 1); renderPuppies(); remindPublish(name);
     }
     function movePuppy(i, dir) { moveItem(content.puppies, i, dir); renderPuppies(); }
     function updPuppy(i, f, v) { content.puppies[i][f] = v; }
@@ -1007,8 +1045,9 @@
       renderLitters();
     }
     function deleteLitter(i) {
+      const name = content.litters[i]?.name || 'Vrh';
       if (!confirm('Smazat tento vrh?')) return;
-      content.litters.splice(i, 1); renderLitters();
+      content.litters.splice(i, 1); renderLitters(); remindPublish(name);
     }
     function moveLitter(i, dir) { moveItem(content.litters, i, dir); renderLitters(); }
     function updLitter(i, f, v) { content.litters[i][f] = v; }
@@ -1265,8 +1304,9 @@
       renderGallery();
     }
     function deleteGallery(i) {
+      const name = content.gallery[i]?.caption || 'Fotka';
       if (!confirm('Smazat tuto fotku?')) return;
-      content.gallery.splice(i, 1); refreshGalleryViews();
+      content.gallery.splice(i, 1); refreshGalleryViews(); remindPublish(name);
     }
     function moveGallery(i, dir) { moveItem(content.gallery, i, dir); refreshGalleryViews(); }
     // Prohodi fotku se sousedni fotkou TEHOZ alba (ne s libovolnou sousedni polozkou galerie)
@@ -1365,6 +1405,7 @@
         if (res.ok && data.ok) {
           const kb = Math.round((data.bytes || 0) / 1024);
           const tr = translatedCount > 0 ? ' · 🌐 ' + translatedCount + ' polí přeloženo' : '';
+          markSaved();
           showToast('🚀 Publikováno na web! (' + kb + ' KB)' + tr, 'success');
         } else {
           showToast('⚠ Chyba: ' + (data.error || res.status), 'error');

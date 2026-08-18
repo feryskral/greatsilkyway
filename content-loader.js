@@ -244,11 +244,20 @@
     const price = reserved
       ? '<div class="puppy-card__price" style="margin-bottom:12px;color:var(--color-text-soft);" data-i18n="status_reserved">Rezervováno</div>'
       : '<div class="puppy-card__price" style="margin-bottom:12px;" data-i18n="price_on_request">Cena na dotaz</div>';
+    // Kliknuti na fotku vede do galerie na album tohoto stenete
+    const link = albumLinkFor(p, 'puppy');
+    const en = gsLang() === 'en';
+    const photoAttrs = link
+      ? ` onclick="location.href='${escapeHtml(link)}'" style="padding:0;overflow:hidden;position:relative;cursor:pointer;" title="${en ? 'View photos in the gallery' : 'Zobrazit fotky v galerii'}" role="link" tabindex="0"`
+      : ' style="padding:0;overflow:hidden;position:relative;"';
+    const photoHint = link
+      ? `<span class="puppy-card__gallery-hint" style="position:absolute;left:10px;bottom:10px;background:rgba(13,21,48,0.72);color:#fff;font-size:0.72rem;font-weight:700;padding:5px 10px;border-radius:999px;backdrop-filter:blur(2px);">📷 ${en ? 'Photos' : 'Fotky'}</span>`
+      : '';
     return `
       <div class="puppy-card aos aos-d${(i % 3) + 1}">
-        <div class="puppy-card__image" style="padding:0;overflow:hidden;position:relative;">
+        <div class="puppy-card__image"${photoAttrs}>
           ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(p.name)}" style="width:100%;height:100%;object-fit:cover;" />` : '<span style="font-size:64px;">🐶</span>'}
-          ${genderBadge(p.gender)}${statusBadge(p.status)}
+          ${genderBadge(p.gender)}${statusBadge(p.status)}${photoHint}
         </div>
         <div class="puppy-card__body">
           <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}</div>
@@ -301,6 +310,29 @@
           ${btn}
         </div>
       </div>`;
+  }
+
+  // ===== PROPOJENI KARTA -> ALBUM V GALERII =====
+  function gsSlugify(s) {
+    return String(s || '').toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  // Vrati odkaz do galerie na album daneho stenete/psa, nebo '' kdyz album
+  // neexistuje nebo je prazdne - na prazdny filtr nema smysl odkazovat.
+  function albumLinkFor(item, kind) {
+    const cfg = kind === 'dog'
+      ? { list: 'dogAlbums', cat: 'psi' }
+      : { list: 'puppyAlbums', cat: 'stenata' };
+    const albums = (content && content[cfg.list]) || [];
+    const gallery = (content && content.gallery) || [];
+    // Prednost ma rucne prirazene album, jinak se hleda podle jmena
+    const wanted = item.album || gsSlugify(item.name);
+    if (!wanted) return '';
+    const album = albums.find(a => a.slug === wanted);
+    if (!album) return '';
+    const hasPhotos = gallery.some(g => g.category === cfg.cat && g.album === album.slug);
+    return hasPhotos ? `galerie.html#${cfg.cat}/${album.slug}` : '';
   }
 
   // ===== PUPPY ALBUMS (podkategorie galerie podle jmen stenat) =====

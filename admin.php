@@ -981,13 +981,63 @@
                 </select>
               </div>
               <div class="field field--full"><label>Popis:</label><textarea class="textarea" rows="2" oninput="updPuppy(${i},'description',this.value)">${escapeHtml(p.description)}</textarea></div>
+              ${puppyGalleryField(p, i)}
             </div>
           </div>`;
         list.appendChild(el);
       });
     }
+    // Pole "Fotky v galerii" na karte stenete. Rika, kam vede kliknuti na
+    // fotku stenete na webu, a umi album rovnou zalozit.
+    function puppyGalleryField(p, i) {
+      const slug = resolvePuppyAlbum(p);
+      const album = content.puppyAlbums.find(a => a.slug === slug);
+      const count = album ? albumPhotoIndexes('puppy', album.slug).length : 0;
+      let stav;
+      if (!album) {
+        stav = `<span style="color:var(--color-text-soft);">Album zatím neexistuje — fotka na webu nikam neodkazuje.</span>
+                <button class="admin-btn admin-btn--secondary admin-btn--sm" style="margin-left:8px;" onclick="createAlbumForPuppy(${i})">+ Vytvořit album a nahrát fotky</button>`;
+      } else if (count === 0) {
+        stav = `<span style="color:var(--color-text-soft);">Album „${escapeHtml(album.name)}" je prázdné — odkaz se objeví až po nahrání fotky.</span>
+                <button class="admin-btn admin-btn--secondary admin-btn--sm" style="margin-left:8px;" onclick="openAlbum('puppy','${escapeHtml(album.slug)}')">📷 Nahrát fotky</button>`;
+      } else {
+        stav = `<span style="color:#2f9e6b;font-weight:600;">✓ Kliknutí na fotku vede do alba „${escapeHtml(album.name)}" (${count} ${plural(count, 'fotka', 'fotky', 'fotek')})</span>
+                <button class="admin-btn admin-btn--secondary admin-btn--sm" style="margin-left:8px;" onclick="openAlbum('puppy','${escapeHtml(album.slug)}')">📷 Otevřít album</button>`;
+      }
+      // Select i stavovy radek musi byt v jednom obalu - .field je grid
+      // se sloupcem pro popisek, jinak by stav spadl pod popisek.
+      return `
+              <div class="field field--full"><label>Fotky v galerii:</label>
+                <div>
+                  <select class="select" onchange="updPuppy(${i},'album',this.value); renderPuppies();">
+                    <option value="">— automaticky podle jména —</option>
+                    ${content.puppyAlbums.map(a => `<option value="${escapeHtml(a.slug)}" ${p.album === a.slug ? 'selected' : ''}>${escapeHtml(a.name)}</option>`).join('')}
+                  </select>
+                  <div style="font-size:0.82rem;margin-top:8px;line-height:1.7;">${stav}</div>
+                </div>
+              </div>`;
+    }
+    // Ktere album patri stenetu: rucne prirazene, jinak podle jmena
+    function resolvePuppyAlbum(p) {
+      if (p.album) return p.album;
+      const bySlug = slugify(p.name);
+      return content.puppyAlbums.some(a => a.slug === bySlug) ? bySlug : '';
+    }
+    // Zalozi album pojmenovane po stenete a rovnou ho otevre pro nahrani fotek
+    function createAlbumForPuppy(i) {
+      const p = content.puppies[i];
+      const name = p.name || 'Nové štěňátko';
+      const slug = uniqueAlbumSlug('puppy', name);
+      content.puppyAlbums.push({ name, nameEn: p.nameEn || '', slug, cover: '' });
+      p.album = slug;
+      renderPuppies(); renderAllAlbums();
+      switchTab('gallery');
+      openAlbum('puppy', slug);
+      showToast('✓ Album „' + name + '" vytvořeno — nahrajte do něj fotky', 'success');
+    }
+
     function addPuppy() {
-      content.puppies.push({ name: 'Nové štěňátko', gender: 'female', status: 'available', photo: '', description: '' });
+      content.puppies.push({ name: 'Nové štěňátko', gender: 'female', status: 'available', photo: '', description: '', album: '' });
       renderPuppies();
     }
     function deletePuppy(i) {
@@ -1098,6 +1148,10 @@
       if (!Array.isArray(content[k])) content[k] = [];
       return content[k];
     }
+    // Ceske skloniovani po cislovce: 1 fotka / 2-4 fotky / 5+ fotek
+    function plural(n, one, few, many) {
+      return n === 1 ? one : (n >= 2 && n <= 4 ? few : many);
+    }
     function slugify(s) {
       return String(s || '').toLowerCase()
         .normalize('NFD').replace(/[̀-ͯ]/g, '')
@@ -1176,7 +1230,7 @@
         el.innerHTML = `
           <div class="item-card__head">
             <h3 style="cursor:pointer;" onclick="openAlbum('${kind}','${escapeHtml(a.slug)}')" title="Otevřít album a přidat fotky">
-              ${cfg.icon} ${escapeHtml(a.name || 'Bez jména')} <span class="badge">${count} ${count === 1 ? 'fotka' : (count >= 2 && count <= 4 ? 'fotky' : 'fotek')}</span>
+              ${cfg.icon} ${escapeHtml(a.name || 'Bez jména')} <span class="badge">${count} ${plural(count, 'fotka', 'fotky', 'fotek')}</span>
             </h3>
             <div>
               <div class="reorder-buttons">

@@ -26,9 +26,13 @@
     if (Array.isArray(c.dogs) && c.dogs.length) applyDogs(c.dogs);
     if (Array.isArray(c.puppies) && c.puppies.length) applyPuppies(c.puppies);
     if (Array.isArray(c.litters) && c.litters.length) applyLitters(c.litters);
-    // Podkategorie stenat musi byt vyrenderovane driv nez galerie -
+    // Podkategorie musi byt vyrenderovane driv nez galerie -
     // applyGallery na konci znovu naviaze filtry a aplikuje hash z URL.
-    applyPuppyAlbums(Array.isArray(c.puppyAlbums) ? c.puppyAlbums : [], Array.isArray(c.gallery) ? c.gallery : []);
+    const gal = Array.isArray(c.gallery) ? c.gallery : [];
+    applyAlbumTabs('dogAlbumTabs', 'psi', Array.isArray(c.dogAlbums) ? c.dogAlbums : [], gal,
+      { all: 'Všichni psi', allEn: 'All dogs' });
+    applyAlbumTabs('puppyAlbumTabs', 'stenata', Array.isArray(c.puppyAlbums) ? c.puppyAlbums : [], gal,
+      { all: 'Všechna štěňata', allEn: 'All puppies' });
     if (Array.isArray(c.gallery) && c.gallery.length) applyGallery(c.gallery);
     if (c.texts) applyTexts(c.texts);
     // Karty se renderuji az po IntersectionObseveru z animations.js.
@@ -300,15 +304,15 @@
   }
 
   // ===== PUPPY ALBUMS (podkategorie galerie podle jmen stenat) =====
-  function applyPuppyAlbums(albums, gallery) {
-    const bar = document.getElementById('puppyAlbumTabs');
+  function applyAlbumTabs(barId, cat, albums, gallery, labels) {
+    const bar = document.getElementById(barId);
     if (!bar) return;
     // Zalozku ukazat jen u jmen, ke kterym uz nejaka fotka je -
     // prazdne album by filtrovalo do prazdna.
-    const used = new Set((gallery || []).filter(g => g.category === 'stenata' && g.album).map(g => g.album));
+    const used = new Set((gallery || []).filter(g => g.category === cat && g.album).map(g => g.album));
     const named = albums.filter(a => a && a.slug && a.name && used.has(a.slug));
     if (!named.length) { bar.innerHTML = ''; bar.style.display = 'none'; return; }
-    const allLabel = gsLang() === 'en' ? 'All puppies' : 'Všechna štěňata';
+    const allLabel = gsLang() === 'en' ? labels.allEn : labels.all;
     const heading = gsLang() === 'en' ? 'By name' : 'Podle jména';
     bar.innerHTML =
       `<div class="filter-tabs--sub__label">${heading}</div>` +
@@ -330,10 +334,15 @@
     const photo = g.photo || '';
     const wideClass = g.wide ? ' wide' : '';
     const delay = i % 3 === 0 ? '' : ` aos aos-d${(i % 3)}`;
-    const cat = g.category === 'senorita' || g.category === 'michelle' || g.category === 'oxygen' || g.category === 'matteo'
-      ? `psi ${g.category}` : g.category;
+    // Starsi data mela pro kazdeho psa vlastni kategorii; dnes je to
+    // kategorie 'psi' + album. Obe varianty vykreslime stejne.
+    const LEGACY_DOG_CATS = ['senorita', 'michelle', 'oxygen', 'matteo'];
+    const legacyDog = LEGACY_DOG_CATS.includes(g.category);
+    const cat = legacyDog ? `psi ${g.category}` : g.category;
     const caption = pickLang(g, 'caption') || g.caption;
-    const album = g.category === 'stenata' && g.album ? ` data-album="${escapeHtml(g.album)}"` : '';
+    const albumSlug = legacyDog ? g.category : g.album;
+    const hasAlbum = albumSlug && (legacyDog || g.category === 'stenata' || g.category === 'psi');
+    const album = hasAlbum ? ` data-album="${escapeHtml(albumSlug)}"` : '';
     return `
       <div class="gallery-item${wideClass}${delay}" data-category="${escapeHtml(cat)}"${album} data-caption="${escapeHtml(caption)}" style="cursor:pointer;">
         ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(caption)}" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(g.objectPosition || 'center center')};" />` : ''}

@@ -276,6 +276,32 @@
       "descriptionEn": "Puppies from Litter A of our kennel."
     }
   ],
+  "dogAlbums": [
+    {
+      "name": "Ti Amo Romantico Senorita",
+      "nameEn": "Ti Amo Romantico Senorita",
+      "slug": "senorita",
+      "cover": ""
+    },
+    {
+      "name": "Enchanting Michelle Angel Of My Heart",
+      "nameEn": "Enchanting Michelle Angel Of My Heart",
+      "slug": "michelle",
+      "cover": ""
+    },
+    {
+      "name": "Earl Matteo Angel Of My Heart",
+      "nameEn": "Earl Matteo Angel Of My Heart",
+      "slug": "matteo",
+      "cover": ""
+    },
+    {
+      "name": "Oxygen Fresh Stream",
+      "nameEn": "Oxygen Fresh Stream",
+      "slug": "oxygen",
+      "cover": ""
+    }
+  ],
   "puppyAlbums": [
     {
       "name": "Amulet",
@@ -293,275 +319,309 @@
   "gallery": [
     {
       "caption": "Ti Amo Romantico Senorita",
-      "category": "senorita",
+      "category": "psi",
       "photo": "York1.jpg",
       "wide": true,
       "objectPosition": "center center",
-      "captionEn": "Ti Amo Romantico Senorita"
+      "captionEn": "Ti Amo Romantico Senorita",
+      "album": "senorita"
     },
     {
       "caption": "Ti Amo Romantico Senorita — profil",
-      "category": "senorita",
+      "category": "psi",
       "photo": "york_best.png",
       "wide": false,
       "objectPosition": "top center",
-      "captionEn": "Ti Amo Romantico Senorita — profile"
+      "captionEn": "Ti Amo Romantico Senorita — profile",
+      "album": "senorita"
     },
     {
       "caption": "Ti Amo Romantico Senorita — portrét",
-      "category": "senorita",
+      "category": "psi",
       "photo": "York3.jpg",
       "wide": false,
       "objectPosition": "top center",
-      "captionEn": "Ti Amo Romantico Senorita — portrait"
+      "captionEn": "Ti Amo Romantico Senorita — portrait",
+      "album": "senorita"
     },
     {
       "caption": "Ti Amo Romantico Senorita — elegance",
-      "category": "senorita",
+      "category": "psi",
       "photo": "York4.jpg",
       "wide": false,
       "objectPosition": "top center",
-      "captionEn": "Ti Amo Romantico Senorita — elegance"
+      "captionEn": "Ti Amo Romantico Senorita — elegance",
+      "album": "senorita"
     },
     {
       "caption": "Ti Amo Romantico Senorita — výstavní póza",
-      "category": "senorita",
+      "category": "psi",
       "photo": "York5.jpg",
       "wide": false,
       "objectPosition": "top center",
-      "captionEn": "Ti Amo Romantico Senorita — show pose"
+      "captionEn": "Ti Amo Romantico Senorita — show pose",
+      "album": "senorita"
     },
     {
       "caption": "Earl Matteo Angel Of My Heart",
-      "category": "matteo",
+      "category": "psi",
       "photo": "mateo.jpg",
       "wide": true,
       "objectPosition": "center center",
-      "captionEn": "Earl Matteo Angel Of My Heart"
+      "captionEn": "Earl Matteo Angel Of My Heart",
+      "album": "matteo"
     },
     {
       "caption": "Earl Matteo Angel Of My Heart",
-      "category": "matteo",
+      "category": "psi",
       "photo": "18a6b3d3-2eda-4a88-832d-6e29e15ee64a.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Earl Matteo Angel Of My Heart"
+      "captionEn": "Earl Matteo Angel Of My Heart",
+      "album": "matteo"
     },
     {
       "caption": "Earl Matteo Angel Of My Heart",
-      "category": "matteo",
+      "category": "psi",
       "photo": "2928d145-5d0d-42c3-8b26-bf80f2242234.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Earl Matteo Angel Of My Heart"
+      "captionEn": "Earl Matteo Angel Of My Heart",
+      "album": "matteo"
     },
     {
       "caption": "Earl Matteo Angel Of My Heart",
-      "category": "matteo",
+      "category": "psi",
       "photo": "90b9ca61-d34a-4917-8e88-e375793248f8.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Earl Matteo Angel Of My Heart"
+      "captionEn": "Earl Matteo Angel Of My Heart",
+      "album": "matteo"
     },
     {
       "caption": "Earl Matteo Angel Of My Heart",
-      "category": "matteo",
+      "category": "psi",
       "photo": "c0bc6276-63e4-45cd-9093-7282fb8b5bfc.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Earl Matteo Angel Of My Heart"
+      "captionEn": "Earl Matteo Angel Of My Heart",
+      "album": "matteo"
     },
     {
       "caption": "Earl Matteo Angel Of My Heart",
-      "category": "matteo",
+      "category": "psi",
       "photo": "dcb54419-effe-4af7-afd3-37114aaa9727.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Earl Matteo Angel Of My Heart"
+      "captionEn": "Earl Matteo Angel Of My Heart",
+      "album": "matteo"
     },
     {
       "caption": "Earl Matteo Angel Of My Heart",
-      "category": "matteo",
+      "category": "psi",
       "photo": "e0702e68-70ce-4361-b262-9a0dde7a2e57.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Earl Matteo Angel Of My Heart"
+      "captionEn": "Earl Matteo Angel Of My Heart",
+      "album": "matteo"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "topfoto.jpg",
       "wide": true,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "01500af5-a0a4-4807-92a8-fb1d67e32d2a.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "058bb08c-6396-4109-a50a-852d10f33263.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "2184623e-a27b-46d1-acd1-f30c1601d9b3.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "2a14fcc4-7cfb-4855-b555-1805e1f458ec.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "396b7244-1dbc-47ca-b1d6-f8e8c6ad2e24.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "39f3bec8-2275-4b2d-a6d2-f23404abfa82.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "3e73579c-47cc-4c8e-8a69-af6462236053.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "598149e8-da3c-4488-b60f-f64a9a28ef31.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "76274b8e-4a59-49e4-8ec0-11df605a25ad.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "8293844c-8379-49a5-a698-f9656048936f.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "969cf9f2-337c-4355-8183-b4fffb3832f9.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "9db38f3c-3412-43f5-9bbe-c524b5d12e64.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "a5f4d1b6-341f-4f81-986c-b8a4de51ad6e.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Enchanting Michelle Angel Of My Heart",
-      "category": "michelle",
+      "category": "psi",
       "photo": "e4ed64f6-55c0-4b0b-a1ba-c6abc5f4dff7.jpg",
       "wide": false,
       "objectPosition": "center center",
-      "captionEn": "Enchanting Michelle Angel Of My Heart"
+      "captionEn": "Enchanting Michelle Angel Of My Heart",
+      "album": "michelle"
     },
     {
       "caption": "Oxygen Fresh Stream — portrét",
-      "category": "oxygen",
+      "category": "psi",
       "photo": "Oxygen_foto3.png",
       "wide": false,
       "objectPosition": "center top",
-      "captionEn": "Oxygen Fresh Stream — portrait"
+      "captionEn": "Oxygen Fresh Stream — portrait",
+      "album": "oxygen"
     },
     {
       "caption": "Oxygen Fresh Stream",
-      "category": "oxygen",
+      "category": "psi",
       "photo": "33bba485-de82-4688-93c0-4351fcdef2a2.jpg",
       "wide": false,
       "objectPosition": "center top",
-      "captionEn": "Oxygen Fresh Stream"
+      "captionEn": "Oxygen Fresh Stream",
+      "album": "oxygen"
     },
     {
       "caption": "Oxygen Fresh Stream",
-      "category": "oxygen",
+      "category": "psi",
       "photo": "56b0b3a5-9999-406c-8552-c4d546163dec.jpg",
       "wide": false,
       "objectPosition": "center top",
-      "captionEn": "Oxygen Fresh Stream"
+      "captionEn": "Oxygen Fresh Stream",
+      "album": "oxygen"
     },
     {
       "caption": "Oxygen Fresh Stream",
-      "category": "oxygen",
+      "category": "psi",
       "photo": "71efe63f-d4b6-4b6b-a0a9-8d496e4eddb0.jpg",
       "wide": false,
       "objectPosition": "center top",
-      "captionEn": "Oxygen Fresh Stream"
+      "captionEn": "Oxygen Fresh Stream",
+      "album": "oxygen"
     },
     {
       "caption": "Oxygen Fresh Stream",
-      "category": "oxygen",
+      "category": "psi",
       "photo": "9190f211-e86d-4eb8-bb7b-74b02e247228.jpg",
       "wide": false,
       "objectPosition": "center top",
-      "captionEn": "Oxygen Fresh Stream"
+      "captionEn": "Oxygen Fresh Stream",
+      "album": "oxygen"
     },
     {
       "caption": "Oxygen Fresh Stream",
-      "category": "oxygen",
+      "category": "psi",
       "photo": "bfd67bd6-a1bc-488b-9be8-2c9582106c43.jpg",
       "wide": false,
       "objectPosition": "center top",
-      "captionEn": "Oxygen Fresh Stream"
+      "captionEn": "Oxygen Fresh Stream",
+      "album": "oxygen"
     },
     {
       "caption": "Oxygen Fresh Stream",
-      "category": "oxygen",
+      "category": "psi",
       "photo": "c9b2806a-9a26-4f09-b2b3-7ac9c8c95003.jpg",
       "wide": false,
       "objectPosition": "center top",
-      "captionEn": "Oxygen Fresh Stream"
+      "captionEn": "Oxygen Fresh Stream",
+      "album": "oxygen"
     },
     {
       "caption": "Štěňátko",

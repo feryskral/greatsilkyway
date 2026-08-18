@@ -707,7 +707,7 @@
               <button class="photo-zone__remove" onclick="event.stopPropagation(); removeDogPhoto(${i})">✕</button>
             </div>
             <div class="field-grid">
-              <div class="field"><label>Jméno:</label><input class="input" value="${escapeHtml(d.name)}" oninput="updDog(${i},'name',this.value)" placeholder="Např. Earl Matteo Angel..." /></div>
+              <div class="field"><label>Jméno:</label><input class="input" value="${escapeHtml(d.name)}" oninput="updDog(${i},'name',this.value)" placeholder="Např. Matteo Angel..." /></div>
               <div class="field"><label>Pohlaví:</label>
                 <select class="select" onchange="updDog(${i},'gender',this.value); renderDogs();">
                   <option value="female" ${d.gender==='female'?'selected':''}>Fena</option>

@@ -1,6 +1,8 @@
+<?php require_once __DIR__ . '/auth.php'; auth_require_login(); $csrfToken = csrf_token(); ?>
 <!DOCTYPE html>
 <html lang="cs">
 <head>
+  <meta name="csrf-token" content="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin – Great Silkyway</title>
@@ -417,7 +419,7 @@
       <div class="admin-header__actions">
         <button class="admin-btn admin-btn--ghost" onclick="translateAll(this)" title="Auto-překlad všech českých textů do EN">🌐 <span class="btn-label-full">Přeložit vše do EN</span><span class="btn-label-short">EN</span></button>
         <button class="admin-btn admin-btn--primary" onclick="publishToWeb()" id="publishBtn">🚀 <span class="btn-label-full">Publikovat na web</span><span class="btn-label-short">Publikovat</span></button>
-        <button class="admin-btn admin-btn--ghost" onclick="logout()"><span class="btn-label-full">Odhlásit</span><span class="btn-label-short">Odhlásit</span></button>
+        <button class="admin-btn admin-btn--ghost" onclick="location.href='logout.php'"><span class="btn-label-full">Odhlásit</span><span class="btn-label-short">Odhlásit</span></button>
       </div>
     </div>
 
@@ -457,10 +459,25 @@
 
       <!-- GALLERY TAB -->
       <div class="admin-panel" id="tab-gallery">
-        <div class="admin-section-title">Galerie</div>
-        <div class="admin-section-sub">Fotky zobrazené v sekci „Galerie". Vyberte kategorii (např. „Štěňata", „Senorita", „Matteo"…) a nahrajte fotku.</div>
-        <div id="galleryList"></div>
-        <button class="admin-btn admin-btn--secondary" onclick="addGallery()">+ Přidat fotku</button>
+
+        <!-- ALBA ŠTĚŇAT (podkategorie podle jmen) -->
+        <div id="albumsBox">
+          <div class="admin-section-title">Štěňata – alba podle jmen</div>
+          <div class="admin-section-sub">Přidejte jméno štěňátka. Vytvoří se podkategorie v Galerii → Štěňata. Kliknutím na jméno otevřete jeho album a nahrajete do něj fotky.</div>
+          <div id="albumList"></div>
+          <button class="admin-btn admin-btn--secondary" onclick="addAlbum()">+ Přidat jméno štěňátka</button>
+        </div>
+
+        <!-- DETAIL ALBA (fotky jednoho štěňátka) -->
+        <div id="albumDetail" style="display:none;"></div>
+
+        <!-- VŠECHNY FOTKY -->
+        <div id="galleryMain">
+          <div class="admin-section-title" style="margin-top:34px;">Všechny fotky v galerii</div>
+          <div class="admin-section-sub">Fotky zobrazené v sekci „Galerie". Vyberte kategorii (např. „Štěňata", „Senorita", „Matteo"…) a nahrajte fotku. U kategorie „Štěňata" můžete fotku navíc přiřadit ke konkrétnímu jménu.</div>
+          <div id="galleryList"></div>
+          <button class="admin-btn admin-btn--secondary" onclick="addGallery()">+ Přidat fotku</button>
+        </div>
       </div>
 
       <!-- TEXTS TAB -->
@@ -497,8 +514,14 @@
       puppies: [],
       litters: [],
       gallery: [],
+      puppyAlbums: [],
       texts: {}
     };
+
+    // Prazdna kostra obsahu - pouzita pri nacitani, importu i resetu
+    function emptyContent() {
+      return { dogs: [], puppies: [], litters: [], gallery: [], puppyAlbums: [], texts: {} };
+    }
 
     const CATEGORIES = [
       { value: 'senorita', label: 'Senorita (fena)' },
@@ -550,13 +573,13 @@
       } catch {}
 
       if (serverContent && typeof serverContent === 'object') {
-        content = Object.assign({ dogs: [], puppies: [], litters: [], gallery: [], texts: {} }, serverContent);
+        content = Object.assign(emptyContent(), serverContent);
         loadFromServerOk = true;
       } else {
         // Server nevratil nic - pouzij lokalni zalohu
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
-          try { content = Object.assign({ dogs: [], puppies: [], litters: [], gallery: [], texts: {} }, JSON.parse(saved)); } catch {}
+          try { content = Object.assign(emptyContent(), JSON.parse(saved)); } catch {}
         } else {
           // Migrace ze stareho klice
           const old = localStorage.getItem('gs_admin_content');
@@ -569,14 +592,15 @@
           }
         }
       }
-      ['dogs','puppies','litters','gallery'].forEach(k => { if (!Array.isArray(content[k])) content[k] = []; });
+      ['dogs','puppies','litters','gallery','puppyAlbums'].forEach(k => { if (!Array.isArray(content[k])) content[k] = []; });
       if (!content.texts) content.texts = {};
+      normalizeAlbums();
 
       // Lokalni zalohu vzdy aktualizujeme tim co je na serveru
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(content)); } catch {}
     }
 
-    function renderAll() { renderDogs(); renderPuppies(); renderLitters(); renderGallery(); }
+    function renderAll() { renderDogs(); renderPuppies(); renderLitters(); renderAlbums(); renderGallery(); }
 
     // ===== UTILITY =====
     function escapeHtml(s) {
@@ -748,6 +772,9 @@
             <option value="bronze" ${a.medal==='bronze'?'selected':''}>🥉 Bronz</option>
           </select>
           <button class="icon-btn" onclick="delAch(${di},${ai})" title="Smazat">✕</button>
+        </div>
+        <div class="achievement-row" style="margin-top:-4px;margin-bottom:14px;">
+          <input class="input" style="grid-column:1 / span 4;" value="${escapeHtml(a.pdf || '')}" oninput="updAch(${di},${ai},'pdf',this.value)" placeholder="Cesta k PDF/obrázku (např. tituly-matteo/certifikat.pdf)" />
         </div>`).join('');
     }
 
@@ -818,36 +845,48 @@
     }
 
     // Globalni: prelozi VSE co jeste nema *En verzi
+    // Core: prelozi vse co nema *En verzi. Vrati pocet prelozenych poli.
+    async function translateMissingFields() {
+      let count = 0;
+      for (const d of content.dogs) {
+        const fields = ['name','description','titles','breed','health'].filter(f => d[f] && !d[f+'En']);
+        if (fields.length) {
+          Object.assign(d, await translateFields(d, fields));
+          count += fields.length;
+        }
+        for (const a of (d.achievements || [])) {
+          const af = ['title','detail'].filter(f => a[f] && !a[f+'En']);
+          if (af.length) { Object.assign(a, await translateFields(a, af)); count += af.length; }
+        }
+      }
+      for (const p of content.puppies) {
+        const f = ['name','description','breed'].filter(x => p[x] && !p[x+'En']);
+        if (f.length) { Object.assign(p, await translateFields(p, f)); count += f.length; }
+      }
+      for (const l of content.litters) {
+        const f = ['name','description'].filter(x => l[x] && !l[x+'En']);
+        if (f.length) { Object.assign(l, await translateFields(l, f)); count += f.length; }
+      }
+      for (const g of content.gallery) {
+        if (g.caption && !g.captionEn) {
+          Object.assign(g, await translateFields(g, ['caption']));
+          count++;
+        }
+      }
+      for (const a of content.puppyAlbums) {
+        if (a.name && !a.nameEn) {
+          Object.assign(a, await translateFields(a, ['name']));
+          count++;
+        }
+      }
+      return count;
+    }
+
     async function translateAll(btn) {
       const orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '⏳ Překládám…';
-      let count = 0;
       try {
-        for (const d of content.dogs) {
-          const fields = ['name','description','titles','breed','health'].filter(f => d[f] && !d[f+'En']);
-          if (fields.length) {
-            Object.assign(d, await translateFields(d, fields));
-            count++;
-          }
-          for (const a of (d.achievements || [])) {
-            const af = ['title','detail'].filter(f => a[f] && !a[f+'En']);
-            if (af.length) { Object.assign(a, await translateFields(a, af)); count++; }
-          }
-        }
-        for (const p of content.puppies) {
-          const f = ['name','description','breed'].filter(x => p[x] && !p[x+'En']);
-          if (f.length) { Object.assign(p, await translateFields(p, f)); count++; }
-        }
-        for (const l of content.litters) {
-          const f = ['name','description'].filter(x => l[x] && !l[x+'En']);
-          if (f.length) { Object.assign(l, await translateFields(l, f)); count++; }
-        }
-        for (const g of content.gallery) {
-          if (g.caption && !g.captionEn) {
-            Object.assign(g, await translateFields(g, ['caption']));
-            count++;
-          }
-        }
-        showToast('✓ Přeloženo ' + count + ' položek do EN', 'success');
+        const count = await translateMissingFields();
+        showToast('✓ Přeloženo ' + count + ' polí do EN', 'success');
       } catch (e) {
         showToast('⚠ Překlad selhal: ' + (e.message || e), 'error');
       } finally {
@@ -976,24 +1015,212 @@
     function litterPhoto(i) { uploadPhoto(d => { content.litters[i].cover = d; renderLitters(); }); }
     function removeLitterPhoto(i) { content.litters[i].cover = ''; renderLitters(); }
 
-    // ===== GALLERY =====
-    function renderGallery() {
-      const list = document.getElementById('galleryList');
+    // ===== ALBA ŠTĚŇAT (podkategorie galerie podle jmen) =====
+    // Album = { name, nameEn, slug, cover }. Fotky alba jsou bezne polozky
+    // content.gallery s category:'stenata' a album:'<slug>' - diky tomu je
+    // web i admin ctou ze stejneho zdroje.
+
+    // Aktualne otevrene album (slug) nebo null = seznam alb
+    let openAlbumSlug = null;
+
+    function slugify(s) {
+      return String(s || '').toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+    function uniqueAlbumSlug(base, exceptIndex) {
+      let slug = slugify(base) || 'stene';
+      const taken = i => content.puppyAlbums.some((a, idx) => idx !== exceptIndex && a.slug === i);
+      if (!taken(slug)) return slug;
+      let n = 2;
+      while (taken(slug + '-' + n)) n++;
+      return slug + '-' + n;
+    }
+    // Doplni chybejici/duplicitni slugy (napr. po importu starsiho content.json)
+    function normalizeAlbums() {
+      content.puppyAlbums.forEach((a, i) => {
+        if (!a.slug || content.puppyAlbums.some((b, j) => j < i && b.slug === a.slug)) {
+          a.slug = uniqueAlbumSlug(a.slug || a.name, i);
+        }
+      });
+    }
+    function albumPhotoIndexes(slug) {
+      const out = [];
+      content.gallery.forEach((g, i) => {
+        if (g.category === 'stenata' && g.album === slug) out.push(i);
+      });
+      return out;
+    }
+
+    function renderAlbums() {
+      const list = document.getElementById('albumList');
+      if (!list) return;
       list.innerHTML = '';
-      if (content.gallery.length === 0) {
-        list.innerHTML = '<div class="empty-state"><div class="empty-state__icon">🖼</div>Zatím žádné fotky. Klikněte na „+ Přidat fotku" níže.</div>';
+      if (content.puppyAlbums.length === 0) {
+        list.innerHTML = '<div class="empty-state"><div class="empty-state__icon">🐾</div>'
+          + 'Zatím žádná jména štěňat. Klikněte na „+ Přidat jméno štěňátka" níže.</div>';
         return;
       }
-      content.gallery.forEach((g, i) => {
+      content.puppyAlbums.forEach((a, i) => {
+        const count = albumPhotoIndexes(a.slug).length;
+        const cover = a.cover || (content.gallery[albumPhotoIndexes(a.slug)[0]] || {}).photo || '';
         const el = document.createElement('div');
         el.className = 'item-card';
         el.innerHTML = `
           <div class="item-card__head">
-            <h3>${escapeHtml(g.caption || 'Nová fotka')} <span class="badge">${(CATEGORIES.find(c => c.value === g.category) || {label:'?'}).label}</span></h3>
+            <h3 style="cursor:pointer;" onclick="openAlbum('${escapeHtml(a.slug)}')" title="Otevřít album a přidat fotky">
+              🐾 ${escapeHtml(a.name || 'Bez jména')} <span class="badge">${count} ${count === 1 ? 'fotka' : (count >= 2 && count <= 4 ? 'fotky' : 'fotek')}</span>
+            </h3>
             <div>
               <div class="reorder-buttons">
-                <button onclick="moveGallery(${i},-1)">▲</button>
-                <button onclick="moveGallery(${i},1)">▼</button>
+                <button onclick="moveAlbum(${i},-1)">▲</button>
+                <button onclick="moveAlbum(${i},1)">▼</button>
+              </div>
+              <button class="admin-btn admin-btn--secondary admin-btn--sm" onclick="translateAlbum(${i}, this)" title="Auto-překlad do angličtiny">🌐 EN</button>
+              <button class="admin-btn admin-btn--danger admin-btn--sm" onclick="deleteAlbum(${i})">🗑 Smazat</button>
+            </div>
+          </div>
+          <div class="item-card__grid">
+            <div class="photo-zone" onclick="openAlbum('${escapeHtml(a.slug)}')">
+              ${cover ? `<img src="${escapeHtml(cover)}" alt="" />` : '<div class="photo-zone__hint"><b>📷</b>Otevřít album</div>'}
+            </div>
+            <div class="field-grid">
+              <div class="field"><label>Jméno štěňátka:</label>
+                <input class="input" value="${escapeHtml(a.name)}" placeholder="např. Barron"
+                       oninput="updAlbum(${i},'name',this.value)" onchange="renameAlbumSlug(${i})" /></div>
+              <div class="field field--full">
+                <button class="admin-btn admin-btn--primary" onclick="openAlbum('${escapeHtml(a.slug)}')">📷 Otevřít fotky (${count})</button>
+              </div>
+            </div>
+          </div>`;
+        list.appendChild(el);
+      });
+    }
+
+    function addAlbum() {
+      const name = 'Nové štěňátko';
+      content.puppyAlbums.push({ name, nameEn: '', slug: uniqueAlbumSlug(name), cover: '' });
+      renderAlbums();
+      showToast('✓ Album přidáno — přepište jméno a otevřete fotky', 'success');
+    }
+    function updAlbum(i, f, v) { content.puppyAlbums[i][f] = v; }
+    function moveAlbum(i, dir) { moveItem(content.puppyAlbums, i, dir); renderAlbums(); }
+    // Po prejmenovani sladit slug a prepsat odkazy u vsech fotek alba
+    function renameAlbumSlug(i) {
+      const a = content.puppyAlbums[i];
+      const next = uniqueAlbumSlug(a.name, i);
+      if (!next || next === a.slug) { renderAlbums(); return; }
+      const old = a.slug;
+      a.slug = next;
+      content.gallery.forEach(g => { if (g.category === 'stenata' && g.album === old) g.album = next; });
+      if (openAlbumSlug === old) openAlbumSlug = next;
+      renderAlbums(); renderGallery();
+    }
+    function deleteAlbum(i) {
+      const a = content.puppyAlbums[i];
+      const idxs = albumPhotoIndexes(a.slug);
+      const msg = idxs.length
+        ? `Smazat album „${a.name}" i s ${idxs.length} fotkami?`
+        : `Smazat album „${a.name}"?`;
+      if (!confirm(msg)) return;
+      // Fotky alba smazat od konce, aby indexy zustaly platne
+      idxs.reverse().forEach(gi => content.gallery.splice(gi, 1));
+      content.puppyAlbums.splice(i, 1);
+      if (openAlbumSlug === a.slug) closeAlbum();
+      renderAlbums(); renderGallery();
+    }
+    async function translateAlbum(i, btn) {
+      await runTranslate(btn, async () => {
+        const a = content.puppyAlbums[i];
+        Object.assign(a, await translateFields(a, ['name']));
+        return a.name;
+      });
+    }
+
+    // ----- Detail alba: fotky jednoho stenete -----
+    function openAlbum(slug) {
+      openAlbumSlug = slug;
+      document.getElementById('albumsBox').style.display = 'none';
+      document.getElementById('galleryMain').style.display = 'none';
+      document.getElementById('albumDetail').style.display = '';
+      renderAlbumDetail();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function closeAlbum() {
+      openAlbumSlug = null;
+      document.getElementById('albumDetail').style.display = 'none';
+      document.getElementById('albumsBox').style.display = '';
+      document.getElementById('galleryMain').style.display = '';
+      renderAlbums(); renderGallery();
+    }
+    function renderAlbumDetail() {
+      const wrap = document.getElementById('albumDetail');
+      const a = content.puppyAlbums.find(x => x.slug === openAlbumSlug);
+      if (!a) { closeAlbum(); return; }
+      const idxs = albumPhotoIndexes(a.slug);
+      wrap.innerHTML = `
+        <button class="admin-btn admin-btn--ghost" onclick="closeAlbum()">← Zpět na seznam jmen</button>
+        <div class="admin-section-title" style="margin-top:14px;">🐾 ${escapeHtml(a.name || 'Bez jména')}</div>
+        <div class="admin-section-sub">Fotky tohoto štěňátka. Na webu je najdete v Galerii pod „Štěňata → ${escapeHtml(a.name || '')}".</div>
+        <div id="albumPhotoList"></div>
+        <button class="admin-btn admin-btn--secondary" onclick="addAlbumPhoto()">+ Přidat fotku do alba ${escapeHtml(a.name || '')}</button>`;
+      const list = document.getElementById('albumPhotoList');
+      if (idxs.length === 0) {
+        list.innerHTML = '<div class="empty-state"><div class="empty-state__icon">🖼</div>'
+          + 'Album je zatím prázdné. Klikněte na „+ Přidat fotku do alba" níže.</div>';
+        return;
+      }
+      idxs.forEach(i => {
+        const el = document.createElement('div');
+        el.className = 'item-card';
+        el.innerHTML = galleryCardHtml(content.gallery[i], i, true);
+        list.appendChild(el);
+      });
+    }
+    function addAlbumPhoto() {
+      const a = content.puppyAlbums.find(x => x.slug === openAlbumSlug);
+      if (!a) return;
+      content.gallery.push({
+        caption: a.name || 'Štěňátko', category: 'stenata', album: a.slug,
+        photo: '', wide: false, objectPosition: 'center top'
+      });
+      renderAlbumDetail();
+      // Rovnou otevrit vyber souboru pro nove pridanou fotku
+      galleryPhoto(content.gallery.length - 1);
+    }
+
+    // ===== GALLERY =====
+    // Spolecna karta fotky - pouzita v seznamu vsech fotek i v detailu alba.
+    // V detailu alba (inAlbum) se skryva vyber kategorie a alba.
+    function galleryCardHtml(g, i, inAlbum) {
+      const catLabel = (CATEGORIES.find(c => c.value === g.category) || { label: '?' }).label;
+      const album = content.puppyAlbums.find(a => a.slug === g.album);
+      const badge = g.category === 'stenata' && album
+        ? `${escapeHtml(catLabel)} → ${escapeHtml(album.name)}`
+        : escapeHtml(catLabel);
+      const rerender = inAlbum ? 'renderAlbumDetail()' : 'renderGallery()';
+      // V albu se prehazuje poradi jen mezi fotkami daneho stenete
+      const moveFn = inAlbum ? 'moveAlbumPhoto' : 'moveGallery';
+      const albumField = (inAlbum || g.category !== 'stenata') ? '' : `
+              <div class="field"><label>Jméno štěňátka:</label>
+                <select class="select" onchange="updGallery(${i},'album',this.value); renderGallery();">
+                  <option value="">— bez jména (obecné štěňata) —</option>
+                  ${content.puppyAlbums.map(a => `<option value="${escapeHtml(a.slug)}" ${g.album === a.slug ? 'selected' : ''}>${escapeHtml(a.name)}</option>`).join('')}
+                </select>
+              </div>`;
+      const catField = inAlbum ? '' : `
+              <div class="field"><label>Kategorie:</label>
+                <select class="select" onchange="updGallery(${i},'category',this.value); renderGallery();">
+                  ${CATEGORIES.map(c => `<option value="${c.value}" ${g.category === c.value ? 'selected' : ''}>${escapeHtml(c.label)}</option>`).join('')}
+                </select>
+              </div>`;
+      return `
+          <div class="item-card__head">
+            <h3>${escapeHtml(g.caption || 'Nová fotka')} <span class="badge">${badge}</span></h3>
+            <div>
+              <div class="reorder-buttons">
+                <button onclick="${moveFn}(${i},-1)">▲</button>
+                <button onclick="${moveFn}(${i},1)">▼</button>
               </div>
               <button class="admin-btn admin-btn--secondary admin-btn--sm" onclick="translateGallery(${i}, this)" title="Auto-překlad do angličtiny">🌐 EN</button>
               <button class="admin-btn admin-btn--danger admin-btn--sm" onclick="deleteGallery(${i})">🗑 Smazat</button>
@@ -1006,30 +1233,54 @@
             </div>
             <div class="field-grid">
               <div class="field"><label>Popisek:</label><input class="input" value="${escapeHtml(g.caption)}" oninput="updGallery(${i},'caption',this.value)" /></div>
-              <div class="field"><label>Kategorie:</label>
-                <select class="select" onchange="updGallery(${i},'category',this.value); renderGallery();">
-                  ${CATEGORIES.map(c => `<option value="${c.value}" ${g.category===c.value?'selected':''}>${escapeHtml(c.label)}</option>`).join('')}
-                </select>
-              </div>
-              <div class="field"><label>Široká:</label><label style="font-weight:normal;"><input type="checkbox" ${g.wide?'checked':''} onchange="updGallery(${i},'wide',this.checked)" /> Fotka zabere 2 sloupce</label></div>
+              ${catField}${albumField}
+              <div class="field"><label>Široká:</label><label style="font-weight:normal;"><input type="checkbox" ${g.wide ? 'checked' : ''} onchange="updGallery(${i},'wide',this.checked); ${rerender};" /> Fotka zabere 2 sloupce</label></div>
               <div class="field"><label>Výřez:</label><input class="input" value="${escapeHtml(g.objectPosition || 'center center')}" oninput="updGallery(${i},'objectPosition',this.value)" placeholder="center center / center top / 30% 50%" /></div>
             </div>
           </div>`;
+    }
+
+    function renderGallery() {
+      const list = document.getElementById('galleryList');
+      list.innerHTML = '';
+      if (content.gallery.length === 0) {
+        list.innerHTML = '<div class="empty-state"><div class="empty-state__icon">🖼</div>Zatím žádné fotky. Klikněte na „+ Přidat fotku" níže.</div>';
+        return;
+      }
+      content.gallery.forEach((g, i) => {
+        const el = document.createElement('div');
+        el.className = 'item-card';
+        el.innerHTML = galleryCardHtml(g, i, false);
         list.appendChild(el);
       });
     }
+    // Po zmene poradi/mazani se prekresli i prave otevrene album
+    function refreshGalleryViews() {
+      renderGallery();
+      renderAlbums();
+      if (openAlbumSlug) renderAlbumDetail();
+    }
     function addGallery() {
-      content.gallery.push({ caption: 'Nová fotka', category: 'stenata', photo: '', wide: false, objectPosition: 'center center' });
+      content.gallery.push({ caption: 'Nová fotka', category: 'stenata', album: '', photo: '', wide: false, objectPosition: 'center center' });
       renderGallery();
     }
     function deleteGallery(i) {
       if (!confirm('Smazat tuto fotku?')) return;
-      content.gallery.splice(i, 1); renderGallery();
+      content.gallery.splice(i, 1); refreshGalleryViews();
     }
-    function moveGallery(i, dir) { moveItem(content.gallery, i, dir); renderGallery(); }
+    function moveGallery(i, dir) { moveItem(content.gallery, i, dir); refreshGalleryViews(); }
+    // Prohodi fotku se sousedni fotkou TEHOZ alba (ne s libovolnou sousedni polozkou galerie)
+    function moveAlbumPhoto(i, dir) {
+      const idxs = albumPhotoIndexes(openAlbumSlug);
+      const pos = idxs.indexOf(i);
+      const target = idxs[pos + dir];
+      if (pos < 0 || target === undefined) return;
+      [content.gallery[i], content.gallery[target]] = [content.gallery[target], content.gallery[i]];
+      refreshGalleryViews();
+    }
     function updGallery(i, f, v) { content.gallery[i][f] = v; }
-    function galleryPhoto(i) { uploadPhoto(d => { content.gallery[i].photo = d; renderGallery(); }); }
-    function removeGalleryPhoto(i) { content.gallery[i].photo = ''; renderGallery(); }
+    function galleryPhoto(i) { uploadPhoto(d => { content.gallery[i].photo = d; refreshGalleryViews(); }); }
+    function removeGalleryPhoto(i) { content.gallery[i].photo = ''; refreshGalleryViews(); }
 
     // ===== TEXTS =====
     function loadTexts() {
@@ -1084,21 +1335,37 @@
       const btn = document.getElementById('publishBtn');
       const originalHtml = btn.innerHTML;
       btn.disabled = true;
+
+      // AUTO-PREKLAD: pred publikaci dolozit chybejici EN preklady
+      btn.innerHTML = '⏳ Překládám do EN…';
+      let translatedCount = 0;
+      try {
+        translatedCount = await translateMissingFields();
+      } catch (e) {
+        // Preklad nesmi blokovat publikaci. Pokracujeme i kdyz API selze.
+        console.warn('Auto-preklad selhal, pokracuji v publikaci:', e);
+      }
+
       btn.innerHTML = '⏳ Publikuji…';
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(content));
       } catch {}
       try {
+        const csrf = document.querySelector('meta[name="csrf-token"]')?.content || '';
         const res = await fetch('save-content.php', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrf,
+          },
           credentials: 'include',
           body: JSON.stringify(content),
         });
         const data = await res.json().catch(() => ({}));
         if (res.ok && data.ok) {
           const kb = Math.round((data.bytes || 0) / 1024);
-          showToast('🚀 Publikováno na web! (' + kb + ' KB)', 'success');
+          const tr = translatedCount > 0 ? ' · 🌐 ' + translatedCount + ' polí přeloženo' : '';
+          showToast('🚀 Publikováno na web! (' + kb + ' KB)' + tr, 'success');
         } else {
           showToast('⚠ Chyba: ' + (data.error || res.status), 'error');
         }
@@ -1127,8 +1394,11 @@
       reader.onload = e => {
         try {
           const imported = JSON.parse(e.target.result);
-          content = Object.assign({ dogs: [], puppies: [], litters: [], gallery: [], texts: {} }, imported);
+          content = Object.assign(emptyContent(), imported);
+          ['dogs','puppies','litters','gallery','puppyAlbums'].forEach(k => { if (!Array.isArray(content[k])) content[k] = []; });
+          normalizeAlbums();
           try { localStorage.setItem(STORAGE_KEY, JSON.stringify(content)); } catch {}
+          openAlbumSlug = null; closeAlbum();
           renderAll(); loadTexts();
           showToast('✓ Obsah načten', 'success');
         } catch {
@@ -1140,7 +1410,8 @@
     function resetAll() {
       if (!confirm('Opravdu obnovit výchozí obsah? Všechny vaše úpravy se smažou.')) return;
       localStorage.removeItem(STORAGE_KEY);
-      content = { dogs: [], puppies: [], litters: [], gallery: [], texts: {} };
+      content = emptyContent();
+      closeAlbum();
       renderAll(); loadTexts();
       showToast('↺ Obnoveno', 'success');
     }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>Diagnostika</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background:#f5f3ef; color:#111; }
+    pre { background: #fff; padding: 12px; border-radius: 8px; overflow: auto; }
+    .ok { color: #2f9e6b; font-weight: bold; }
+    .fail { color: #c0392b; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Diagnostika content.json</h1>
+  <div id="out">Nacitam...</div>
+  <script>
+    const out = document.getElementById('out');
+    function add(html) { out.insertAdjacentHTML('beforeend', html); }
+
+    out.innerHTML = '';
+    add('<p>1. Volam fetch("content.json")...</p>');
+
+    fetch('content.json?nocache=' + Date.now(), { cache: 'no-store' })
+      .then(r => {
+        add('<p class="ok">2. HTTP status: ' + r.status + ' ' + r.statusText + '</p>');
+        add('<p>3. Content-Type: ' + r.headers.get('content-type') + '</p>');
+        return r.text();
+      })
+      .then(text => {
+        add('<p>4. Velikost odpovedi: ' + text.length + ' znaku</p>');
+        add('<p>5. Prvnich 200 znaku:</p><pre>' + text.substring(0, 200).replace(/</g,'&lt;') + '</pre>');
+        try {
+          const data = JSON.parse(text);
+          add('<p class="ok">6. JSON.parse OK</p>');
+          add('<p>7. dogs: ' + (data.dogs?.length || 0) + ', puppies: ' + (data.puppies?.length || 0) + ', litters: ' + (data.litters?.length || 0) + ', gallery: ' + (data.gallery?.length || 0) + '</p>');
+          if (data.puppies?.length) {
+            add('<p>8. Prvni stene: <strong>' + data.puppies[0].name + '</strong> (foto: ' + data.puppies[0].photo + ')</p>');
+            add('<p>9. Test obrazku: <img src="' + data.puppies[0].photo + '" style="max-height:120px;border:1px solid #ccc;" onerror="this.outerHTML=&quot;<span class=fail>OBRAZEK NENALEZEN</span>&quot;"></p>');
+          } else {
+            add('<p class="fail">8. ZADNA STENATA v datech!</p>');
+          }
+        } catch (e) {
+          add('<p class="fail">6. JSON.parse SELHAL: ' + e.message + '</p>');
+        }
+      })
+      .catch(e => {
+        add('<p class="fail">CHYBA fetch: ' + e.message + '</p>');
+      });
+  </script>
+</body>
+</html>

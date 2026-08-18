@@ -26,8 +26,40 @@
     if (Array.isArray(c.dogs) && c.dogs.length) applyDogs(c.dogs);
     if (Array.isArray(c.puppies) && c.puppies.length) applyPuppies(c.puppies);
     if (Array.isArray(c.litters) && c.litters.length) applyLitters(c.litters);
+    // Podkategorie stenat musi byt vyrenderovane driv nez galerie -
+    // applyGallery na konci znovu naviaze filtry a aplikuje hash z URL.
+    applyPuppyAlbums(Array.isArray(c.puppyAlbums) ? c.puppyAlbums : [], Array.isArray(c.gallery) ? c.gallery : []);
     if (Array.isArray(c.gallery) && c.gallery.length) applyGallery(c.gallery);
     if (c.texts) applyTexts(c.texts);
+    // Karty se renderuji az po IntersectionObseveru z animations.js.
+    // Bez tohohle zustanou opacity:0 (skryte). Zviditelnime je.
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.aos').forEach(el => el.classList.add('aos--visible'));
+      // Po vyrendrovani aplikovat preklady (lang.js) pro vsechny [data-i18n] elementy
+      if (typeof window.applyTranslations === 'function' && typeof window.getLang === 'function') {
+        try { window.applyTranslations(window.getLang()); } catch {}
+      }
+    });
+  }
+
+  // Helper - vybere CZ/EN podle aktualniho jazyka
+  function gsLang() {
+    try { return (window.getLang && window.getLang()) || 'cs'; } catch { return 'cs'; }
+  }
+  function pickLang(obj, baseKey) {
+    const lang = gsLang();
+    if (lang === 'en' && obj[baseKey + 'En']) return obj[baseKey + 'En'];
+    return obj[baseKey] || '';
+  }
+
+  // Po prepnuti jazyka znovu vyrenderovat karty (kvuli dynamickym popisum/popiskum)
+  if (typeof window.setLang === 'function' && !window._gsLangHooked) {
+    window._gsLangHooked = true;
+    const _origSetLang = window.setLang;
+    window.setLang = function(lang) {
+      _origSetLang(lang);
+      if (content) apply(content);
+    };
   }
 
   function escapeHtml(s) {
@@ -75,32 +107,70 @@
   function dogCard(d, i) {
     const photo = d.photo || '';
     const badge = d.gender === 'male'
-      ? '<span class="dog-card__badge" style="background:var(--color-navy);">Pes</span>'
-      : '<span class="dog-card__badge">Fena</span>';
+      ? '<span class="dog-card__badge" style="background:var(--color-navy);" data-i18n="gender_male">Pes</span>'
+      : '<span class="dog-card__badge" data-i18n="gender_female">Fena</span>';
     const ach = (d.achievements || []).filter(a => a.title);
+    // Mapovani slug -> puvodni open*Achievements funkce v nasi-psi.html (s PDF certifikaty)
+    const slugFnMap = {
+      senorita: 'openRomaAchievements',
+      michelle: 'openMichelleAchievements',
+      oxygen: 'openOxygenAchievements',
+      matteo: 'openMatteoAchievements',
+    };
+    const slugForFn = (d.slug || '').toLowerCase();
+    const openFn = slugFnMap[slugForFn];
     const achBtn = ach.length
-      ? `<button class="btn btn--outline btn--sm btn--achievements" onclick="event.stopPropagation(); gsShowAchievements(${i}, '${escapeHtml(d.gender)}')">🏆 Úspěchy</button>`
+      ? (openFn
+          ? `<button class="btn btn--outline btn--sm btn--achievements" onclick="event.stopPropagation(); ${openFn}()">🏆 <span data-i18n="btn_achievements">Úspěchy</span></button>`
+          : `<button class="btn btn--outline btn--sm btn--achievements" onclick="event.stopPropagation(); gsShowAchievements(${i}, '${escapeHtml(d.gender)}')">🏆 <span data-i18n="btn_achievements">Úspěchy</span></button>`)
       : '';
+    const objFit = d.imageFit || 'cover';
+    const objPos = d.imagePosition || 'center center';
+    const imgBg = d.imageBg ? `background:${escapeHtml(d.imageBg)};` : '';
+    const imageStyle = `position:relative;overflow:hidden;${imgBg}`;
+    // Kliknuti na kartu otevre galerii s filtrem na tohoto psa
+    const slug = (d.slug || d.name || '').toString().toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    const clickHandler = slug ? `onclick="location.href='galerie.html#${escapeHtml(slug)}'"` : '';
+    const desc = pickLang(d, 'description');
+    const titlesV = pickLang(d, 'titles');
+    const healthV = pickLang(d, 'health') || (gsLang() === 'en' ? 'All clear' : 'V pořádku');
     return `
-      <div class="dog-card aos aos-d${(i % 3) + 1}" style="cursor:pointer;">
-        <div class="dog-card__image">
-          ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(d.name)}" style="width:100%;height:100%;object-fit:cover;" />` : ''}
+      <div class="dog-card aos aos-d${(i % 3) + 1}" style="cursor:pointer;" ${clickHandler}>
+        <div class="dog-card__image" style="${imageStyle}">
+          ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(d.name)}" style="width:100%;height:100%;object-fit:${escapeHtml(objFit)};object-position:${escapeHtml(objPos)};" />` : ''}
           ${badge}
         </div>
         <div class="dog-card__body">
-          <div class="dog-card__breed">${escapeHtml(d.breed || 'Yorkshire teriér')}</div>
-          <div class="dog-card__name">${escapeHtml(d.name)}</div>
-          <p class="dog-card__desc">${escapeHtml(d.description || '')}</p>
+          <div class="dog-card__breed" data-i18n="breed_yt">${escapeHtml(d.breed || 'Yorkshire teriér')}</div>
+          <div class="dog-card__name">${escapeHtml(pickLang(d,'name') || d.name)}</div>
+          <p class="dog-card__desc">${escapeHtml(desc)}</p>
           <div class="dog-card__meta">
-            ${d.titles ? `<div class="dog-card__meta-item"><label>Tituly</label><span>${escapeHtml(d.titles)}</span></div>` : ''}
-            <div class="dog-card__meta-item"><label>Zdraví</label><span>${escapeHtml(d.health || 'V pořádku')} ✓</span></div>
+            ${titlesV ? `<div class="dog-card__meta-item"><label data-i18n="dog_titles">Tituly</label><span>${escapeHtml(titlesV)}</span></div>` : ''}
+            <div class="dog-card__meta-item"><label data-i18n="dog_dna">Zdraví</label><span>${escapeHtml(healthV)} ✓</span></div>
           </div>
           ${achBtn}
         </div>
       </div>`;
   }
 
-  // Modal pro úspěchy
+  // Modal pro úspěchy - vybira CZ/EN podle aktualniho jazyka (gsLang/pickLang definovany vyse)
+  window.gsToggleAch = function (btn) {
+    const wrap = btn.closest('.gs-ach-wrap');
+    const open = wrap.classList.toggle('gs-ach-open');
+    const panel = wrap.querySelector('.gs-ach-panel');
+    const iframe = panel.querySelector('iframe');
+    const img = panel.querySelector('img');
+    if (open) {
+      if (iframe && iframe.dataset.src && iframe.src.endsWith('about:blank')) iframe.src = iframe.dataset.src;
+      if (img && img.dataset.src && !img.src) img.src = img.dataset.src;
+      panel.style.maxHeight = '600px';
+    } else {
+      panel.style.maxHeight = '0';
+    }
+    btn.querySelector('.gs-ach-arrow').textContent = open ? '▲' : '▼';
+  };
   window.gsShowAchievements = function (i, gender) {
     const dogs = (content.dogs || []).filter(d => gender === 'male' ? d.gender === 'male' : d.gender !== 'male');
     const d = dogs[i]; if (!d) return;
@@ -112,17 +182,35 @@
       m.onclick = e => { if (e.target === m) m.remove(); };
       document.body.appendChild(m);
     }
+    const lang = gsLang();
     const medal = { gold: '🥇', silver: '🥈', bronze: '🥉' };
+    const heading = lang === 'en' ? '🏆 Achievements' : '🏆 Úspěchy';
+    const isImage = (p) => /\.(jpg|jpeg|png|webp|gif)$/i.test(p);
     m.innerHTML = `
-      <div style="background:#fff;border-radius:16px;max-width:540px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative;animation:gsFadeUp 0.3s ease both;">
+      <div style="background:#fff;border-radius:16px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;padding:32px;position:relative;animation:gsFadeUp 0.3s ease both;">
         <button onclick="document.getElementById('gsAchModal').remove()" style="position:absolute;top:14px;right:14px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#666;">✕</button>
-        <h2 style="font-family:var(--font-heading);color:var(--color-navy);margin-bottom:6px;">${escapeHtml(d.name)}</h2>
-        <div style="color:var(--color-text-soft);margin-bottom:20px;">🏆 Úspěchy</div>
-        ${(d.achievements || []).filter(a => a.title).map(a => `
-          <div style="border-left:3px solid var(--color-gold);padding:10px 14px;margin-bottom:10px;background:#faf8f3;border-radius:0 8px 8px 0;">
-            <div style="font-weight:700;color:var(--color-navy);">${medal[a.medal] || ''} ${escapeHtml(a.title)}</div>
-            ${a.detail ? `<div style="color:var(--color-text-soft);font-size:0.9rem;margin-top:2px;">${escapeHtml(a.detail)}</div>` : ''}
-          </div>`).join('')}
+        <h2 style="font-family:var(--font-heading);color:var(--color-navy);margin-bottom:6px;">${escapeHtml(pickLang(d, 'name') || d.name)}</h2>
+        <div style="color:var(--color-text-soft);margin-bottom:20px;">${heading}</div>
+        ${(d.achievements || []).filter(a => a.title).map(a => {
+          const t = pickLang(a, 'title');
+          const det = pickLang(a, 'detail');
+          const hasFile = !!a.pdf;
+          const pdfUrl = a.pdf ? encodeURI(a.pdf) : '';
+          const panel = !hasFile ? '' : (isImage(a.pdf)
+            ? `<div class="gs-ach-panel" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease;"><div style="padding:12px;"><img data-src="${escapeHtml(pdfUrl)}" alt="" style="width:100%;height:auto;border-radius:8px;" /></div></div>`
+            : `<div class="gs-ach-panel" style="max-height:0;overflow:hidden;transition:max-height 0.3s ease;"><iframe data-src="${escapeHtml(pdfUrl)}" src="about:blank" loading="lazy" style="width:100%;height:560px;border:none;border-radius:8px;"></iframe><div style="padding:8px 12px;text-align:right;"><a href="${escapeHtml(pdfUrl)}" target="_blank" rel="noopener" style="color:var(--color-gold);font-size:0.85rem;text-decoration:none;">📄 Otevřít v nové záložce ↗</a></div></div>`);
+          return `
+          <div class="gs-ach-wrap" style="border-left:3px solid var(--color-gold);margin-bottom:10px;background:#faf8f3;border-radius:0 8px 8px 0;overflow:hidden;">
+            <button type="button" ${hasFile ? 'onclick="gsToggleAch(this)"' : ''} style="width:100%;text-align:left;background:none;border:none;padding:12px 14px;cursor:${hasFile?'pointer':'default'};display:flex;align-items:center;gap:10px;font-family:inherit;">
+              <div style="flex:1;">
+                <div style="font-weight:700;color:var(--color-navy);">${medal[a.medal] || ''} ${escapeHtml(t)}</div>
+                ${det ? `<div style="color:var(--color-text-soft);font-size:0.9rem;margin-top:2px;">${escapeHtml(det)}</div>` : ''}
+              </div>
+              ${hasFile ? '<span class="gs-ach-arrow" style="color:var(--color-gold);font-size:1.1rem;">▼</span>' : ''}
+            </button>
+            ${panel}
+          </div>`;
+        }).join('')}
       </div>`;
   };
 
@@ -135,23 +223,23 @@
   }
   function genderBadge(g) {
     return g === 'male'
-      ? '<span class="puppy-card__gender puppy-card__gender--male">Pes</span>'
-      : '<span class="puppy-card__gender puppy-card__gender--female">Fena</span>';
+      ? '<span class="puppy-card__gender puppy-card__gender--male" data-i18n="gender_male">Pes</span>'
+      : '<span class="puppy-card__gender puppy-card__gender--female" data-i18n="gender_female">Fena</span>';
   }
   function statusBadge(s) {
     return s === 'reserved'
-      ? '<span class="puppy-card__status puppy-card__status--reserved">Rezervováno</span>'
-      : '<span class="puppy-card__status puppy-card__status--available">Volné</span>';
+      ? '<span class="puppy-card__status puppy-card__status--reserved" data-i18n="status_reserved">Rezervováno</span>'
+      : '<span class="puppy-card__status puppy-card__status--available" data-i18n="status_available">Volné</span>';
   }
   function puppyCardStena(p, i) {
     const photo = p.photo || '';
     const reserved = p.status === 'reserved';
     const btn = reserved
-      ? '<button class="btn btn--outline btn--sm" disabled style="opacity:0.5;cursor:not-allowed;">Obsazeno</button>'
-      : '<a href="kontakt.html" class="btn btn--primary btn--sm">Mám zájem</a>';
+      ? '<button class="btn btn--outline btn--sm" disabled style="opacity:0.5;cursor:not-allowed;" data-i18n="btn_taken">Obsazeno</button>'
+      : '<a href="kontakt.html" class="btn btn--primary btn--sm" data-i18n="btn_interested">Mám zájem</a>';
     const price = reserved
-      ? '<div class="puppy-card__price" style="margin-bottom:12px;color:var(--color-text-soft);">Rezervováno</div>'
-      : '<div class="puppy-card__price" style="margin-bottom:12px;">Cena na dotaz</div>';
+      ? '<div class="puppy-card__price" style="margin-bottom:12px;color:var(--color-text-soft);" data-i18n="status_reserved">Rezervováno</div>'
+      : '<div class="puppy-card__price" style="margin-bottom:12px;" data-i18n="price_on_request">Cena na dotaz</div>';
     return `
       <div class="puppy-card aos aos-d${(i % 3) + 1}">
         <div class="puppy-card__image" style="padding:0;overflow:hidden;position:relative;">
@@ -159,8 +247,8 @@
           ${genderBadge(p.gender)}${statusBadge(p.status)}
         </div>
         <div class="puppy-card__body">
-          <div class="puppy-card__name">${escapeHtml(p.name)}</div>
-          <div class="puppy-card__info">Yorkshire teriér</div>
+          <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}</div>
+          <div class="puppy-card__info" data-i18n="breed_yt">Yorkshire teriér</div>
           ${price}${btn}
         </div>
       </div>`;
@@ -174,9 +262,9 @@
           ${genderBadge(p.gender)}${statusBadge(p.status)}
         </div>
         <div class="puppy-card__body">
-          <div class="puppy-card__name">${escapeHtml(p.name)}</div>
-          <div class="puppy-card__info">Yorkshire teriér</div>
-          <div class="puppy-card__price">Na dotaz</div>
+          <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}</div>
+          <div class="puppy-card__info" data-i18n="breed_yt">Yorkshire teriér</div>
+          <div class="puppy-card__price" data-i18n="price_on_request">Na dotaz</div>
         </div>
       </div>`;
   }
@@ -190,24 +278,42 @@
   function litterCard(l, i) {
     const photo = l.cover || '';
     const statusClass = l.status === 'available' ? 'available' : 'reserved';
-    const statusLabel = { available: 'Dostupný', unavailable: 'Nedostupné', reserved: 'Rezervované' }[l.status] || 'Nedostupné';
+    const statusKey = l.status === 'available' ? 'litter_status_available' : 'litter_status_unavailable';
+    const statusLabel = l.status === 'available' ? 'Dostupný' : 'Nedostupné';
     const dimmed = l.status !== 'available' ? 'opacity:0.78;' : '';
     const btn = l.status === 'available'
-      ? '<a href="kontakt.html" class="btn btn--outline btn--sm">Dotaz na vrh</a>'
-      : '<button class="btn btn--outline btn--sm" disabled style="opacity:0.4;cursor:not-allowed;">Dotaz na vrh</button>';
+      ? '<a href="kontakt.html" class="btn btn--outline btn--sm" data-i18n="litter_inquiry">Dotaz na vrh</a>'
+      : '<button class="btn btn--outline btn--sm" disabled style="opacity:0.4;cursor:not-allowed;" data-i18n="litter_inquiry">Dotaz na vrh</button>';
     return `
       <div class="vrh-card aos aos-d${(i % 3) + 1}" style="cursor:pointer;${dimmed}" data-img="${escapeHtml(photo)}" data-caption="${escapeHtml(l.name)}">
         <div class="vrh-card__image" style="position:relative;">
           ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(l.name)}" style="object-position:center top;" />` : ''}
-          <span class="puppy-card__status puppy-card__status--${statusClass}">${statusLabel}</span>
+          <span class="puppy-card__status puppy-card__status--${statusClass}" data-i18n="${statusKey}">${statusLabel}</span>
         </div>
         <div class="vrh-card__body">
           <div class="vrh-card__label">Great Silkyway</div>
-          <div class="vrh-card__title">${escapeHtml(l.name)}</div>
-          <p class="vrh-card__desc">${escapeHtml(l.description || '')}</p>
+          <div class="vrh-card__title">${escapeHtml(pickLang(l,'name') || l.name)}</div>
+          <p class="vrh-card__desc">${escapeHtml(pickLang(l,'description'))}</p>
           ${btn}
         </div>
       </div>`;
+  }
+
+  // ===== PUPPY ALBUMS (podkategorie galerie podle jmen stenat) =====
+  function applyPuppyAlbums(albums, gallery) {
+    const bar = document.getElementById('puppyAlbumTabs');
+    if (!bar) return;
+    // Zalozku ukazat jen u jmen, ke kterym uz nejaka fotka je -
+    // prazdne album by filtrovalo do prazdna.
+    const used = new Set((gallery || []).filter(g => g.category === 'stenata' && g.album).map(g => g.album));
+    const named = albums.filter(a => a && a.slug && a.name && used.has(a.slug));
+    if (!named.length) { bar.innerHTML = ''; bar.style.display = 'none'; return; }
+    const allLabel = gsLang() === 'en' ? 'All puppies' : 'Všechna štěňata';
+    const heading = gsLang() === 'en' ? 'By name' : 'Podle jména';
+    bar.innerHTML =
+      `<div class="filter-tabs--sub__label">${heading}</div>` +
+      `<button class="filter-tab active" data-album="">${escapeHtml(allLabel)}</button>` +
+      named.map(a => `<button class="filter-tab" data-album="${escapeHtml(a.slug)}">${escapeHtml(pickLang(a, 'name'))}</button>`).join('');
   }
 
   // ===== GALLERY =====
@@ -215,6 +321,10 @@
     const grid = document.getElementById('galleryGrid');
     if (!grid) return;
     grid.innerHTML = items.map((g, i) => galleryItem(g, i)).join('');
+    // Po prerenderovani znovu navazat lightbox + filter kliky
+    if (typeof window.bindGalleryInteractions === 'function') {
+      window.bindGalleryInteractions();
+    }
   }
   function galleryItem(g, i) {
     const photo = g.photo || '';
@@ -222,10 +332,12 @@
     const delay = i % 3 === 0 ? '' : ` aos aos-d${(i % 3)}`;
     const cat = g.category === 'senorita' || g.category === 'michelle' || g.category === 'oxygen' || g.category === 'matteo'
       ? `psi ${g.category}` : g.category;
+    const caption = pickLang(g, 'caption') || g.caption;
+    const album = g.category === 'stenata' && g.album ? ` data-album="${escapeHtml(g.album)}"` : '';
     return `
-      <div class="gallery-item${wideClass}${delay}" data-category="${escapeHtml(cat)}" data-caption="${escapeHtml(g.caption)}" style="cursor:pointer;">
-        ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(g.caption)}" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(g.objectPosition || 'center center')};" />` : ''}
-        <div class="gallery-item__overlay"><span class="gallery-item__caption">${escapeHtml(g.caption)}</span></div>
+      <div class="gallery-item${wideClass}${delay}" data-category="${escapeHtml(cat)}"${album} data-caption="${escapeHtml(caption)}" style="cursor:pointer;">
+        ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(caption)}" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(g.objectPosition || 'center center')};" />` : ''}
+        <div class="gallery-item__overlay"><span class="gallery-item__caption">${escapeHtml(caption)}</span></div>
       </div>`;
   }
 })();

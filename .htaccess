@@ -9,6 +9,10 @@ Options -Indexes
 # --- Skryt podpisy serveru ---
 ServerSignature Off
 
+# --- UTF-8 vsude (oprava rozbite diakritiky) ---
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .htm .css .js .json .xml .txt
+
 # --- Blokovat citlive soubory podle nazvu / pripony ---
 <FilesMatch "(^\.|\.(env|env\..*|db|sqlite|sqlite3|sql|log|bak|old|swp|tmp|ini|conf|key|pem|crt|cer|p12|pfx|ps1|bat|sh|mjs|ts|tsx|md|yml|yaml|toml|lock|gitignore|gitattributes|npmrc|prettierrc.*|gitconfig|htpasswd|DS_Store|map)$|composer\.(json|lock)|package(-lock)?\.json|payload\.db|webpack\.config\.|tsconfig\.|vitest\.|playwright\.)">
   Require all denied
@@ -43,28 +47,49 @@ RedirectMatch 404 ^/media(/.*)?$
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://api.mymemory.translated.net; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
   Header unset X-Powered-By
   Header always unset X-Powered-By
 
   <FilesMatch "^content\.json$">
-    Header set Cache-Control "public, max-age=300, must-revalidate"
+    Header set Cache-Control "public, max-age=60, must-revalidate"
   </FilesMatch>
 
-  <FilesMatch "^(admin\.html|stats\.php|save-content\.php)$">
+  <FilesMatch "^(admin\.html|admin\.php|stats\.php|save-content\.php|login\.php|logout\.php)$">
     Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+
+  # HTML stranky - vzdy zkontrolovat aktualnost (zabrani uvaznuti stare verze)
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+
+  # content-loader.js - musi se rychle obnovovat
+  <FilesMatch "^content-loader\.js$">
+    Header set Cache-Control "public, max-age=300, must-revalidate"
   </FilesMatch>
 </IfModule>
 
 # --- Vychozi stranka ---
 DirectoryIndex index.html index.php
 
-# --- Ochrana admin rozhrani HTTP Basic Auth ---
-<FilesMatch "^(admin\.html|stats\.php|save-content\.php)$">
+# --- Presmerovani admin.html na admin.php (session auth) ---
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^admin\.html$ /admin.php [R=301,L]
+</IfModule>
+
+# Stats stale chranen Basic Authem (jednoducha cesta)
+<FilesMatch "^stats\.php$">
   AuthType Basic
-  AuthName "Great Silkyway - Admin"
+  AuthName "Great Silkyway - Statistiky"
   AuthUserFile /data/web/virtuals/397564/virtual/www/domains/greatsilkyway.cz/.htpasswd-admin
   Require valid-user
+</FilesMatch>
+
+# Chranit citlive auth soubory
+<FilesMatch "^\.(htpasswd|login-attempts)">
+  Require all denied
 </FilesMatch>
 
 # --- Cache statickych souboru ---

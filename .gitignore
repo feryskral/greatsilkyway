@@ -24,3 +24,8 @@ _sync-ftp.ps1
 # Claude Code worktrees a state
 .claude/
 
+
+# Auth state
+.login-attempts.json
+.htpasswd*
+

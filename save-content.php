@@ -1,9 +1,25 @@
 <?php
 // Endpoint pro uložení content.json přímo ze admin panelu.
-// Chráněno HTTP Basic Auth pres .htaccess (FilesMatch).
-// Pristupne jen z admin.html (kontrola Origin/Referer).
+// Chráněno session-based auth (auth.php).
+// Pristupne jen z admin.php (kontrola Origin/Referer).
 
 declare(strict_types=1);
+
+require_once __DIR__ . '/auth.php';
+auth_start_session();
+if (empty($_SESSION['auth_user'])) {
+    http_response_code(401);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['ok' => false, 'error' => 'Nepřihlášen - obnovte stránku a přihlaste se znovu']);
+    exit;
+}
+// CSRF: musi mit platny token v hlavicce X-CSRF-Token
+if (!csrf_verify()) {
+    http_response_code(403);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['ok' => false, 'error' => 'Neplatný CSRF token - obnovte stránku a zkuste znovu']);
+    exit;
+}
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, no-cache, must-revalidate');

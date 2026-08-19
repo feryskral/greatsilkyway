@@ -64,12 +64,14 @@ RedirectMatch 404 ^/media(/.*)?$
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
 
-  # content-loader.js - musi se rychle obnovovat.
-  # Hosting jinak vnucuje max-age=30 dni a navstevnikum uvazne stara verze.
-  # "always" prebije i hlavicku nastavenou jinde, Expires se musi zrusit zvlast.
-  <FilesMatch "^content-loader\.js$">
-    Header always set Cache-Control "public, max-age=300, must-revalidate"
-    Header always unset Expires
+  # Skripty a styly se musi rychle obnovovat. Hosting jinak vnucuje
+  # max-age=30 dni a navstevnikum uvazne stara verze (treba bez novych
+  # stylu). Varianta "always set" se tady neprojevila, obycejne "set"
+  # funguje - stejne jako u content.json vyse. Hlavni pojistkou zustava
+  # verzovana adresa v HTML (style.css?v=7).
+  <FilesMatch "^(content-loader\.js|lang\.js|animations\.js|style\.css)$">
+    Header set Cache-Control "public, max-age=300, must-revalidate"
+    Header unset Expires
   </FilesMatch>
 </IfModule>
 

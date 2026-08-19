@@ -64,11 +64,12 @@ RedirectMatch 404 ^/media(/.*)?$
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
 
-  # Skripty a styly se musi rychle obnovovat. Hosting jinak vnucuje
-  # max-age=30 dni a navstevnikum uvazne stara verze (treba bez novych
-  # stylu). Varianta "always set" se tady neprojevila, obycejne "set"
-  # funguje - stejne jako u content.json vyse. Hlavni pojistkou zustava
-  # verzovana adresa v HTML (style.css?v=7).
+  # POZOR: tohle pravidlo hosting ignoruje - overeno na zivem webu, kde
+  # style.css i skripty porad chodi s max-age=2592000 (30 dni) od CDN
+  # poskytovatele. Necháváme ho tu pro pripad, ze se to zmeni, ale
+  # skutecnou pojistkou je VERZOVANA ADRESA v HTML (style.css?v=7).
+  # Pri kazde zmene style.css / lang.js / content-loader.js je proto
+  # nutne zvednout cislo verze ve vsech HTML souborech.
   <FilesMatch "^(content-loader\.js|lang\.js|animations\.js|style\.css)$">
     Header set Cache-Control "public, max-age=300, must-revalidate"
     Header unset Expires

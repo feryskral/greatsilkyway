@@ -4,7 +4,7 @@
     {
       "name": "great-silkyway",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "3456", "."],
+      "runtimeArgs": ["-y", "serve", "-l", "3456", "."],
       "port": 3456
     },
     {

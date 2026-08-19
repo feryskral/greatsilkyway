@@ -229,9 +229,57 @@
   function applyPuppies(puppies) {
     const stenaGrid = document.getElementById('puppies-grid-stena');
     const homeGrid = document.getElementById('puppies-grid-home');
-    if (stenaGrid) stenaGrid.innerHTML = puppies.map((p, i) => puppyCardStena(p, i)).join('');
+    if (stenaGrid) {
+      // Odkaz z karty vrhu (stena.html#vrh-c) zuzi vypis jen na dany vrh
+      const slug = activeLitterSlug(puppies);
+      const shown = slug ? puppies.filter(p => gsSlugify(p.litter) === slug) : puppies;
+      stenaGrid.innerHTML = shown.map((p, i) => puppyCardStena(p, i)).join('');
+      renderLitterFilterNote(stenaGrid, puppies, slug);
+    }
     if (homeGrid) homeGrid.innerHTML = puppies.map((p, i) => puppyCardHome(p, i)).join('');
   }
+
+  // ===== FILTR STENAT PODLE VRHU (stena.html#vrh-c) =====
+  // Slug prijmeme jen tehdy, kdyz k nemu nejake stene existuje -
+  // jinak by odkaz vedl na prazdny vypis.
+  function activeLitterSlug(puppies) {
+    let raw = '';
+    try { raw = gsSlugify(decodeURIComponent((location.hash || '').slice(1))); } catch { raw = ''; }
+    if (!raw) return '';
+    return (puppies || []).some(p => gsSlugify(p.litter) === raw) ? raw : '';
+  }
+  function renderLitterFilterNote(grid, puppies, slug) {
+    let note = document.getElementById('puppyLitterNote');
+    if (!slug) { if (note) note.remove(); window._gsLitterScrolledFor = ''; return; }
+    if (!note) {
+      note = document.createElement('div');
+      note.id = 'puppyLitterNote';
+      note.className = 'litter-filter-note';
+      grid.parentNode.insertBefore(note, grid);
+    }
+    const p = puppies.find(x => gsSlugify(x.litter) === slug) || {};
+    const en = gsLang() === 'en';
+    note.innerHTML =
+      `<span class="litter-filter-note__text">${en ? 'Showing puppies from' : 'Zobrazena štěňata z vrhu'}</span>` +
+      `<span class="litter-filter-note__tag">${escapeHtml(pickLang(p, 'litter'))}</span>` +
+      `<button type="button" class="litter-filter-note__clear" onclick="gsClearLitterFilter()">${en ? 'Show all puppies' : 'Zobrazit všechna štěňata'}</button>`;
+    // Vypis stenat je az pod adopcnim procesem - po prichodu z Vrhu na nej rovnou
+    // sjedeme. Jen jednou na dany vrh, at prepnuti jazyka strankou necuka.
+    if (window._gsLitterScrolledFor !== slug) {
+      window._gsLitterScrolledFor = slug;
+      requestAnimationFrame(() => {
+        try { note.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch { note.scrollIntoView(); }
+      });
+    }
+  }
+  // Zruseni filtru = pryc s hashem a prekreslit (apply znovu odhali .aos karty)
+  window.gsClearLitterFilter = function () {
+    history.replaceState(null, '', location.pathname + location.search);
+    if (content) apply(content);
+  };
+  window.addEventListener('hashchange', () => {
+    if (content && document.getElementById('puppies-grid-stena')) apply(content);
+  });
   function genderBadge(g) {
     return g === 'male'
       ? '<span class="puppy-card__gender puppy-card__gender--male" data-i18n="gender_male">Pes</span>'
@@ -257,14 +305,16 @@
     const photoAttrs = link
       ? ` onclick="location.href='${escapeHtml(link)}'" style="padding:0;overflow:hidden;position:relative;cursor:pointer;" title="${en ? 'View photos in the gallery' : 'Zobrazit fotky v galerii'}" role="link" tabindex="0"`
       : ' style="padding:0;overflow:hidden;position:relative;"';
-    const photoHint = link
-      ? `<span class="puppy-card__gallery-hint" style="position:absolute;left:10px;bottom:10px;background:rgba(13,21,48,0.72);color:#fff;font-size:0.72rem;font-weight:700;padding:5px 10px;border-radius:999px;backdrop-filter:blur(2px);">📷 ${en ? 'Photos' : 'Fotky'}</span>`
+    // Misto obecneho '📷 Fotky' nese kazde stene tag sveho vrhu (Vrh C / Vrh D)
+    const litterName = pickLang(p, 'litter');
+    const litterTag = litterName
+      ? `<span class="puppy-card__litter">${escapeHtml(litterName)}</span>`
       : '';
     return `
       <div class="puppy-card aos aos-d${(i % 3) + 1}">
         <div class="puppy-card__image"${photoAttrs}>
           ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(p.name)}" style="width:100%;height:100%;object-fit:cover;" />` : '<span style="font-size:64px;">🐶</span>'}
-          ${genderBadge(p.gender)}${statusBadge(p.status)}${photoHint}
+          ${genderBadge(p.gender)}${statusBadge(p.status)}${litterTag}
         </div>
         <div class="puppy-card__body">
           <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}</div>
@@ -294,6 +344,8 @@
     const grid = document.querySelector('.vrhy-grid');
     if (!grid) return;
     grid.innerHTML = litters.map((l, i) => litterCard(l, i)).join('');
+    // Karty jsou nove -> znovu navazat kliknuti na fotku (lightbox)
+    if (typeof window.bindVrhLightbox === 'function') window.bindVrhLightbox();
   }
   function litterCard(l, i) {
     const photo = l.cover || '';
@@ -301,9 +353,14 @@
     const statusKey = l.status === 'available' ? 'litter_status_available' : 'litter_status_unavailable';
     const statusLabel = l.status === 'available' ? 'Dostupný' : 'Nedostupné';
     const dimmed = l.status !== 'available' ? 'opacity:0.78;' : '';
-    const btn = l.status === 'available'
-      ? '<a href="kontakt.html" class="btn btn--outline btn--sm" data-i18n="litter_inquiry">Dotaz na vrh</a>'
-      : '<button class="btn btn--outline btn--sm" disabled style="opacity:0.4;cursor:not-allowed;" data-i18n="litter_inquiry">Dotaz na vrh</button>';
+    // Tlacitko vede na stenata z tohoto vrhu (stena.html#vrh-c). Kdyz k vrhu
+    // zadne stene neni, zustane neaktivni - odkaz by vedl do prazdna.
+    const slug = gsSlugify(l.name);
+    const hasPuppies = ((content && content.puppies) || []).some(p => gsSlugify(p.litter) === slug);
+    const btnLabel = gsLang() === 'en' ? 'View puppies from litter' : 'Zobrazit štěňata z vrhu';
+    const btn = hasPuppies
+      ? `<a href="stena.html#${escapeHtml(slug)}" class="btn btn--outline btn--sm" data-i18n="litter_show_puppies">${escapeHtml(btnLabel)}</a>`
+      : `<button class="btn btn--outline btn--sm" disabled style="opacity:0.4;cursor:not-allowed;" data-i18n="litter_show_puppies">${escapeHtml(btnLabel)}</button>`;
     return `
       <div class="vrh-card aos aos-d${(i % 3) + 1}" style="cursor:pointer;${dimmed}" data-img="${escapeHtml(photo)}" data-caption="${escapeHtml(l.name)}">
         <div class="vrh-card__image" style="position:relative;">

@@ -198,7 +198,9 @@
       "description": "Yorkshire teriér",
       "nameEn": "Citrine",
       "descriptionEn": "Yorkshire Terrier",
-      "album": "citrine"
+      "album": "citrine",
+      "litter": "Vrh C",
+      "litterEn": "Litter C"
     },
     {
       "name": "Coral",
@@ -208,7 +210,9 @@
       "description": "Yorkshire teriér",
       "nameEn": "Coral",
       "descriptionEn": "Yorkshire Terrier",
-      "album": "coral"
+      "album": "coral",
+      "litter": "Vrh C",
+      "litterEn": "Litter C"
     },
     {
       "name": "Dolce Far Niente",
@@ -217,7 +221,9 @@
       "photo": "stene-dolce-far-niente.jpg",
       "description": "",
       "nameEn": "Dolce Far Niente",
-      "album": "dolce-far-niente"
+      "album": "dolce-far-niente",
+      "litter": "Vrh D",
+      "litterEn": "Litter D"
     },
     {
       "name": "Dolce Amore",
@@ -226,7 +232,9 @@
       "photo": "stene-dolce-amore.jpg",
       "description": "",
       "nameEn": "Dolce Amore",
-      "album": "dolce-amore"
+      "album": "dolce-amore",
+      "litter": "Vrh D",
+      "litterEn": "Litter D"
     },
     {
       "name": "Dolores",
@@ -235,7 +243,9 @@
       "photo": "stene-dolores.jpg",
       "description": "",
       "nameEn": "Dolores",
-      "album": "dolores"
+      "album": "dolores",
+      "litter": "Vrh D",
+      "litterEn": "Litter D"
     },
     {
       "name": "Dolce Vita",
@@ -244,7 +254,9 @@
       "photo": "stene-dolce-vita.jpg",
       "description": "",
       "nameEn": "Dolce Vita: ",
-      "album": "dolce-vita"
+      "album": "dolce-vita",
+      "litter": "Vrh D",
+      "litterEn": "Litter D"
     }
   ],
   "litters": [

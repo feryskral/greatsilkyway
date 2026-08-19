@@ -858,7 +858,7 @@
     async function translatePuppy(i, btn) {
       await runTranslate(btn, async () => {
         const p = content.puppies[i];
-        Object.assign(p, await translateFields(p, ['name','description','breed']));
+        Object.assign(p, await translateFields(p, ['name','description','breed','litter']));
         return p.name;
       });
     }
@@ -904,7 +904,7 @@
         }
       }
       for (const p of content.puppies) {
-        const f = ['name','description','breed'].filter(x => p[x] && !p[x+'En']);
+        const f = ['name','description','breed','litter'].filter(x => p[x] && !p[x+'En']);
         if (f.length) { Object.assign(p, await translateFields(p, f)); count += f.length; }
       }
       for (const l of content.litters) {
@@ -942,8 +942,13 @@
     function renderPuppies() {
       const list = document.getElementById('puppyList');
       list.innerHTML = '';
+      // Napoveda pro pole "Vrh" - nabidne nazvy uz zalozenych vrhu
+      list.insertAdjacentHTML('beforeend',
+        '<datalist id="litterNameOptions">' +
+        content.litters.map(l => '<option value="' + escapeHtml(l.name || '') + '"></option>').join('') +
+        '</datalist>');
       if (content.puppies.length === 0) {
-        list.innerHTML = '<div class="empty-state"><div class="empty-state__icon">🐾</div>Zatím žádná štěňátka. Klikněte na „+ Přidat štěňátko" níže.</div>';
+        list.insertAdjacentHTML('beforeend', '<div class="empty-state"><div class="empty-state__icon">🐾</div>Zatím žádná štěňátka. Klikněte na „+ Přidat štěňátko" níže.</div>');
         return;
       }
       content.puppies.forEach((p, i) => {
@@ -980,6 +985,7 @@
                   <option value="reserved" ${p.status==='reserved'?'selected':''}>Rezervováno</option>
                 </select>
               </div>
+              <div class="field"><label>Vrh:</label><input class="input" list="litterNameOptions" value="${escapeHtml(p.litter || '')}" oninput="updPuppy(${i},'litter',this.value)" placeholder="Vrh C" title="Zobrazí se jako štítek na fotce štěněte. Musí sedět s názvem vrhu, aby tlačítko na stránce Vrhy vedlo sem." /></div>
               <div class="field field--full"><label>Popis:</label><textarea class="textarea" rows="2" oninput="updPuppy(${i},'description',this.value)">${escapeHtml(p.description)}</textarea></div>
               ${puppyGalleryField(p, i)}
             </div>
@@ -1037,7 +1043,7 @@
     }
 
     function addPuppy() {
-      content.puppies.push({ name: 'Nové štěňátko', gender: 'female', status: 'available', photo: '', description: '', album: '' });
+      content.puppies.push({ name: 'Nové štěňátko', gender: 'female', status: 'available', photo: '', description: '', album: '', litter: '' });
       renderPuppies();
     }
     function deletePuppy(i) {

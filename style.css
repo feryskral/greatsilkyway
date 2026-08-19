@@ -789,6 +789,60 @@ p {
   color: white;
 }
 
+/* Tag vrhu na fotce stenete (Vrh C / Vrh D) */
+.puppy-card__litter {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: rgba(13, 21, 48, 0.78);
+  backdrop-filter: blur(2px);
+  z-index: 2;
+}
+
+/* Lista nad vypisem stenat, kdyz je aktivni filtr podle vrhu */
+.litter-filter-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  background: var(--color-gold-pale);
+  border: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  color: var(--color-text-soft);
+}
+
+.litter-filter-note__tag {
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-navy);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.litter-filter-note__clear {
+  margin-left: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-gold);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.litter-filter-note__clear:hover { color: var(--color-navy); }
+
 .puppy-card__body {
   padding: 18px 20px 20px;
 }

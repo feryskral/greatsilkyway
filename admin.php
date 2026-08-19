@@ -549,6 +549,9 @@
     // Pojistka proti race condition: Publikovat zakazat dokud nedobehne loadContent
     let contentLoaded = false;
     let loadFromServerOk = false;
+    // Presna podoba content.json pri otevreni adminu. Pred publikaci se
+    // porovna se soucasnym stavem serveru - viz POJISTKA 4.
+    let serverSnapshotJson = '';
 
     const PUBLISH_BTN_HTML = '🚀 <span class="btn-label-full">Publikovat na web</span><span class="btn-label-short">Publikovat</span>';
 
@@ -612,7 +615,10 @@
       let serverContent = null;
       try {
         const res = await fetch('content.json?_=' + Date.now(), { cache: 'no-store' });
-        if (res.ok) serverContent = await res.json();
+        if (res.ok) {
+          serverContent = await res.json();
+          serverSnapshotJson = JSON.stringify(serverContent);
+        }
       } catch {}
 
       if (serverContent && typeof serverContent === 'object') {
@@ -1520,6 +1526,28 @@
         if (!confirm('Pozor! Publikujete UPLNE PRAZDNY obsah - smazete vsechna stenata, '
                    + 'psy, vrhy i fotky z webu. Opravdu pokracovat?')) return;
       }
+      // POJISTKA 4: Publikace posila cely content.json. Kdyz se obsah na serveru
+      // od otevreni adminu zmenil (publikace z jineho okna, uprava souboru),
+      // prepsal by se tim, co ma tenhle admin v pameti - a novejsi data by zmizela.
+      if (loadFromServerOk && serverSnapshotJson) {
+        let currentJson = null;
+        try {
+          const res = await fetch('content.json?_=' + Date.now(), { cache: 'no-store' });
+          if (res.ok) currentJson = JSON.stringify(await res.json());
+        } catch {}
+        if (currentJson !== null && currentJson !== serverSnapshotJson) {
+          const zprava = [
+            "Pozor! Obsah na webu se od otevreni tohoto adminu zmenil - publikoval jste z jineho okna, nebo se soubor zmenil na serveru.",
+            "",
+            "Kdyz budete pokracovat, prepisete ho tim, co vidite tady, a novejsi zmeny se ztrati.",
+            "",
+            "Doporuceni: dejte Zrusit, nactete stranku znovu (F5) a upravy udelejte na cerstvych datech.",
+            "",
+            "Presto prepsat?",
+          ].join('\n');
+          if (!confirm(zprava)) return;
+        }
+      }
       const btn = document.getElementById('publishBtn');
       const originalHtml = btn.innerHTML;
       btn.disabled = true;
@@ -1535,8 +1563,9 @@
       }
 
       btn.innerHTML = '⏳ Publikuji…';
+      const publishedJson = JSON.stringify(content);
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(content));
+        localStorage.setItem(STORAGE_KEY, publishedJson);
       } catch {}
       try {
         const csrf = document.querySelector('meta[name="csrf-token"]')?.content || '';
@@ -1547,13 +1576,16 @@
             'X-CSRF-Token': csrf,
           },
           credentials: 'include',
-          body: JSON.stringify(content),
+          body: publishedJson,
         });
         const data = await res.json().catch(() => ({}));
         if (res.ok && data.ok) {
           const kb = Math.round((data.bytes || 0) / 1024);
           const tr = translatedCount > 0 ? ' · 🌐 ' + translatedCount + ' polí přeloženo' : '';
           markSaved();
+          // Nove razitko serveru - jinak by dalsi publikace v teze relaci
+          // hlasila zmenu, kterou jsme udelali sami (POJISTKA 4)
+          serverSnapshotJson = publishedJson;
           showToast('🚀 Publikováno na web! (' + kb + ' KB)' + tr, 'success');
         } else {
           showToast('⚠ Chyba: ' + (data.error || res.status), 'error');

@@ -833,7 +833,9 @@ p {
   margin-left: auto;
   background: none;
   border: none;
-  padding: 0;
+  /* Vyska 40 px kvuli dotykovemu ovladani na mobilu */
+  padding: 9px 6px;
+  min-height: 40px;
   font: inherit;
   font-weight: 600;
   color: var(--color-gold);
@@ -842,6 +844,18 @@ p {
 }
 
 .litter-filter-note__clear:hover { color: var(--color-navy); }
+
+@media (max-width: 768px) {
+  .litter-filter-note {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .litter-filter-note__clear {
+    margin-left: 0;
+    width: 100%;
+  }
+}
 
 .puppy-card__body {
   padding: 18px 20px 20px;

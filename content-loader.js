@@ -325,11 +325,16 @@
   }
   function puppyCardHome(p, i) {
     const photo = p.photo || '';
+    // Stejny tag vrhu jako na strance Stenata - sekce ma vypadat stejne
+    const litterName = pickLang(p, 'litter');
+    const litterTag = litterName
+      ? `<span class="puppy-card__litter">${escapeHtml(litterName)}</span>`
+      : '';
     return `
       <div class="puppy-card aos aos-d${(i % 3) + 1}" style="cursor:pointer;" onclick="location.href='stena.html'">
         <div class="puppy-card__image" style="padding:0;overflow:hidden;position:relative;">
           ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(p.name)}" style="width:100%;height:100%;object-fit:cover;" />` : '<span>🐶</span>'}
-          ${genderBadge(p.gender)}${statusBadge(p.status)}
+          ${genderBadge(p.gender)}${statusBadge(p.status)}${litterTag}
         </div>
         <div class="puppy-card__body">
           <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}</div>

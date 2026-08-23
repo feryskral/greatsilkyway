@@ -155,6 +155,48 @@
       text-align: center;
       opacity: 0.85;
     }
+    /* Sipky pro listovani mezi fotkami */
+    .lightbox__nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 60px;
+      height: 60px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 38px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 5px;
+      transition: background 0.2s ease;
+      z-index: 2;
+    }
+    .lightbox__nav:hover { background: rgba(255,255,255,0.3); }
+    .lightbox__nav--prev { left: 20px; }
+    .lightbox__nav--next { right: 20px; }
+    /* Jedina fotka ve vyberu - sipky nemaji kam vest */
+    .lightbox__nav[hidden] { display: none; }
+
+    .lightbox__counter {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 640px) {
+      .lightbox__nav { width: 48px; height: 48px; font-size: 30px; }
+      .lightbox__nav--prev { left: 8px; }
+      .lightbox__nav--next { right: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .lightbox__nav { transition: none; }
+    }
+
     .lightbox__close {
       position: fixed;
       top: 20px;
@@ -520,11 +562,14 @@
 
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
-    <button class="lightbox__close" id="lightboxClose">✕</button>
+    <button class="lightbox__close" id="lightboxClose" aria-label="Zavřít">✕</button>
+    <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Předchozí fotka">‹</button>
+    <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Další fotka">›</button>
     <div class="lightbox__content">
       <img class="lightbox__img" id="lightboxImg" src="" alt="" loading="lazy" decoding="async" />
       <div class="lightbox__emoji" id="lightboxEmoji"></div>
       <p class="lightbox__caption-text" id="lightboxCaption"></p>
+      <div class="lightbox__counter" id="lightboxCounter"></div>
     </div>
   </div>
 
@@ -604,13 +649,84 @@
     const lightboxEmoji = document.getElementById('lightboxEmoji');
     const lightboxCaption = document.getElementById('lightboxCaption');
     const lightboxClose = document.getElementById('lightboxClose');
-    lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+
+    // Listuje se jen mezi PRAVE ZOBRAZENYMI fotkami - kdyz mate otevrene
+    // album Coral, sipky vas nesmi prehodit do jineho alba.
+    let lbSada = [];
+    let lbIndex = 0;
+
+    function lbViditelne() {
+      return [...document.querySelectorAll('#galleryGrid .gallery-item')]
+        .filter(i => i.style.display !== 'none');
+    }
+
+    function lbUkaz(i) {
+      if (!lbSada.length) return;
+      // pretoceni na druhy konec, at listovani nikde nekonci
+      lbIndex = (i + lbSada.length) % lbSada.length;
+      const item = lbSada[lbIndex];
+      const img = item.querySelector('img');
+      if (img) {
+        lightboxImg.src = item.dataset.full || img.src;
+        lightboxImg.alt = img.alt;
+        lightboxImg.style.display = 'block';
+        lightboxEmoji.textContent = '';
+      } else {
+        lightboxImg.style.display = 'none';
+        lightboxEmoji.textContent = item.dataset.emoji || '🐕';
+        lightboxEmoji.style.display = 'block';
+        lightboxEmoji.style.fontSize = '80px';
+      }
+      lightboxCaption.textContent = item.dataset.caption || '';
+      lightboxCounter.textContent = lbSada.length > 1 ? (lbIndex + 1) + ' / ' + lbSada.length : '';
+      const jedna = lbSada.length < 2;
+      lightboxPrev.hidden = jedna;
+      lightboxNext.hidden = jedna;
+      lbPrednacti();
+    }
+
+    // Nacist dopredu sousedni fotky, at listovani neceka na stahovani
+    function lbPrednacti() {
+      [lbIndex + 1, lbIndex - 1].forEach(k => {
+        const it = lbSada[(k + lbSada.length) % lbSada.length];
+        const src = it && (it.dataset.full || it.querySelector('img')?.src);
+        if (src) { const p = new Image(); p.src = src; }
+      });
+    }
+
+    function lbOtevri(item) {
+      lbSada = lbViditelne();
+      const i = lbSada.indexOf(item);
+      lbUkaz(i < 0 ? 0 : i);
+      lightbox.classList.add('open');
+    }
+    function lbZavri() { lightbox.classList.remove('open'); }
+
+    lightboxClose.addEventListener('click', lbZavri);
+    lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); lbUkaz(lbIndex - 1); });
+    lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); lbUkaz(lbIndex + 1); });
     lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) lightbox.classList.remove('open');
+      if (e.target === lightbox) lbZavri();
     });
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') lightbox.classList.remove('open');
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') lbZavri();
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); lbUkaz(lbIndex - 1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); lbUkaz(lbIndex + 1); }
     });
+
+    // Prejeti prstem na mobilu
+    let lbX = null;
+    lightbox.addEventListener('touchstart', e => { lbX = e.changedTouches[0].clientX; }, { passive: true });
+    lightbox.addEventListener('touchend', e => {
+      if (lbX === null) return;
+      const rozdil = e.changedTouches[0].clientX - lbX;
+      lbX = null;
+      if (Math.abs(rozdil) > 50) lbUkaz(lbIndex + (rozdil < 0 ? 1 : -1));
+    }, { passive: true });
 
     // Gallery filter + lightbox
     // Filtr ma dve urovne: hlavni kategorie a (u "Štěňata") podkategorii
@@ -702,23 +818,7 @@
       items.forEach(item => {
         if (item.dataset.lightboxBound) return;
         item.dataset.lightboxBound = '1';
-        item.addEventListener('click', () => {
-          const img = item.querySelector('img');
-          if (img) {
-            // V mrizce je lehky nahled - po kliknuti nacist puvodni fotku
-            lightboxImg.src = item.dataset.full || img.src;
-            lightboxImg.alt = img.alt;
-            lightboxImg.style.display = 'block';
-            lightboxEmoji.textContent = '';
-          } else {
-            lightboxImg.style.display = 'none';
-            lightboxEmoji.textContent = item.dataset.emoji || '🐕';
-            lightboxEmoji.style.display = 'block';
-            lightboxEmoji.style.fontSize = '80px';
-          }
-          lightboxCaption.textContent = item.dataset.caption || '';
-          lightbox.classList.add('open');
-        });
+        item.addEventListener('click', () => lbOtevri(item));
       });
 
       if (!gsApplyHash()) gsApplyFilter(false);

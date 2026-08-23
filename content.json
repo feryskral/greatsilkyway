@@ -867,6 +867,66 @@
       "objectPosition": "center top",
       "captionEn": "Dolores",
       "thumb": "thumbs/foto-dolores-4.webp"
+    },
+    {
+      "caption": "Coral",
+      "captionEn": "Coral",
+      "category": "stenata",
+      "album": "coral",
+      "photo": "foto-coral-2.jpg",
+      "wide": false,
+      "objectPosition": "center top",
+      "thumb": "thumbs/foto-coral-2.webp"
+    },
+    {
+      "caption": "Coral",
+      "captionEn": "Coral",
+      "category": "stenata",
+      "album": "coral",
+      "photo": "foto-coral-3.jpg",
+      "wide": false,
+      "objectPosition": "center top",
+      "thumb": "thumbs/foto-coral-3.webp"
+    },
+    {
+      "caption": "Coral",
+      "captionEn": "Coral",
+      "category": "stenata",
+      "album": "coral",
+      "photo": "foto-coral-4.jpg",
+      "wide": false,
+      "objectPosition": "center top",
+      "thumb": "thumbs/foto-coral-4.webp"
+    },
+    {
+      "caption": "Coral",
+      "captionEn": "Coral",
+      "category": "stenata",
+      "album": "coral",
+      "photo": "foto-coral-5.jpg",
+      "wide": false,
+      "objectPosition": "center top",
+      "thumb": "thumbs/foto-coral-5.webp"
+    },
+    {
+      "caption": "Coral",
+      "captionEn": "Coral",
+      "category": "stenata",
+      "album": "coral",
+      "photo": "foto-coral-6.jpg",
+      "wide": false,
+      "objectPosition": "center top",
+      "thumb": "thumbs/foto-coral-6.webp"
+    },
+    {
+      "caption": "Coral",
+      "captionEn": "Coral",
+      "category": "stenata",
+      "album": "coral",
+      "photo": "foto-coral-7.jpg",
+      "wide": false,
+      "objectPosition": "center top",
+      "thumb": "thumbs/foto-coral-7.webp"
     }
   ],
   "puppyAlbums": [

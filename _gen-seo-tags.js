@@ -15,41 +15,45 @@ const EMAIL = 'info@greatsilkyway.cz';
 const FB = 'https://www.facebook.com/profile.php?id=100089532775624';
 const IG = 'https://www.instagram.com/great_silkyway_kennel/';
 
+// title  = modry klikaci nadpis ve vysledcich vyhledavani. Hledana fraze
+//          patri dopredu, znacka az za svislitko - jmeno stanice lide neznaji.
+//          Doporucena delka do ~60 znaku, jinak Google konec usekne.
+// desc    = popisek pod nadpisem, do ~155 znaku.
 const STRANKY = {
   'index.html': {
     url: '/', jmeno: 'Úvod',
-    ogTitle: 'Great Silkyway – chovatelská stanice Yorkshire teriérů',
-    ogDesc: 'Yorkshire teriéři s průkazem původu FCI, odchovaní s láskou v rodinném prostředí. Podívejte se na aktuálně dostupná štěňátka.',
+    title: 'Chovatelská stanice Yorkshire teriérů | Great Silkyway',
+    desc: 'Chováme Yorkshire teriéry s průkazem původu FCI. Štěňátka odchovaná s láskou v rodinném prostředí, očkovaná, odčervená a s mikročipem.',
   },
   'stena.html': {
     url: '/stena.html', jmeno: 'Štěňata',
-    ogTitle: 'Dostupná štěňata Yorkshire teriéra – Great Silkyway',
-    ogDesc: 'Aktuálně dostupná štěňátka jorkšírského teriéra s průkazem FCI, očkovaná, odčervená a s mikročipem.',
+    title: 'Štěňata Yorkshire teriéra s průkazem FCI | Great Silkyway',
+    desc: 'Aktuálně dostupná štěňátka Yorkshire teriéra s průkazem původu FCI. Očkovaná, odčervená, s mikročipem a kupní smlouvou.',
   },
   'vrhy.html': {
     url: '/vrhy.html', jmeno: 'Vrhy',
-    ogTitle: 'Vrhy štěňat – Great Silkyway',
-    ogDesc: 'Přehled vrhů Yorkshire teriérů z naší chovatelské stanice včetně fotografií štěňátek.',
+    title: 'Vrhy štěňat Yorkshire teriéra | Great Silkyway',
+    desc: 'Přehled vrhů Yorkshire teriérů z naší chovatelské stanice včetně fotografií štěňátek a informací o rodičích.',
   },
   'nasi-psi.html': {
     url: '/nasi-psi.html', jmeno: 'Naši psi',
-    ogTitle: 'Naši chovní psi a feny – Great Silkyway',
-    ogDesc: 'Seznamte se s našimi chovnými Yorkshire teriéry — jejich tituly, zdravotními testy a povahou.',
+    title: 'Chovní Yorkshire teriéři – tituly a zdraví | Great Silkyway',
+    desc: 'Naši chovní psi a feny Yorkshire teriéra — výstavní tituly, zdravotní testy a povaha. Seznamte se s rodiči našich štěňátek.',
   },
   'galerie.html': {
     url: '/galerie.html', jmeno: 'Galerie',
-    ogTitle: 'Fotogalerie Yorkshire teriérů – Great Silkyway',
-    ogDesc: 'Fotografie našich psů a štěňátek jorkšírského teriéra z každodenního života i z výstav.',
+    title: 'Fotogalerie Yorkshire teriérů | Great Silkyway',
+    desc: 'Fotografie našich Yorkshire teriérů a štěňátek z každodenního života i z výstav. Prohlédněte si je podle jmen.',
   },
   'about.html': {
     url: '/about.html', jmeno: 'O nás',
-    ogTitle: 'O naší chovatelské stanici – Great Silkyway',
-    ogDesc: 'Chovatelská stanice Yorkshire teriérů s registrací FCI. Náš příběh, hodnoty a přístup k chovu.',
+    title: 'O chovatelské stanici Yorkshire teriérů | Great Silkyway',
+    desc: 'Chovatelská stanice Yorkshire teriérů s registrací FCI. Náš příběh, hodnoty a přístup k chovu a odchovu štěňat.',
   },
   'kontakt.html': {
     url: '/kontakt.html', jmeno: 'Kontakt',
-    ogTitle: 'Kontakt – Great Silkyway',
-    ogDesc: 'Máte zájem o štěňátko jorkšírského teriéra? Ozvěte se nám telefonicky nebo e-mailem.',
+    title: 'Kontakt – chovatelská stanice Yorkshire | Great Silkyway',
+    desc: 'Máte zájem o štěňátko Yorkshire teriéra? Ozvěte se nám telefonicky nebo e-mailem, rádi zodpovíme vaše otázky.',
   },
 };
 
@@ -75,7 +79,7 @@ function organizace() {
       addressCountry: 'CZ',
     },
     areaServed: { '@type': 'Country', name: 'Česká republika' },
-    knowsAbout: ['Yorkshire teriér', 'jorkšírský teriér', 'chov psů', 'FCI'],
+    knowsAbout: ['Yorkshire teriér', 'chovatelská stanice psů', 'chov psů', 'FCI'],
     sameAs: [FB, IG],
   };
 }
@@ -98,6 +102,15 @@ for (const [soubor, s] of Object.entries(STRANKY)) {
   if (!fs.existsSync(soubor)) { console.log('  chybi: ' + soubor); continue; }
   let html = fs.readFileSync(soubor, 'utf8');
 
+  // Titulek a popis stranky - to je, co Google zobrazi ve vysledcich
+  html = html.replace(/<title>[\s\S]*?<\/title>/, '<title>' + esc(s.title) + '</title>');
+  if (/<meta name="description"[^>]*>/.test(html)) {
+    html = html.replace(/<meta name="description"[^>]*>/,
+      '<meta name="description" content="' + esc(s.desc) + '" />');
+  } else {
+    html = html.replace(/(<\/title>\n)/, '$1  <meta name="description" content="' + esc(s.desc) + '" />\n');
+  }
+
   const data = [organizace(), drobecky(s)].filter(Boolean)
     .map(o => '  <script type="application/ld+json">\n' + JSON.stringify(o, null, 2)
       .split('\n').map(r => '  ' + r).join('\n') + '\n  </script>')
@@ -108,15 +121,15 @@ for (const [soubor, s] of Object.entries(STRANKY)) {
   <meta property="og:site_name" content="Great Silkyway" />
   <meta property="og:locale" content="cs_CZ" />
   <meta property="og:url" content="${D}${s.url}" />
-  <meta property="og:title" content="${esc(s.ogTitle)}" />
-  <meta property="og:description" content="${esc(s.ogDesc)}" />
+  <meta property="og:title" content="${esc(s.title)}" />
+  <meta property="og:description" content="${esc(s.desc)}" />
   <meta property="og:image" content="${D}/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Štěňátka Yorkshire teriéra z chovatelské stanice Great Silkyway" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${esc(s.ogTitle)}" />
-  <meta name="twitter:description" content="${esc(s.ogDesc)}" />
+  <meta name="twitter:title" content="${esc(s.title)}" />
+  <meta name="twitter:description" content="${esc(s.desc)}" />
   <meta name="twitter:image" content="${D}/og-image.jpg" />
 ${data}
   <!-- SEO:end -->

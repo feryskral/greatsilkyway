@@ -174,7 +174,7 @@ function transformIndex(html) {
     '<a href="about.html" class="btn btn--primary">Zjistit více o nás</a>',
     '<a href="about.html" class="btn btn--primary" data-i18n="about_btn">Zjistit více o nás</a>'
   );
-  html = r(html, '<strong>15+ let</strong>', '<strong data-i18n="badge_exp">15+ let</strong>');
+  html = r(html, '<strong>FCI</strong>', '<strong>FCI</strong>');
   html = r(html, '<span>zkušený chovatel</span>', '<span data-i18n="badge_breeder">zkušený chovatel</span>');
 
   // dogs teaser
@@ -261,8 +261,8 @@ function transformAbout(html) {
   // page hero
   html = r(html, '<h1>O naší chovatelské stanici</h1>', '<h1 data-i18n="about_page_title">O naší chovatelské stanici</h1>');
   html = r(html,
-    '<p>Více než 15 let lásky k Yorkshire teriérům, zodpovědného chovu a šťastných rodin.</p>',
-    '<p data-i18n="about_page_desc">Více než 15 let lásky k Yorkshire teriérům, zodpovědného chovu a šťastných rodin.</p>'
+    '<p>Láska k Yorkshire teriérům, zodpovědný chov a šťastné rodiny.</p>',
+    '<p data-i18n="about_page_desc">Láska k Yorkshire teriérům, zodpovědný chov a šťastné rodiny.</p>'
   );
 
   // story section

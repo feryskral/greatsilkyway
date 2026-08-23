@@ -489,9 +489,12 @@
     const albumSlug = legacyDog ? g.category : g.album;
     const hasAlbum = albumSlug && (legacyDog || g.category === 'stenata' || g.category === 'psi');
     const album = hasAlbum ? ` data-album="${escapeHtml(albumSlug)}"` : '';
+    // V mrizce lehky nahled, po kliknuti se v lightboxu otevre original.
+    // Kdyz nahled neexistuje, pouzije se rovnou puvodni fotka.
+    const nahled = g.thumb || photo;
     return `
-      <div class="gallery-item${wideClass}${delay}" data-category="${escapeHtml(cat)}"${album} data-caption="${escapeHtml(caption)}" style="cursor:pointer;">
-        ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(caption)}" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(g.objectPosition || 'center center')};" />` : ''}
+      <div class="gallery-item${wideClass}${delay}" data-category="${escapeHtml(cat)}"${album} data-caption="${escapeHtml(caption)}" data-full="${escapeHtml(photo)}" style="cursor:pointer;">
+        ${photo ? `<img src="${escapeHtml(nahled)}" alt="${escapeHtml(caption)}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:${escapeHtml(g.objectPosition || 'center center')};" />` : ''}
         <div class="gallery-item__overlay"><span class="gallery-item__caption">${escapeHtml(caption)}</span></div>
       </div>`;
   }

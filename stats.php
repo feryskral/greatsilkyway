@@ -225,6 +225,7 @@ function donutPath($cx, $cy, $rOuter, $rInner, $startAngle, $endAngle) {
 <head>
 <meta charset="UTF-8">
 <title>📊 Statistiky · Great Silkyway</title>
+  <meta name="robots" content="noindex, nofollow" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root {

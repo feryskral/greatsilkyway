@@ -1,0 +1,17 @@
+# Great Silkyway - chovatelska stanice Yorkshire terieru
+User-agent: *
+Allow: /
+
+# Administrace a technicke soubory do vyhledavace nepatri
+Disallow: /admin.php
+Disallow: /admin.html
+Disallow: /login.php
+Disallow: /logout.php
+Disallow: /save-content.php
+Disallow: /upload-photo.php
+Disallow: /stats.php
+Disallow: /test-diag.html
+Disallow: /cms/
+Disallow: /node_modules/
+
+Sitemap: https://greatsilkyway.cz/sitemap.xml

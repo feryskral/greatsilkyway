@@ -701,10 +701,14 @@
     const MAX_DIMENSION = 1600;
     const JPEG_QUALITY = 0.85;
 
-    function uploadPhoto(callback) {
+    // Fotka se zmensi v prohlizeci a posle na server jako soubor.
+    // Callback dostane { photo, thumb } - photo je nazev souboru, ne base64.
+    // Drive se ukladal base64 primo do content.json a ten soubor stahuje
+    // kazdy navstevnik na kazde strance - par fotek ho nafouklo na 3,6 MB.
+    function uploadPhoto(callback, nazev) {
       const inp = document.createElement('input');
       inp.type = 'file'; inp.accept = 'image/jpeg,image/png,image/webp';
-      inp.onchange = () => {
+      inp.onchange = async () => {
         const f = inp.files[0]; if (!f) return;
         if (!/^image\/(jpeg|png|webp)$/.test(f.type)) {
           showToast('⚠ Pouze JPG, PNG nebo WebP fotky', 'error'); return;
@@ -712,13 +716,44 @@
         if (f.size > MAX_FILE_BYTES) {
           showToast('⚠ Fotka je vetsi nez 10 MB. Vyberte mensi.', 'error'); return;
         }
-        resizeImage(f).then(callback).catch(() => {
+        showToast('⏳ Nahrávám fotku…');
+        let blob;
+        try {
+          blob = await resizeImageBlob(f);
+        } catch {
+          blob = f;                                  // zmenseni selhalo, posli original
+        }
+        try {
+          const vysledek = await odeslatFotku(blob, nazev || f.name);
+          callback(vysledek);
+          showToast('✓ Fotka nahrána' + (vysledek.thumbError ? ' (bez náhledu)' : ''), 'success');
+          if (vysledek.thumbError) console.warn('Náhled:', vysledek.thumbError);
+        } catch (e) {
+          // Nahrani selhalo - radeji fotku prijmout jako base64 nez uzivatele
+          // zablokovat, ale nahlas rict, ze to chce uklidit.
+          showToast('⚠ Nahrání na server selhalo (' + e.message + '). Fotka uložena do datového souboru — dejte vědět správci.', 'error');
           const reader = new FileReader();
-          reader.onload = e => callback(e.target.result);
-          reader.readAsDataURL(f);
-        });
+          reader.onload = ev => callback({ photo: ev.target.result, thumb: null });
+          reader.readAsDataURL(blob);
+        }
       };
       inp.click();
+    }
+
+    async function odeslatFotku(blob, nazev) {
+      const fd = new FormData();
+      fd.append('photo', blob, 'upload');
+      fd.append('name', (nazev || '').replace(/\.[^.]+$/, ''));
+      const csrf = document.querySelector('meta[name="csrf-token"]')?.content || '';
+      const res = await fetch('upload-photo.php', {
+        method: 'POST',
+        headers: { 'X-CSRF-Token': csrf, 'Accept': 'application/json' },
+        credentials: 'include',
+        body: fd,
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || ('HTTP ' + res.status));
+      return data;
     }
 
     function resizeImage(file) {
@@ -739,6 +774,35 @@
           canvas.getContext('2d').drawImage(img, 0, 0, width, height);
           const isPng = file.type === 'image/png';
           resolve(canvas.toDataURL(isPng ? 'image/png' : 'image/jpeg', JPEG_QUALITY));
+        };
+        img.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Stejne zmenseni, ale vysledkem je binarni soubor k odeslani na server
+    function resizeImageBlob(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = e => { img.src = e.target.result; };
+        reader.onerror = reject;
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+            const ratio = Math.min(MAX_DIMENSION / width, MAX_DIMENSION / height);
+            width = Math.round(width * ratio);
+            height = Math.round(height * ratio);
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width; canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          const isPng = file.type === 'image/png';
+          canvas.toBlob(
+            b => b ? resolve(b) : reject(new Error('Převod se nezdařil')),
+            isPng ? 'image/png' : 'image/jpeg',
+            JPEG_QUALITY
+          );
         };
         img.onerror = reject;
         reader.readAsDataURL(file);
@@ -838,7 +902,7 @@
     }
     function moveDog(i, dir) { moveItem(content.dogs, i, dir); renderDogs(); }
     function updDog(i, f, v) { content.dogs[i][f] = v; }
-    function dogPhoto(i) { uploadPhoto(d => { content.dogs[i].photo = d; renderDogs(); }); }
+    function dogPhoto(i) { uploadPhoto(r => { content.dogs[i].photo = r.photo; renderDogs(); }, content.dogs[i].name); }
     function removeDogPhoto(i) { content.dogs[i].photo = ''; renderDogs(); }
     function addAchievement(i) {
       if (!content.dogs[i].achievements) content.dogs[i].achievements = [];
@@ -1059,7 +1123,7 @@
     }
     function movePuppy(i, dir) { moveItem(content.puppies, i, dir); renderPuppies(); }
     function updPuppy(i, f, v) { content.puppies[i][f] = v; }
-    function puppyPhoto(i) { uploadPhoto(d => { content.puppies[i].photo = d; renderPuppies(); }); }
+    function puppyPhoto(i) { uploadPhoto(r => { content.puppies[i].photo = r.photo; renderPuppies(); }, content.puppies[i].name); }
     function removePuppyPhoto(i) { content.puppies[i].photo = ''; renderPuppies(); }
 
     // ===== LITTERS =====
@@ -1120,7 +1184,7 @@
     }
     function moveLitter(i, dir) { moveItem(content.litters, i, dir); renderLitters(); }
     function updLitter(i, f, v) { content.litters[i][f] = v; }
-    function litterPhoto(i) { uploadPhoto(d => { content.litters[i].cover = d; renderLitters(); }); }
+    function litterPhoto(i) { uploadPhoto(r => { content.litters[i].cover = r.photo; renderLitters(); }, content.litters[i].name); }
     function removeLitterPhoto(i) { content.litters[i].cover = ''; renderLitters(); }
 
     // ===== ALBA (podkategorie galerie podle jmen) =====
@@ -1473,8 +1537,8 @@
       refreshGalleryViews();
     }
     function updGallery(i, f, v) { content.gallery[i][f] = v; }
-    function galleryPhoto(i) { uploadPhoto(d => { content.gallery[i].photo = d; refreshGalleryViews(); }); }
-    function removeGalleryPhoto(i) { content.gallery[i].photo = ''; refreshGalleryViews(); }
+    function galleryPhoto(i) { uploadPhoto(r => { const g = content.gallery[i]; g.photo = r.photo; if (r.thumb) g.thumb = r.thumb; else delete g.thumb; refreshGalleryViews(); }, content.gallery[i].caption); }
+    function removeGalleryPhoto(i) { content.gallery[i].photo = ''; delete content.gallery[i].thumb; refreshGalleryViews(); }
 
     // ===== TEXTS =====
     function loadTexts() {

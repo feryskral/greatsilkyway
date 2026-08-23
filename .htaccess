@@ -55,7 +55,7 @@ RedirectMatch 404 ^/media(/.*)?$
     Header set Cache-Control "public, max-age=60, must-revalidate"
   </FilesMatch>
 
-  <FilesMatch "^(admin\.html|admin\.php|stats\.php|save-content\.php|login\.php|logout\.php)$">
+  <FilesMatch "^(admin\.html|admin\.php|stats\.php|save-content\.php|upload-photo\.php|login\.php|logout\.php)$">
     Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
   </FilesMatch>
 

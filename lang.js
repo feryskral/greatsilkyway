@@ -83,7 +83,7 @@ const T = {
     breed_yt:'Yorkshire teriér', dna_clean:'V pořádku ✓',
     dog_born_f:'Narozena', dog_born_m:'Narozen', dog_litters:'Vrhy', dog_dna:'Zdraví',
     dog_titles:'Tituly', dog_offspring:'Potomci',
-    senorita_desc:'Jakožto import z Ruska přináší do chovatelské stanice Great Silkyway prestižní krevní linie špičkových chovatelů (e.g. Amore Bravo). Fena má výrazný „babyface“ vzhled s kratším nosánkem, který je mezi zájemci vysoce ceněn. Přitom je silná, má rovný hřbet, korektní zauzlení, nůžkový skus 6x6. Ti Amo Romantico Senorita tyto žádané exteriérové znaky a sladký výraz úspěšně předává dál na své potomky.',
+    senorita_desc:'Jakožto import z Ruska přináší do chovatelské stanice Great Silkyway prestižní krevní linie špičkových chovatelů (e.g. Amore Bravo). Fena má výrazný „babyface“ vzhled s kratším nosánkem, který je mezi zájemci vysoce ceněn. Přitom je silná, má rovný hřbet, korektní zaúhlení, nůžkový skus 6x6. Ti Amo Romantico Senorita tyto žádané exteriérové znaky a sladký výraz úspěšně předává dál na své potomky.',
     michelle_desc:'Okouzlující fena s nádhernou srstí a výraznou osobností. Michelle je elegantní, klidná a do každého vrhu předává ty nejlepší vlastnosti.',
     matteo_desc:'Výjimečný pes s titulem Junior Champion. Matteo disponuje dokonalou stavbou těla, nádhernou srstí a sebevědomou povahou výstavního psa nejvyšší kvality.',
     roma_desc_short:'Import z Ruska s prestižními krevními liniemi. Výrazný „babyface“ vzhled, silná stavba a korektní nůžkový skus.',

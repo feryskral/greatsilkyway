@@ -417,8 +417,8 @@ function transformDogs(html) {
 
   // dog descriptions
   html = r(html,
-    'Jakožto import z Ruska přináší do chovatelské stanice Great Silkyway prestižní krevní linie špičkových chovatelů (e.g. Amore Bravo). Fena má výrazný „babyface“ vzhled s kratším nosánkem, který je mezi zájemci vysoce ceněn. Přitom je silná, má rovný hřbet, korektní zauzlení, nůžkový skus 6x6. Ti Amo Romantico Senorita tyto žádané exteriérové znaky a sladký výraz úspěšně předává dál na své potomky.',
-    '<span data-i18n="senorita_desc">Jakožto import z Ruska přináší do chovatelské stanice Great Silkyway prestižní krevní linie špičkových chovatelů (e.g. Amore Bravo). Fena má výrazný „babyface“ vzhled s kratším nosánkem, který je mezi zájemci vysoce ceněn. Přitom je silná, má rovný hřbet, korektní zauzlení, nůžkový skus 6x6. Ti Amo Romantico Senorita tyto žádané exteriérové znaky a sladký výraz úspěšně předává dál na své potomky.</span>'
+    'Jakožto import z Ruska přináší do chovatelské stanice Great Silkyway prestižní krevní linie špičkových chovatelů (e.g. Amore Bravo). Fena má výrazný „babyface“ vzhled s kratším nosánkem, který je mezi zájemci vysoce ceněn. Přitom je silná, má rovný hřbet, korektní zaúhlení, nůžkový skus 6x6. Ti Amo Romantico Senorita tyto žádané exteriérové znaky a sladký výraz úspěšně předává dál na své potomky.',
+    '<span data-i18n="senorita_desc">Jakožto import z Ruska přináší do chovatelské stanice Great Silkyway prestižní krevní linie špičkových chovatelů (e.g. Amore Bravo). Fena má výrazný „babyface“ vzhled s kratším nosánkem, který je mezi zájemci vysoce ceněn. Přitom je silná, má rovný hřbet, korektní zaúhlení, nůžkový skus 6x6. Ti Amo Romantico Senorita tyto žádané exteriérové znaky a sladký výraz úspěšně předává dál na své potomky.</span>'
   );
   html = r(html,
     'Okouzlující fena s nádhernou srstí a výraznou osobností. Michelle je elegantní, klidná a do každého vrhu předává ty nejlepší vlastnosti.',

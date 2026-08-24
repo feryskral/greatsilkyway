@@ -181,8 +181,8 @@ function transformIndex(html) {
   html = r(html, '<span class="section-label">Chovní jedinci</span>', '<span class="section-label" data-i18n="dogs_label">Chovní jedinci</span>');
   html = r(html, '<h2 class="section-title">Naši chovní psi</h2>', '<h2 class="section-title" data-i18n="dogs_title">Naši chovní psi</h2>');
   html = r(html,
-    '<p class="section-subtitle">\n          Seznamte se s hvězdami naší stanice — chovnými fenami a psy\n          s výbornými výsledky z výstav a zdravotními prověrkami.\n        </p>',
-    '<p class="section-subtitle" data-i18n="dogs_subtitle">Seznamte se s hvězdami naší stanice — chovnými fenami a psy s výbornými výsledky z výstav a zdravotními prověrkami.</p>'
+    '<p class="section-subtitle">\n          Seznamte se s hvězdami naší stanice — chovnými fenami a psy\n          s výbornými výsledky z výstav a zdravotními testy.\n        </p>',
+    '<p class="section-subtitle" data-i18n="dogs_subtitle">Seznamte se s hvězdami naší stanice — chovnými fenami a psy s výbornými výsledky z výstav a zdravotními testy.</p>'
   );
   html = r(html,
     '<a href="nasi-psi.html" class="btn btn--outline">Zobrazit všechny psy</a>',
@@ -417,8 +417,8 @@ function transformDogs(html) {
 
   // dog descriptions
   html = r(html,
-    'Nádherná fena s výjimečně hedvábnou srstí a typickým výstavním výrazem. Senorita je elegantní, temperamentní a plná energie.',
-    '<span data-i18n="senorita_desc">Nádherná fena s výjimečně hedvábnou srstí a typickým výstavním výrazem. Senorita je elegantní, temperamentní a plná energie.</span>'
+    'Jakožto import z Ruska přináší do chovatelské stanice Great Silkyway prestižní krevní linie špičkových chovatelů (e.g. Amore Bravo). Fena má výrazný „babyface“ vzhled s kratším nosánkem, který je mezi zajemci vysoce ceněn. Přitom je silná, má rovný hřbet, korektní zauzleni, nůžkový skus 6x6. Ti Amo Romantico Senorita tyto žádané exteriérové znaky a sladký výraz úspěšně předává dál na své potomky.',
+    '<span data-i18n="senorita_desc">Jakožto import z Ruska přináší do chovatelské stanice Great Silkyway prestižní krevní linie špičkových chovatelů (e.g. Amore Bravo). Fena má výrazný „babyface“ vzhled s kratším nosánkem, který je mezi zajemci vysoce ceněn. Přitom je silná, má rovný hřbet, korektní zauzleni, nůžkový skus 6x6. Ti Amo Romantico Senorita tyto žádané exteriérové znaky a sladký výraz úspěšně předává dál na své potomky.</span>'
   );
   html = r(html,
     'Okouzlující fena s nádhernou srstí a výraznou osobností. Michelle je elegantní, klidná a do každého vrhu předává ty nejlepší vlastnosti.',

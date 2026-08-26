@@ -1591,3 +1591,53 @@ p {
 .page-hero p  { animation: heroEntrance 0.7s ease both; animation-delay: 0.3s; }
 .breadcrumb   { animation: heroEntrance 0.5s ease both; animation-delay: 0.05s; }
 
+
+/* ---- AKCNI TLACITKA NA KARTACH (Uspechy / Rodokmen) ----
+   Drive stalo tlacitko Rodokmen hned za Uspechy jen oddelene mezerou
+   a odsazeni resilo pravidlo .btn--achievements vlozene primo do
+   index.html a nasi-psi.html. Na strance Stenata toto pravidlo chybi,
+   takze se tlacitko lepilo na "Mam zajem". Radek tlacitek je proto
+   ted samostatny flex kontejner v globalnim stylu - plati vsude. */
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* Karta stenete uz ma mezeru pod cenou, druhe odsazeni by bylo moc */
+.card-actions--tight {
+  margin-top: 0;
+}
+
+.card-actions .btn {
+  margin-top: 0;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* Rodokmen je doplnek k Uspechum, proto zlata varianta z palety webu.
+   Text je tmavsi zlata (#8A6220) - samotna --color-gold ma na svetlem
+   pozadi kontrast jen 2,6:1 a byla by spatne citelna. */
+.btn--pedigree {
+  background-color: var(--color-gold-pale);
+  color: #8A6220;
+  border-color: var(--color-gold);
+}
+
+.btn--pedigree:hover {
+  background-color: var(--color-gold);
+  color: var(--color-white);
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Na uzkych kartach radeji kazde tlacitko pres celou sirku nez
+   roztrhany radek */
+@media (max-width: 420px) {
+  .card-actions .btn {
+    flex: 1 1 100%;
+  }
+}

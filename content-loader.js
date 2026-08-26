@@ -161,9 +161,16 @@
             ${titlesV ? `<div class="dog-card__meta-item"><label data-i18n="dog_titles">Tituly</label><span>${escapeHtml(titlesV)}</span></div>` : ''}
             <div class="dog-card__meta-item"><label data-i18n="dog_dna">Zdraví</label><span>${escapeHtml(healthV)} ✓</span></div>
           </div>
-          ${achBtn}${pedigreeBtn('dog', i, d)}
+          ${actionsRow(achBtn + pedigreeBtn('dog', i, d))}
         </div>
       </div>`;
+  }
+
+  // Tlacitka na pate karty do jednoho flex radku - bez nej se opiraji
+  // o mezeru v sablone a pri zalomeni nemaji zadny rozestup.
+  function actionsRow(html, tridy) {
+    if (!html || !html.trim()) return '';
+    return `<div class="card-actions${tridy ? ' ' + tridy : ''}">${html}</div>`;
   }
 
   // ===== RODOKMEN =====
@@ -173,7 +180,7 @@
   function pedigreeBtn(druh, _i, o) {
     if (!o.pedigree) return '';
     const popisek = gsLang() === 'en' ? 'Pedigree' : 'Rodokmen';
-    return ` <button class="btn btn--outline btn--sm btn--achievements" onclick="event.stopPropagation(); gsShowPedigree('${druh}', '${escapeHtml(String(o.name || '').replace(/'/g, ''))}')">📜 <span data-i18n="btn_pedigree">${popisek}</span></button>`;
+    return `<button class="btn btn--sm btn--pedigree" onclick="event.stopPropagation(); gsShowPedigree('${druh}', '${escapeHtml(String(o.name || '').replace(/'/g, ''))}')">📜 <span data-i18n="btn_pedigree">${popisek}</span></button>`;
   }
 
   window.gsShowPedigree = function (druh, jmeno) {
@@ -371,7 +378,7 @@
         <div class="puppy-card__body">
           <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}</div>
           <div class="puppy-card__info" data-i18n="breed_yt">Yorkshire teriér</div>
-          ${price}${btn}${pedigreeBtn('puppy', i, p)}
+          ${price}${actionsRow(btn + pedigreeBtn('puppy', i, p), 'card-actions--tight')}
         </div>
       </div>`;
   }

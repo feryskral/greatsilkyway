@@ -739,30 +739,74 @@
           font-size: 1.08rem;
           line-height: 1.75;
         }
-        /* Fotka pejska misto emoji - dolozi, ze recenze je od skutecneho majitele */
-        .testimonial-card__photo {
-          width: 64px;
-          height: 64px;
-          border-radius: 50%;
-          object-fit: cover;
-          flex-shrink: 0;
+        /* Fotka pejska vedle recenze - dolozi, ze je od skutecneho majitele */
+        .testimonial-single {
+          display: flex;
+          align-items: stretch;
+          gap: 26px;
+          max-width: 900px;
+          margin: 0 auto;
+        }
+        .testimonial-single .testimonial-card { flex: 1; }
+        .testimonial-photo {
+          position: relative;
+          flex: 0 0 250px;
+          display: block;
+          border-radius: var(--radius-md);
+          overflow: hidden;
+          box-shadow: 0 10px 30px rgba(13,27,62,0.16);
           border: 3px solid var(--color-gold-light);
-          box-shadow: 0 3px 10px rgba(13,27,62,0.18);
+          cursor: zoom-in;
+          transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .testimonial-photo:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 16px 40px rgba(13,27,62,0.26);
+        }
+        .testimonial-photo img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .testimonial-photo__label {
+          position: absolute;
+          left: 0; right: 0; bottom: 0;
+          padding: 24px 12px 10px;
+          background: linear-gradient(to top, rgba(20,30,58,0.9), rgba(20,30,58,0));
+          color: #fff;
+          font-size: 0.82rem;
+          font-weight: 700;
+          text-align: center;
+        }
+        @media (max-width: 760px) {
+          .testimonial-single { flex-direction: column; gap: 18px; }
+          .testimonial-photo { flex: 0 0 auto; max-height: 340px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .testimonial-photo { transition: none; }
+          .testimonial-photo:hover { transform: none; }
         }
       </style>
       <div class="testimonials-grid testimonials-grid--single mt-40">
+       <div class="testimonial-single">
+        <a class="testimonial-photo" href="recenze-balua.jpg" onclick="gsZoom(this); return false;"
+           title="Kliknutím zvětšíte">
+          <img src="recenze-balua.jpg" alt="Balua – Yorkshire teriér z chovatelské stanice Great Silkyway" loading="lazy" decoding="async" />
+          <span class="testimonial-photo__label" data-i18n="testimonial_1_photo">Balua 🔍</span>
+        </a>
         <div class="testimonial-card">
           <div class="testimonial-card__stars">★★★★★</div>
           <div class="testimonial-card__quote">"</div>
           <p class="testimonial-card__text" data-i18n="testimonial_1">Od paní chovatelky jsem si pořídila štěňátko Yorkshira – Balua, a jsem naprosto spokojená. Komunikace byla skvělá, štěňátko je zdravé a má úžasnou povahu. Doporučuji všem, kteří hledají milého a zdravého pejska.</p>
           <div class="testimonial-card__author">
-            <img class="testimonial-card__photo" src="recenze-balua.jpg" alt="Balua – štěňátko Yorkshire teriéra z chovatelské stanice Great Silkyway" loading="lazy" decoding="async" width="64" height="64" />
             <div>
               <div class="testimonial-card__name">Tereza Hrušková</div>
               <div class="testimonial-card__location" data-i18n="testimonial_1_sub">majitelka štěňátka Balua</div>
             </div>
           </div>
         </div>
+       </div>
       </div>
     </div>
   </section>
@@ -1081,6 +1125,30 @@
     });
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') { closeRomaAchievements(); closeMichelleAchievements(); closeMatteoAchievements(); }
+    });
+
+    // Zvetseni fotky po kliknuti (fotka u recenze)
+    function gsZoom(odkaz) {
+      const url = odkaz.getAttribute('href');
+      const popis = odkaz.querySelector('img')?.alt || '';
+      let o = document.getElementById('gsZoomBox');
+      if (!o) {
+        o = document.createElement('div');
+        o.id = 'gsZoomBox';
+        o.style.cssText = 'position:fixed;inset:0;background:rgba(13,21,48,0.9);display:flex;align-items:center;'
+          + 'justify-content:center;z-index:9999;padding:24px;cursor:zoom-out;';
+        o.onclick = () => o.remove();
+        document.body.appendChild(o);
+      }
+      o.innerHTML = '<img src="' + url + '" alt="' + popis.replace(/"/g, '&quot;') + '" '
+        + 'style="max-width:min(92vw,760px);max-height:90vh;object-fit:contain;border-radius:12px;'
+        + 'box-shadow:0 20px 60px rgba(0,0,0,0.5);" />'
+        + '<button aria-label="Zavřít" onclick="document.getElementById(\'gsZoomBox\').remove()" '
+        + 'style="position:fixed;top:20px;right:24px;width:44px;height:44px;border:none;border-radius:50%;'
+        + 'background:rgba(255,255,255,0.15);color:#fff;font-size:26px;cursor:pointer;line-height:1;">✕</button>';
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.getElementById('gsZoomBox')?.remove();
     });
   </script>
 <script src="animations.js?v=7"></script>

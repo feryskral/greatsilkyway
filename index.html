@@ -726,42 +726,30 @@
         <p class="section-subtitle" data-i18n="test_subtitle">Přečtěte si zkušenosti lidí, kteří si od nás přijali yorkshire teriéra.</p>
       </div>
 
-      <div class="testimonials-grid mt-40">
+      <style>
+        /* Jedina reference - mrizka pro tri sloupce by ji nechala nalepenou
+           vlevo, tohle ji vycentruje a da ji citelnou sirku. */
+        .testimonials-grid--single {
+          display: block;
+          max-width: 720px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .testimonials-grid--single .testimonial-card__text {
+          font-size: 1.08rem;
+          line-height: 1.75;
+        }
+      </style>
+      <div class="testimonials-grid testimonials-grid--single mt-40">
         <div class="testimonial-card">
           <div class="testimonial-card__stars">★★★★★</div>
           <div class="testimonial-card__quote">"</div>
-          <p class="testimonial-card__text" data-i18n="testimonial_1">Naše Mia je naprostý poklad. Přišla k nám perfektně socializovaná a zdravá. Komunikace s chovatelkou byla od začátku do konce naprosto skvělá.</p>
+          <p class="testimonial-card__text" data-i18n="testimonial_1">Od paní chovatelky jsem si pořídila štěňátko Yorkshira – Balua, a jsem naprosto spokojená. Komunikace byla skvělá, štěňátko je zdravé a má úžasnou povahu. Doporučuji všem, kteří hledají milého a zdravého pejska.</p>
           <div class="testimonial-card__author">
             <div class="testimonial-card__avatar">👩</div>
             <div>
-              <div class="testimonial-card__name">Petra Nováková</div>
-              <div class="testimonial-card__location">Praha</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-card__stars">★★★★★</div>
-          <div class="testimonial-card__quote">"</div>
-          <p class="testimonial-card__text" data-i18n="testimonial_2">Profesionální přístup na každém kroku. Pes má nádherný papír, byl naočkovaný, odčervený a perfektně zvyklý na lidi. Doporučuji celým srdcem!</p>
-          <div class="testimonial-card__author">
-            <div class="testimonial-card__avatar">👨</div>
-            <div>
-              <div class="testimonial-card__name">Tomáš Kratochvíl</div>
-              <div class="testimonial-card__location">Brno</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-card__stars">★★★★★</div>
-          <div class="testimonial-card__quote">"</div>
-          <p class="testimonial-card__text" data-i18n="testimonial_3">Čekali jsme na štěně několik měsíců a stálo to za to. Chovatelka nás průběžně informovala fotkami. Náš Max je zdravý a úžasně temperamentní.</p>
-          <div class="testimonial-card__author">
-            <div class="testimonial-card__avatar">👩</div>
-            <div>
-              <div class="testimonial-card__name">Markéta Horáčková</div>
-              <div class="testimonial-card__location">Olomouc</div>
+              <div class="testimonial-card__name">Tereza Hrušková</div>
+              <div class="testimonial-card__location" data-i18n="testimonial_1_sub">majitelka štěňátka Balua</div>
             </div>
           </div>
         </div>
@@ -1086,7 +1074,7 @@
     });
   </script>
 <script src="animations.js?v=7"></script>
-<script src="lang.js?v=6"></script>
+<script src="lang.js?v=7"></script>
 <script src="content-loader.js?v=8"></script>
 
 <script>(function(){new Image().src='track.php?p='+encodeURIComponent(location.pathname)+'&r='+encodeURIComponent(document.referrer);})();</script>

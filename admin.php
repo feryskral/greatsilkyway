@@ -815,6 +815,40 @@
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
 
+    // ===== RODOKMEN =====
+    // Sdilene pole pro psy i stenata. Rodokmen se na webu zobrazi pod
+    // vlastnim tlacitkem "Rodokmen" vedle Uspechu.
+    function rodokmenPole(typ, i, o) {
+      const stav = o.pedigree
+        ? `<span style="color:#2f9e6b;font-weight:600;">✓ nahráno</span>
+           <a href="${escapeHtml(o.pedigree)}" target="_blank" rel="noopener" style="margin-left:10px;color:var(--color-gold);">📄 zobrazit</a>
+           <button class="admin-btn admin-btn--danger admin-btn--sm" style="margin-left:8px;" onclick="smazatRodokmen('${typ}',${i})">🗑 Odebrat</button>`
+        : `<span style="color:var(--color-text-soft);">Zatím nenahrán — tlačítko „Rodokmen" se na webu nezobrazí.</span>`;
+      return `
+              <div class="field field--full"><label>Rodokmen:</label>
+                <div>
+                  <button class="admin-btn admin-btn--secondary admin-btn--sm" onclick="nahratRodokmen('${typ}',${i})">${o.pedigree ? '⇄ Nahradit' : '+ Nahrát rodokmen'}</button>
+                  <div style="font-size:0.82rem;margin-top:8px;line-height:1.7;">${stav}</div>
+                </div>
+              </div>`;
+    }
+    function rodokmenSeznam(typ) { return typ === 'puppy' ? content.puppies : content.dogs; }
+    function nahratRodokmen(typ, i) {
+      const o = rodokmenSeznam(typ)[i];
+      uploadPhoto(r => {
+        o.pedigree = r.photo;
+        typ === 'puppy' ? renderPuppies() : renderDogs();
+        remindPublishTicho();
+      }, 'rodokmen-' + (o.name || typ));
+    }
+    function smazatRodokmen(typ, i) {
+      if (!confirm('Odebrat rodokmen? Soubor zůstane na serveru, jen se přestane zobrazovat.')) return;
+      delete rodokmenSeznam(typ)[i].pedigree;
+      typ === 'puppy' ? renderPuppies() : renderDogs();
+      remindPublishTicho();
+    }
+    function remindPublishTicho() { updateDirtyBadge(); }
+
     // ===== DOGS =====
     function renderDogs() {
       const list = document.getElementById('dogList');
@@ -856,6 +890,7 @@
               <div class="field"><label>Filtr v galerii:</label><input class="input" value="${escapeHtml(d.slug || '')}" oninput="updDog(${i},'slug',this.value)" placeholder="senorita / michelle / oxygen / matteo" /></div>
               <div class="field"><label>Zdraví:</label><input class="input" value="${escapeHtml(d.health || 'V pořádku')}" oninput="updDog(${i},'health',this.value)" /></div>
               <div class="field field--full"><label>Popis:</label><textarea class="textarea" rows="3" oninput="updDog(${i},'description',this.value)" placeholder="Krátký popis psa…">${escapeHtml(d.description)}</textarea></div>
+              ${rodokmenPole('dog', i, d)}
               <div class="achievements">
                 <div class="achievements__title">🏆 Úspěchy <button class="admin-btn admin-btn--secondary admin-btn--sm" onclick="addAchievement(${i})">+ Přidat úspěch</button></div>
                 <div id="ach-${i}"></div>
@@ -1057,6 +1092,7 @@
               </div>
               <div class="field"><label>Vrh:</label><input class="input" list="litterNameOptions" value="${escapeHtml(p.litter || '')}" oninput="updPuppy(${i},'litter',this.value)" placeholder="Vrh C" title="Zobrazí se jako štítek na fotce štěněte. Musí sedět s názvem vrhu, aby tlačítko na stránce Vrhy vedlo sem." /></div>
               <div class="field field--full"><label>Popis:</label><textarea class="textarea" rows="2" oninput="updPuppy(${i},'description',this.value)">${escapeHtml(p.description)}</textarea></div>
+              ${rodokmenPole('puppy', i, p)}
               ${puppyGalleryField(p, i)}
             </div>
           </div>`;

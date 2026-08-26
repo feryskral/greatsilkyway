@@ -96,7 +96,8 @@
       "breedEn": "Yorkshire Terrier",
       "healthEn": "All clear",
       "descriptionEn": "An elegant female with an exceptional temperament and beautiful coat. Oxygen Fresh Stream is calm, kind and passes the very best qualities on to her offspring.",
-      "nameEn": "Oxygen Fresh Stream"
+      "nameEn": "Oxygen Fresh Stream",
+      "pedigree": "rodokmen-oxygen.jpg"
     },
     {
       "name": "Matteo Angel Of My Heart",
@@ -212,7 +213,8 @@
       "descriptionEn": "Yorkshire Terrier",
       "album": "coral",
       "litter": "Vrh C",
-      "litterEn": "Litter C"
+      "litterEn": "Litter C",
+      "pedigree": "rodokmen-coral.jpg"
     },
     {
       "name": "Dolce Far Niente",

@@ -161,10 +161,62 @@
             ${titlesV ? `<div class="dog-card__meta-item"><label data-i18n="dog_titles">Tituly</label><span>${escapeHtml(titlesV)}</span></div>` : ''}
             <div class="dog-card__meta-item"><label data-i18n="dog_dna">Zdraví</label><span>${escapeHtml(healthV)} ✓</span></div>
           </div>
-          ${achBtn}
+          ${achBtn}${pedigreeBtn('dog', i, d)}
         </div>
       </div>`;
   }
+
+  // ===== RODOKMEN =====
+  // Tlacitko vedle Uspechu. Zobrazi se jen kdyz pes rodokmen opravdu ma.
+  // Hleda se podle jmena, ne podle poradi - karty stenat se filtruji podle
+  // vrhu a karty psu podle pohlavi, takze index by ukazal na cizi zaznam.
+  function pedigreeBtn(druh, _i, o) {
+    if (!o.pedigree) return '';
+    const popisek = gsLang() === 'en' ? 'Pedigree' : 'Rodokmen';
+    return ` <button class="btn btn--outline btn--sm btn--achievements" onclick="event.stopPropagation(); gsShowPedigree('${druh}', '${escapeHtml(String(o.name || '').replace(/'/g, ''))}')">📜 <span data-i18n="btn_pedigree">${popisek}</span></button>`;
+  }
+
+  window.gsShowPedigree = function (druh, jmeno) {
+    const seznam = druh === 'puppy' ? (content.puppies || []) : (content.dogs || []);
+    const o = seznam.find(x => String(x.name || '').replace(/'/g, '') === jmeno);
+    if (!o || !o.pedigree) return;
+
+    let m = document.getElementById('gsPedModal');
+    if (!m) {
+      m = document.createElement('div');
+      m.id = 'gsPedModal';
+      m.style.cssText = 'position:fixed;inset:0;background:rgba(13,21,48,0.82);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;';
+      m.onclick = e => { if (e.target === m) m.remove(); };
+      document.body.appendChild(m);
+    }
+    const en = gsLang() === 'en';
+    const url = encodeURI(o.pedigree);
+    const jePdf = /\.pdf$/i.test(o.pedigree);
+    const nadpis = en ? '📜 Pedigree' : '📜 Rodokmen';
+    const otevrit = en ? 'Open in a new tab' : 'Otevřít v nové záložce';
+    const napoveda = en ? 'Click the image to enlarge it' : 'Kliknutím na obrázek jej zvětšíte';
+
+    const obsah = jePdf
+      ? `<iframe src="${escapeHtml(url)}" loading="lazy" style="width:100%;height:70vh;border:none;border-radius:8px;background:#f5f3ef;"></iframe>`
+      : `<a href="${escapeHtml(url)}" target="_blank" rel="noopener" title="${escapeHtml(otevrit)}">
+           <img src="${escapeHtml(url)}" alt="${escapeHtml(nadpis)} ${escapeHtml(o.name || '')}" loading="lazy"
+                style="width:100%;height:auto;border-radius:8px;border:1px solid var(--color-border);display:block;" />
+         </a>
+         <div style="color:var(--color-text-soft);font-size:0.82rem;margin-top:8px;text-align:center;">${escapeHtml(napoveda)}</div>`;
+
+    m.innerHTML = `
+      <div style="background:#fff;border-radius:16px;max-width:940px;width:100%;max-height:92vh;overflow-y:auto;padding:30px;position:relative;animation:gsFadeUp 0.3s ease both;">
+        <button onclick="document.getElementById('gsPedModal').remove()" aria-label="Zavřít"
+                style="position:absolute;top:14px;right:14px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#666;">✕</button>
+        <h2 style="font-family:var(--font-heading);color:var(--color-navy);margin-bottom:4px;">${escapeHtml(pickLang(o, 'name') || o.name)}</h2>
+        <div style="color:var(--color-text-soft);margin-bottom:18px;">${nadpis}</div>
+        ${obsah}
+        <div style="margin-top:14px;text-align:right;">
+          <a href="${escapeHtml(url)}" target="_blank" rel="noopener"
+             style="color:var(--color-gold);font-size:0.88rem;text-decoration:none;">📄 ${escapeHtml(otevrit)} ↗</a>
+        </div>
+      </div>`;
+  };
 
   // Modal pro úspěchy - vybira CZ/EN podle aktualniho jazyka (gsLang/pickLang definovany vyse)
   window.gsToggleAch = function (btn) {
@@ -319,7 +371,7 @@
         <div class="puppy-card__body">
           <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}</div>
           <div class="puppy-card__info" data-i18n="breed_yt">Yorkshire teriér</div>
-          ${price}${btn}
+          ${price}${btn}${pedigreeBtn('puppy', i, p)}
         </div>
       </div>`;
   }

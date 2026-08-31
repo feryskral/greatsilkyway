@@ -231,7 +231,7 @@
       "name": "Dolce Amore",
       "gender": "male",
       "status": "available",
-      "photo": "stene-dolce-amore.jpg",
+      "photo": "foto-dolce-amore-5.jpg",
       "description": "",
       "nameEn": "Dolce Amore",
       "album": "dolce-amore",
@@ -1019,6 +1019,76 @@
       "wide": false,
       "objectPosition": "center center",
       "thumb": "thumbs/foto-senorita-14.webp"
+    },
+    {
+      "caption": "Dolce Amore",
+      "captionEn": "Dolce Amore",
+      "category": "stenata",
+      "album": "dolce-amore",
+      "photo": "foto-dolce-amore-3.jpg",
+      "wide": false,
+      "objectPosition": "center center",
+      "thumb": "thumbs/foto-dolce-amore-3.webp"
+    },
+    {
+      "caption": "Dolce Amore",
+      "captionEn": "Dolce Amore",
+      "category": "stenata",
+      "album": "dolce-amore",
+      "photo": "foto-dolce-amore-4.jpg",
+      "wide": false,
+      "objectPosition": "center center",
+      "thumb": "thumbs/foto-dolce-amore-4.webp"
+    },
+    {
+      "caption": "Dolce Amore",
+      "captionEn": "Dolce Amore",
+      "category": "stenata",
+      "album": "dolce-amore",
+      "photo": "foto-dolce-amore-5.jpg",
+      "wide": false,
+      "objectPosition": "center center",
+      "thumb": "thumbs/foto-dolce-amore-5.webp"
+    },
+    {
+      "caption": "Dolce Amore",
+      "captionEn": "Dolce Amore",
+      "category": "stenata",
+      "album": "dolce-amore",
+      "photo": "foto-dolce-amore-6.jpg",
+      "wide": false,
+      "objectPosition": "center center",
+      "thumb": "thumbs/foto-dolce-amore-6.webp"
+    },
+    {
+      "caption": "Dolce Amore",
+      "captionEn": "Dolce Amore",
+      "category": "stenata",
+      "album": "dolce-amore",
+      "photo": "foto-dolce-amore-7.jpg",
+      "wide": false,
+      "objectPosition": "center center",
+      "thumb": "thumbs/foto-dolce-amore-7.webp"
+    },
+    {
+      "caption": "Dolce Amore",
+      "captionEn": "Dolce Amore",
+      "category": "stenata",
+      "album": "dolce-amore",
+      "photo": "foto-dolce-amore-8.jpg",
+      "wide": false,
+      "objectPosition": "center center",
+      "thumb": "thumbs/foto-dolce-amore-8.webp"
+    },
+    {
+      "caption": "Dolce Amore",
+      "captionEn": "Dolce Amore",
+      "category": "stenata",
+      "album": "dolce-amore",
+      "photo": "foto-dolce-amore-9.jpg",
+      "wide": false,
+      "objectPosition": "center center",
+      "thumb": "thumbs/foto-dolce-amore-9.webp"
     }
   ],
   "puppyAlbums": [
@@ -1044,7 +1114,7 @@
       "name": "Dolce Amore",
       "nameEn": "Dolce Amore",
       "slug": "dolce-amore",
-      "cover": ""
+      "cover": "foto-dolce-amore-5.jpg"
     },
     {
       "name": "Dolores",

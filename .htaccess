@@ -36,6 +36,16 @@ RedirectMatch 404 ^/media(/.*)?$
 # --- Vynutit HTTPS ---
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # --- Sjednoceni hostitele: www -> bez www ---
+  # Web bezel na obou adresach zaroven a Google si je indexoval zvlast.
+  # Musi byt pred vynucenim HTTPS, aby http://www skoncilo na https://bez-www
+  # jednim skokem misto dvou. Po presmerovani uz host www nema, takze
+  # podminka neplati a smycka nevznikne.
+  # Pozor: %{REQUEST_URI} zde nese i fyzickou cestu /domains/..., proto
+  # se cesta bere z $1 stejne jako u pravidla pro HTTPS nize.
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
   RewriteCond %{HTTPS} !=on
   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 

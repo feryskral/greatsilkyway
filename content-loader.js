@@ -370,6 +370,7 @@
       : ' style="padding:0;overflow:hidden;position:relative;"';
     // Misto obecneho '📷 Fotky' nese kazde stene tag sveho vrhu (Vrh C / Vrh D)
     const litterName = pickLang(p, 'litter');
+    // Vsechny stitky sedi v radku se jmenem, fotka zustava cista
     const litterTag = litterName
       ? `<span class="puppy-card__litter">${escapeHtml(litterName)}</span>`
       : '';
@@ -377,10 +378,9 @@
       <div class="puppy-card aos aos-d${(i % 3) + 1}">
         <div class="puppy-card__image"${photoAttrs}>
           ${photo ? `<img src="${escapeHtml(nahled)}" alt="${escapeHtml(p.name)}"${i > 2 ? ' loading="lazy"' : ''} decoding="async" style="width:100%;height:100%;object-fit:cover;" />` : '<span style="font-size:64px;">🐶</span>'}
-          ${genderBadge(p.gender)}${statusBadge(p.status)}${litterTag}
         </div>
         <div class="puppy-card__body">
-          <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}</div>
+          <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}${genderBadge(p.gender)}${litterTag}${statusBadge(p.status)}</div>
           <div class="puppy-card__info" data-i18n="breed_yt">Yorkshire teriér</div>
           ${price}${actionsRow(btn + pedigreeBtn('puppy', i, p), 'card-actions--tight')}
         </div>
@@ -392,6 +392,7 @@
     const nahled = p.thumb || photo;
     // Stejny tag vrhu jako na strance Stenata - sekce ma vypadat stejne
     const litterName = pickLang(p, 'litter');
+    // Vsechny stitky sedi v radku se jmenem, fotka zustava cista
     const litterTag = litterName
       ? `<span class="puppy-card__litter">${escapeHtml(litterName)}</span>`
       : '';
@@ -399,10 +400,9 @@
       <div class="puppy-card aos aos-d${(i % 3) + 1}" style="cursor:pointer;" onclick="location.href='stena.html'">
         <div class="puppy-card__image" style="padding:0;overflow:hidden;position:relative;">
           ${photo ? `<img src="${escapeHtml(nahled)}" alt="${escapeHtml(p.name)}"${i > 2 ? ' loading="lazy"' : ''} decoding="async" style="width:100%;height:100%;object-fit:cover;" />` : '<span>🐶</span>'}
-          ${genderBadge(p.gender)}${statusBadge(p.status)}${litterTag}
         </div>
         <div class="puppy-card__body">
-          <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}</div>
+          <div class="puppy-card__name">${escapeHtml(pickLang(p,'name') || p.name)}${genderBadge(p.gender)}${litterTag}${statusBadge(p.status)}</div>
           <div class="puppy-card__info" data-i18n="breed_yt">Yorkshire teriér</div>
           <div class="puppy-card__price" data-i18n="price_on_request">Na dotaz</div>
         </div>

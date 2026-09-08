@@ -622,32 +622,53 @@
 
       <style>
         .puppy-card__gender {
-          position: absolute;
-          top: 12px;
-          left: 12px;
-          padding: 6px 14px;
+          display: inline-block;
+          padding: 3px 10px;
           border-radius: 999px;
-          font-size: 0.72rem;
+          font-size: 0.62rem;
           font-weight: 700;
           letter-spacing: 0.06em;
           text-transform: uppercase;
           color: #fff;
-          z-index: 2;
+        }
+        /* Jmeno a stitky tvori jeden radek, ktery se na uzke karte zalomi */
+        .puppy-card__name {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 6px;
+        }
+        /* Stav a vrh sedi u jmena, ne na fotce - rusi se absolutni pozicovani
+           ze style.css. Karty vrhu pouzivaji stejnou tridu a zustavaji beze zmeny,
+           protoze tohle pravidlo plati jen uvnitr .puppy-card__name. */
+        .puppy-card__name .puppy-card__status,
+        .puppy-card__name .puppy-card__litter {
+          position: static;
+          top: auto; right: auto; bottom: auto; left: auto;
+          padding: 3px 10px;
+          font-size: 0.62rem;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          backdrop-filter: none;
+        }
+        /* Vrh ma vlastni oranzovou. Je zamerne tmavsi nez #F59E0B u stavu
+           "Rezervovano", aby se dva oranzove ovaly na karte nepletly. */
+        .puppy-card__name .puppy-card__litter {
+          background: #C2410C;
+          color: #fff;
+          border: none;
         }
         .puppy-card__gender--female { background: #d8607f; }
-        .puppy-card__gender--male   { background: var(--color-navy); }
+        .puppy-card__gender--male   { background: #3A6FB5; }
       </style>
       <div class="puppies-grid" id="puppies-grid-home">
         <div class="puppy-card aos aos-d1" style="cursor:pointer;" onclick="location.href='stena.html'">
           <div class="puppy-card__image" style="padding:0; overflow:hidden; position:relative;">
             <img src="thumbs/Citrine.webp" alt="Citrine" style="width:100%; height:100%; object-fit:cover; object-position:center center;" loading="lazy" decoding="async" />
-            <span class="puppy-card__gender puppy-card__gender--female" data-i18n="gender_female">Fena</span>
-            <span class="puppy-card__status puppy-card__status--available" data-i18n="status_available">Volné</span>
-            <span class="puppy-card__litter">Vrh C</span>
-          </div>
+                      </div>
           <div class="puppy-card__body">
-            <div class="puppy-card__name">Citrine</div>
-            <div class="puppy-card__info" data-i18n="breed_yt">Yorkshire teriér</div>
+            <div class="puppy-card__name">Citrine<span class="puppy-card__gender puppy-card__gender--female" data-i18n="gender_female">Fena</span><span class="puppy-card__litter">Vrh C</span><span class="puppy-card__status puppy-card__status--available" data-i18n="status_available">Volné</span></div>
+            <div class="puppy-card__info" data-i18n="breed_yt" data-i18n="breed_yt">Yorkshire teriér</div>
             <div class="puppy-card__price" data-i18n="price_on_request">Na dotaz</div>
           </div>
         </div>
@@ -655,13 +676,10 @@
         <div class="puppy-card aos aos-d2" style="cursor:pointer;" onclick="location.href='stena.html'">
           <div class="puppy-card__image" style="padding:0; overflow:hidden; position:relative;">
             <img src="thumbs/Coral.webp" alt="Coral" style="width:100%; height:100%; object-fit:cover; object-position:center center;" loading="lazy" decoding="async" />
-            <span class="puppy-card__gender puppy-card__gender--male" data-i18n="gender_male">Pes</span>
-            <span class="puppy-card__status puppy-card__status--available" data-i18n="status_available">Volné</span>
-            <span class="puppy-card__litter">Vrh C</span>
-          </div>
+                      </div>
           <div class="puppy-card__body">
-            <div class="puppy-card__name">Coral</div>
-            <div class="puppy-card__info" data-i18n="breed_yt">Yorkshire teriér</div>
+            <div class="puppy-card__name">Coral<span class="puppy-card__gender puppy-card__gender--male" data-i18n="gender_male">Pes</span><span class="puppy-card__litter">Vrh C</span><span class="puppy-card__status puppy-card__status--available" data-i18n="status_available">Volné</span></div>
+            <div class="puppy-card__info" data-i18n="breed_yt" data-i18n="breed_yt">Yorkshire teriér</div>
             <div class="puppy-card__price" data-i18n="price_on_request">Na dotaz</div>
           </div>
         </div>
@@ -1153,7 +1171,7 @@
   </script>
 <script src="animations.js?v=7"></script>
 <script src="lang.js?v=9"></script>
-<script src="content-loader.js?v=11"></script>
+<script src="content-loader.js?v=12"></script>
 
 <script>(function(){new Image().src='track.php?p='+encodeURIComponent(location.pathname)+'&r='+encodeURIComponent(document.referrer);})();</script>
 </body>

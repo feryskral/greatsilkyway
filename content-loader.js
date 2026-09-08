@@ -117,6 +117,8 @@
   }
   function dogCard(d, i) {
     const photo = d.photo || '';
+    // V karte staci lehky nahled; original zustava pro lightbox a plnou kvalitu.
+    const nahled = d.thumb || photo;
     const badge = d.gender === 'male'
       ? '<span class="dog-card__badge" style="background:var(--color-navy);" data-i18n="gender_male">Pes</span>'
       : '<span class="dog-card__badge" data-i18n="gender_female">Fena</span>';
@@ -150,7 +152,7 @@
     return `
       <div class="dog-card aos aos-d${(i % 3) + 1}" style="cursor:pointer;" ${clickHandler}>
         <div class="dog-card__image" style="${imageStyle}">
-          ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(d.name)}" style="width:100%;height:100%;object-fit:${escapeHtml(objFit)};object-position:${escapeHtml(objPos)};" />` : ''}
+          ${photo ? `<img src="${escapeHtml(nahled)}" alt="${escapeHtml(d.name)}"${i > 2 ? ' loading="lazy"' : ''} decoding="async" style="width:100%;height:100%;object-fit:${escapeHtml(objFit)};object-position:${escapeHtml(objPos)};" />` : ''}
           ${badge}
         </div>
         <div class="dog-card__body">
@@ -351,6 +353,8 @@
   }
   function puppyCardStena(p, i) {
     const photo = p.photo || '';
+    // V karte staci lehky nahled; original zustava pro lightbox a plnou kvalitu.
+    const nahled = p.thumb || photo;
     const reserved = p.status === 'reserved';
     const btn = reserved
       ? '<button class="btn btn--outline btn--sm" disabled style="opacity:0.5;cursor:not-allowed;" data-i18n="btn_taken">Obsazeno</button>'
@@ -372,7 +376,7 @@
     return `
       <div class="puppy-card aos aos-d${(i % 3) + 1}">
         <div class="puppy-card__image"${photoAttrs}>
-          ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(p.name)}" style="width:100%;height:100%;object-fit:cover;" />` : '<span style="font-size:64px;">🐶</span>'}
+          ${photo ? `<img src="${escapeHtml(nahled)}" alt="${escapeHtml(p.name)}"${i > 2 ? ' loading="lazy"' : ''} decoding="async" style="width:100%;height:100%;object-fit:cover;" />` : '<span style="font-size:64px;">🐶</span>'}
           ${genderBadge(p.gender)}${statusBadge(p.status)}${litterTag}
         </div>
         <div class="puppy-card__body">
@@ -384,6 +388,8 @@
   }
   function puppyCardHome(p, i) {
     const photo = p.photo || '';
+    // V karte staci lehky nahled; original zustava pro lightbox a plnou kvalitu.
+    const nahled = p.thumb || photo;
     // Stejny tag vrhu jako na strance Stenata - sekce ma vypadat stejne
     const litterName = pickLang(p, 'litter');
     const litterTag = litterName
@@ -392,7 +398,7 @@
     return `
       <div class="puppy-card aos aos-d${(i % 3) + 1}" style="cursor:pointer;" onclick="location.href='stena.html'">
         <div class="puppy-card__image" style="padding:0;overflow:hidden;position:relative;">
-          ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(p.name)}" style="width:100%;height:100%;object-fit:cover;" />` : '<span>🐶</span>'}
+          ${photo ? `<img src="${escapeHtml(nahled)}" alt="${escapeHtml(p.name)}"${i > 2 ? ' loading="lazy"' : ''} decoding="async" style="width:100%;height:100%;object-fit:cover;" />` : '<span>🐶</span>'}
           ${genderBadge(p.gender)}${statusBadge(p.status)}${litterTag}
         </div>
         <div class="puppy-card__body">
@@ -413,6 +419,8 @@
   }
   function litterCard(l, i) {
     const photo = l.cover || '';
+    // V karte staci lehky nahled; original zustava pro lightbox a plnou kvalitu.
+    const nahled = l.thumb || photo;
     const statusClass = l.status === 'available' ? 'available' : 'reserved';
     const statusKey = l.status === 'available' ? 'litter_status_available' : 'litter_status_unavailable';
     const statusLabel = l.status === 'available' ? 'Dostupný' : 'Nedostupné';
@@ -428,7 +436,7 @@
     return `
       <div class="vrh-card aos aos-d${(i % 3) + 1}" style="cursor:pointer;${dimmed}" data-img="${escapeHtml(photo)}" data-caption="${escapeHtml(l.name)}">
         <div class="vrh-card__image" style="position:relative;">
-          ${photo ? `<img src="${escapeHtml(photo)}" alt="${escapeHtml(l.name)}" style="object-position:center top;" />` : ''}
+          ${photo ? `<img src="${escapeHtml(nahled)}" alt="${escapeHtml(l.name)}"${i > 2 ? ' loading="lazy"' : ''} decoding="async" style="object-position:center top;" />` : ''}
           <span class="puppy-card__status puppy-card__status--${statusClass}" data-i18n="${statusKey}">${statusLabel}</span>
         </div>
         <div class="vrh-card__body">

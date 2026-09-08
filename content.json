@@ -22,7 +22,8 @@
       "breedEn": "Yorkshire Terrier",
       "healthEn": "All clear",
       "descriptionEn": "Imported from Russia, she brings the prestigious bloodlines of top breeders (e.g. Amore Bravo) to the Great Silkyway kennel. She has a pronounced \"babyface\" look with a shorter muzzle, highly prized among enthusiasts. At the same time she is strong, with a level back, correct angulation and a scissor bite 6x6. Ti Amo Romantico Senorita passes these sought-after conformation traits and sweet expression on to her offspring.",
-      "nameEn": "Ti Amo Romantico Senorita"
+      "nameEn": "Ti Amo Romantico Senorita",
+      "thumb": "thumbs/York1.webp"
     },
     {
       "name": "Enchanting Michelle Angel Of My Heart",
@@ -62,7 +63,8 @@
       "breedEn": "Yorkshire Terrier",
       "healthEn": "All clear",
       "descriptionEn": "A charming female with a gorgeous coat and a striking personality. Michelle is elegant, calm and passes the very best qualities on to every litter.",
-      "nameEn": "Enchanting Michelle Angel Of My Heart"
+      "nameEn": "Enchanting Michelle Angel Of My Heart",
+      "thumb": "thumbs/topfoto.webp"
     },
     {
       "name": "Oxygen Fresh Stream",
@@ -97,7 +99,8 @@
       "healthEn": "All clear",
       "descriptionEn": "An elegant female with an exceptional temperament and beautiful coat. Oxygen Fresh Stream is calm, kind and passes the very best qualities on to her offspring.",
       "nameEn": "Oxygen Fresh Stream",
-      "pedigree": "rodokmen-oxygen.jpg"
+      "pedigree": "rodokmen-oxygen.jpg",
+      "thumb": "thumbs/oxygen_foto2.webp"
     },
     {
       "name": "Matteo Angel Of My Heart",
@@ -187,7 +190,8 @@
       "titlesEn": "JCH EARL",
       "healthEn": "All clear",
       "descriptionEn": "An exceptional male holding the Junior Champion title. Matteo combines perfect conformation, a stunning coat and the confident temperament of a top-quality show dog.",
-      "nameEn": "Matteo Angel Of My Heart"
+      "nameEn": "Matteo Angel Of My Heart",
+      "thumb": "thumbs/pes-matteo.webp"
     }
   ],
   "puppies": [
@@ -201,7 +205,8 @@
       "descriptionEn": "Yorkshire Terrier",
       "album": "citrine",
       "litter": "Vrh C",
-      "litterEn": "Litter C"
+      "litterEn": "Litter C",
+      "thumb": "thumbs/Citrine.webp"
     },
     {
       "name": "Coral",
@@ -214,7 +219,8 @@
       "album": "coral",
       "litter": "Vrh C",
       "litterEn": "Litter C",
-      "pedigree": "rodokmen-coral.jpg"
+      "pedigree": "rodokmen-coral.jpg",
+      "thumb": "thumbs/foto-coral-3.webp"
     },
     {
       "name": "Dolce Far Niente",
@@ -225,7 +231,8 @@
       "nameEn": "Dolce Far Niente",
       "album": "dolce-far-niente",
       "litter": "Vrh D",
-      "litterEn": "Litter D"
+      "litterEn": "Litter D",
+      "thumb": "thumbs/stene-dolce-far-niente.webp"
     },
     {
       "name": "Dolce Amore",
@@ -236,7 +243,8 @@
       "nameEn": "Dolce Amore",
       "album": "dolce-amore",
       "litter": "Vrh D",
-      "litterEn": "Litter D"
+      "litterEn": "Litter D",
+      "thumb": "thumbs/foto-dolce-amore-5.webp"
     },
     {
       "name": "Dolores",
@@ -247,7 +255,8 @@
       "nameEn": "Dolores",
       "album": "dolores",
       "litter": "Vrh D",
-      "litterEn": "Litter D"
+      "litterEn": "Litter D",
+      "thumb": "thumbs/stene-dolores.webp"
     },
     {
       "name": "Dolce Vita",
@@ -258,7 +267,8 @@
       "nameEn": "Dolce Vita: ",
       "album": "dolce-vita",
       "litter": "Vrh D",
-      "litterEn": "Litter D"
+      "litterEn": "Litter D",
+      "thumb": "thumbs/stene-dolce-vita.webp"
     }
   ],
   "litters": [
@@ -271,7 +281,8 @@
       "dame": "",
       "dob": "",
       "nameEn": "Litter C",
-      "descriptionEn": "Puppies from Litter C of our kennel."
+      "descriptionEn": "Puppies from Litter C of our kennel.",
+      "thumb": "thumbs/VRH_C.webp"
     },
     {
       "name": "Vrh B",
@@ -282,7 +293,8 @@
       "dame": "",
       "dob": "",
       "nameEn": "Litter B",
-      "descriptionEn": "Puppies from Litter B of our kennel."
+      "descriptionEn": "Puppies from Litter B of our kennel.",
+      "thumb": "thumbs/VRH_B.webp"
     },
     {
       "name": "Vrh A",
@@ -293,7 +305,8 @@
       "dame": "",
       "dob": "",
       "nameEn": "Litter A",
-      "descriptionEn": "Puppies from Litter A of our kennel."
+      "descriptionEn": "Puppies from Litter A of our kennel.",
+      "thumb": "thumbs/VRH_A.webp"
     }
   ],
   "gallery": [

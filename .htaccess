@@ -38,6 +38,12 @@ RedirectMatch 404 ^/media(/.*)?$
   RewriteEngine On
   RewriteCond %{HTTPS} !=on
   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+  # --- Sjednoceni domovske stranky: /index.html -> / ---
+  # THE_REQUEST obsahuje puvodni pozadavek z prohlizece, takze interni
+  # prepis pres DirectoryIndex tuhle podminku nesplni a nevznikne smycka.
+  RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+  RewriteRule ^ / [R=301,L]
 </IfModule>
 
 # --- Bezpecnostni hlavicky ---

@@ -2,6 +2,8 @@ const T = {
   cs: {
     nav_home:'Úvod', nav_about:'O nás', nav_dogs:'Naši psi', nav_puppies:'Štěňata',
     nav_litters:'Vrhy', nav_gallery:'Galerie', nav_contact_btn:'Kontaktujte nás',
+    promo_tiktok_text:'Právě jsme aktivní na TikToku', promo_tiktok_cta:'Sledovat',
+    promo_tiktok_close:'Zavřít oznámení',
     footer_nav_title:'Navigace', footer_info_title:'Informace', footer_contact_title:'Kontakt',
     footer_tagline:'Profesionální chovatelská stanice Yorkshire teriérů s FCI registrací. Chováme s láskou od roku 2023.',
     footer_write:'Napište nám', footer_location:'📍 Česká republika, Praha',
@@ -50,7 +52,7 @@ const T = {
     story_label:'Náš příběh', story_title:'Vítejte v Great Silkyway',
     story_p1:'Chovatelská stanice Great Silkyway vznikla v roce 2023 z čisté a nefalšované lásky k Yorkshire teriérům. To, co začalo jako osobní vášeň jedné rodiny, se postupem let rozrostlo v respektovanou chovatelskou stanici s mezinárodní FCI registrací.',
     story_p2:'Naším hlavním posláním je chovat Yorkshire teriéry, kteří jsou nejen krásní navenek, ale především zdraví, dobře socializovaní a s výbornou povahou. Věříme, že správný yorkie je věrný společník pro celou rodinu — od batolat po seniory.',
-    story_p3:'Každé štěně, které opouští naši stanici, odchází jako součást naší rodiny. Zůstáváme k dispozici novým majitelům po celý život psa — s radami, podporou i přátelstvím.',
+    story_p3:'Nové rodiny vybíráme pečlivě — věříme, že každé štěně patří ke konkrétnímu člověku, a proto se s vámi chceme nejdřív poznat. Každé štěně pak odchází jako součást naší rodiny a s novými majiteli zůstáváme v kontaktu po celý život psa.',
     story_btn1:'Aktuální štěňata', story_btn2:'Napište nám',
     badge_fci:'FCI registrace', badge_since:'od roku 2023',
     values_label:'Naše hodnoty', values_title:'Co nás řídí',
@@ -59,8 +61,9 @@ const T = {
     val2_title:'Zdraví nade vše', val2_desc:'Naším závazkem je, aby každé štěňátko vyrostlo zdravě a šťastně. Zdraví vašeho budoucího mazlíčka je pro nás na prvním místě.',
     val3_title:'Poctivost a transparentnost', val3_desc:'Sdílíme vše — výsledky zdravotních testů, výstavní tituly i rodokmen. Žádná tajemství.',
     breeder_label:'Chovatelé', breeder_title:'Kdo stojí za Great Silkyway',
-    breeder_p1:'Za naší stanicí stojí vášnivá chovatelka se dvěma desetiletími zkušeností s chovem Yorkshire teriérů. Aktivně se účastní výstav psů po celé Evropě a pravidelně absolvuje odborné semináře zaměřené na welfare a zdraví psů.',
-    breeder_p2:'Vrhy plánujeme s velkým rozmyslem — vybíráme rodiče nejen podle titulů, ale především podle zdraví, povahy a chovné hodnoty. Počet vrhů za rok záměrně omezujeme, aby každé štěně dostalo tu nejlepší možnou péči a pozornost.',
+    breeder_p1:'Za naší stanicí stojí chovatelka se dvěma desetiletími zkušeností s Yorkshire teriéry. Aktivně se účastní výstav po celé Evropě, je členkou 1. CZ Yorkshire Terrier Clubu zastřešeného ČMKU a pravidelně absolvuje odborné semináře zaměřené na welfare a zdraví psů.',
+    breeder_p2:'Základem chovu jsou feny dovezené ze zahraničí z nejlepších linií. K nim vybíráme partnera podle zdraví, povahy a chovné hodnoty — ne jen podle titulů.',
+    breeder_p3:'Fenu nepřipouštíme při každém hárání, ale nejdříve za rok až dva. Po porodu potřebuje čas se zotavit a vrátit do formy. Počet vrhů za rok proto zůstává nízký.',
     breeder_check1:'Členka FCI', breeder_check2:'Aktivní výstavní kariéra v ČR i zahraničí',
     breeder_check3:'Průběžné vzdělávání v oblasti genetiky a welfare', breeder_check4:'Individuální péče o každé štěňátko',
     badge_breeder_year:'Chovatel roku', badge_year:'2022',
@@ -110,7 +113,7 @@ const T = {
     step1_title:'Kontaktujte nás', step1_desc:'Napište nám e-mail nebo zavolejte. Rádi odpovíme na všechny vaše otázky a zjistíme, zda máme vhodné štěně pro vás.',
     step2_title:'Přijďte se podívat', step2_desc:'Rádi vás přivítáme osobně, ukážeme vám naše štěňátka i prostředí, ve kterém vyrůstají. Žádný spěch — jen přirozené seznámení.',
     step3_title:'Průběžné fotky a video', step3_desc:'Budete pravidelně dostávat fotografie a videa vašeho štěněte. Sledujete jeho vývoj od prvního dne.',
-    step4_title:'Nový začátek', step4_desc:'Ve chvíli, kdy je štěňátko připraveno, odchází s plnou péčí do své nové rodiny. Jsme vám k dispozici i nadále — s radami, odpověďmi i přátelstvím.',
+    step4_title:'Nový začátek', step4_desc:'Štěňátko předáváme nejdříve ve 3,5 měsících, po kompletní vakcinaci. Delší pobyt u nás má svůj důvod — štěně se socializuje se smečkou a co nejdéle se učí od maminky. Jsme vám k dispozici i potom, s radami i přátelstvím.',
     included_title:'S čím štěňátko odchází do nového domova', included_desc:'Chceme, aby štěňátko i jeho nová rodina měli ten nejlepší začátek společně:',
     inc1:'FCI průkaz původu', inc2:'Veterinární pas EU', inc3:'Kompletní očkování',
     inc4:'Odčervení', inc5:'Mikročip', inc6:'Potvrzení o zdravotním stavu',
@@ -171,6 +174,8 @@ const T = {
   en: {
     nav_home:'Home', nav_about:'About us', nav_dogs:'Our Dogs', nav_puppies:'Puppies',
     nav_litters:'Litters', nav_gallery:'Gallery', nav_contact_btn:'Contact us',
+    promo_tiktok_text:"We're now active on TikTok", promo_tiktok_cta:'Follow',
+    promo_tiktok_close:'Close announcement',
     footer_nav_title:'Navigation', footer_info_title:'Information', footer_contact_title:'Contact',
     footer_tagline:'Professional Yorkshire Terrier kennel with FCI registration. Breeding with love since 2023.',
     footer_write:'Write to us', footer_location:'📍 Czech Republic, Prague',
@@ -217,7 +222,7 @@ const T = {
     story_label:'Our story', story_title:'Welcome to Great Silkyway',
     story_p1:'The Great Silkyway kennel was founded in 2023 out of genuine love for Yorkshire Terriers. What started as a personal passion of one family has grown over the years into a respected kennel with international FCI registration.',
     story_p2:'Our main mission is to breed Yorkshire Terriers who are not only beautiful on the outside, but above all healthy, well-socialised and with an excellent temperament. We believe the right Yorkie is a faithful companion for the whole family — from toddlers to seniors.',
-    story_p3:'Every puppy that leaves our kennel goes as a part of our family. We remain available to new owners for the entire life of the dog — with advice, support and friendship.',
+    story_p3:'We choose new families carefully — we believe every puppy belongs with one particular person, so we want to get to know you first. Each puppy then leaves as a part of our family and we stay in touch with the new owners for the whole life of the dog.',
     story_btn1:'Current puppies', story_btn2:'Write to us',
     badge_fci:'FCI registration', badge_since:'since 2023',
     values_label:'Our values', values_title:'What drives us',
@@ -226,8 +231,9 @@ const T = {
     val2_title:'Health above all', val2_desc:'Our commitment is for every puppy to grow up healthy and happy. The health of your future companion is our top priority.',
     val3_title:'Honesty and transparency', val3_desc:'We share everything — health test results, show titles and pedigree. No secrets.',
     breeder_label:'Breeders', breeder_title:'Who is behind Great Silkyway',
-    breeder_p1:'Our kennel is run by a passionate breeder with two decades of experience in Yorkshire Terrier breeding. She actively participates in dog shows across Europe and regularly attends professional seminars focused on animal welfare and health.',
-    breeder_p2:'We plan litters with great care — we select parents not only by titles, but above all by health, temperament and breeding value. We deliberately limit the number of litters per year so that every puppy receives the best possible care and attention.',
+    breeder_p1:'Our kennel is run by a breeder with two decades of experience with Yorkshire Terriers. She actively takes part in shows across Europe, is a member of the 1st CZ Yorkshire Terrier Club under the ČMKU, and regularly attends professional seminars on canine welfare and health.',
+    breeder_p2:'Our breeding is built on females imported from abroad, from the finest bloodlines. We choose their partner by health, temperament and breeding value — not by titles alone.',
+    breeder_p3:'We do not breed a female at every season, but after a year or two at the earliest. After whelping she needs time to recover and get back in shape. The number of litters per year therefore stays low.',
     breeder_check1:'Member of FCI', breeder_check2:'Active show career in Czech Republic and abroad',
     breeder_check3:'Ongoing education in genetics and animal welfare', breeder_check4:'Individual care for every puppy',
     badge_breeder_year:'Breeder of the Year', badge_year:'2022',
@@ -274,7 +280,7 @@ const T = {
     step1_title:'Contact us', step1_desc:'Write to us or call. We will happily answer all your questions and find out if we have the right puppy for you.',
     step2_title:'Come and visit', step2_desc:'We would love to welcome you in person, show you our puppies and the home they grow up in. No rush — just a natural getting-to-know-each-other.',
     step3_title:'Regular photos and video', step3_desc:'You will regularly receive photos and videos of your puppy. You can watch its development from day one.',
-    step4_title:'A new beginning', step4_desc:'When the puppy is ready, it goes to its new family with full care. We remain available to you — with advice, answers and friendship.',
+    step4_title:'A new beginning', step4_desc:'We hand a puppy over at 3.5 months at the earliest, after complete vaccination. The longer stay with us has a reason — the puppy socialises with the pack and learns from its mother for as long as possible. We remain available to you afterwards, with advice and friendship.',
     included_title:'What your puppy takes home', included_desc:'We want every puppy and their new family to have the very best start together:',
     inc1:'FCI Pedigree', inc2:'EU Veterinary passport', inc3:'Full vaccination',
     inc4:'Deworming', inc5:'Microchip', inc6:'Health certificate',
@@ -351,6 +357,11 @@ function applyTranslations(lang) {
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const k = el.getAttribute('data-i18n-placeholder');
     if (t[k] !== undefined) el.placeholder = t[k];
+  });
+
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    const k = el.getAttribute('data-i18n-aria');
+    if (t[k] !== undefined) el.setAttribute('aria-label', t[k]);
   });
 }
 

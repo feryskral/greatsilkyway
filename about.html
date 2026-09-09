@@ -84,12 +84,40 @@
   }
   </script>
   <!-- SEO:end -->
-  <link rel="stylesheet" href="style.css?v=8" />
+  <link rel="stylesheet" href="style.css?v=9" />
 
   <link rel="icon" type="image/png" href="favicon-32.png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 </head>
 <body>
+
+  <!-- HORNI LISTA: TIKTOK -->
+  <div class="promo-bar" id="promoBar">
+    <div class="container promo-bar__inner">
+      <a class="promo-bar__link" href="https://www.tiktok.com/@greatsilkyway" target="_blank" rel="noopener">
+        <span class="promo-bar__dot" aria-hidden="true"></span>
+        <svg class="promo-bar__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.59 2.59 0 0 1 0-5.18c.27 0 .53.04.77.12v-3.2a5.8 5.8 0 0 0-.77-.05 5.79 5.79 0 1 0 5.79 5.79V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.29 4.29 0 0 1-3.35-1.48z"/></svg>
+        <span data-i18n="promo_tiktok_text">Právě jsme aktivní na TikToku</span>
+        <span class="promo-bar__cta"><span data-i18n="promo_tiktok_cta">Sledovat</span><span class="promo-bar__handle">&nbsp;@greatsilkyway</span> →</span>
+      </a>
+      <button class="promo-bar__close" id="promoBarClose" type="button" aria-label="Zavřít oznámení" data-i18n-aria="promo_tiktok_close">✕</button>
+    </div>
+  </div>
+  <script>
+    // Zavreni si pamatujeme v prohlizeci navstevnika. Bezi hned za listou,
+    // takze zavrena lista nestihne probliknout.
+    (function () {
+      var bar = document.getElementById('promoBar');
+      if (!bar) return;
+      var KEY = 'gs_promo_tiktok_v1';
+      try { if (localStorage.getItem(KEY) === 'off') { bar.hidden = true; return; } } catch (e) {}
+      document.getElementById('promoBarClose').addEventListener('click', function () {
+        bar.hidden = true;
+        try { localStorage.setItem(KEY, 'off'); } catch (e) {}
+      });
+    })();
+  </script>
+
 
   <!-- NAVIGATION -->
   <nav class="nav">
@@ -154,7 +182,7 @@
             <span data-i18n="story_p2">Naším hlavním posláním je chovat Yorkshire teriéry, kteří jsou nejen krásní navenek, ale především zdraví, dobře socializovaní a s výbornou povahou. Věříme, že správný yorkie je věrný společník pro celou rodinu — od batolat po seniory.</span>
           </p>
           <p>
-            <span data-i18n="story_p3">Každé štěně, které opouští naši stanici, odchází jako součást naší rodiny. Zůstáváme k dispozici novým majitelům po celý život psa — s radami, podporou i přátelstvím.</span>
+            <span data-i18n="story_p3">Nové rodiny vybíráme pečlivě — věříme, že každé štěně patří ke konkrétnímu člověku, a proto se s vámi chceme nejdřív poznat. Každé štěně pak odchází jako součást naší rodiny a s novými majiteli zůstáváme v kontaktu po celý život psa.</span>
           </p>
           <div class="btn-group">
             <a href="stena.html" class="btn btn--primary" data-i18n="story_btn1">Aktuální štěňata</a>
@@ -222,10 +250,13 @@
           <div class="divider"></div>
           <h2 class="section-title" data-i18n="breeder_title">Kdo stojí za Great Silkyway</h2>
           <p>
-            <span data-i18n="breeder_p1">Za naší stanicí stojí vášnivá chovatelka se dvěma desetiletími zkušeností s chovem Yorkshire teriérů. Aktivně se účastní výstav psů po celé Evropě, je členkou ČMKU a pravidelně absolvuje odborné semináře zaměřené na welfare a zdraví psů.</span>
+            <span data-i18n="breeder_p1">Za naší stanicí stojí chovatelka se dvěma desetiletími zkušeností s Yorkshire teriéry. Aktivně se účastní výstav po celé Evropě, je členkou 1. CZ Yorkshire Terrier Clubu zastřešeného ČMKU a pravidelně absolvuje odborné semináře zaměřené na welfare a zdraví psů.</span>
           </p>
           <p>
-            <span data-i18n="breeder_p2">Vrhy plánujeme s velkým rozmyslem — vybíráme rodiče nejen podle titulů, ale především podle zdraví, povahy a chovné hodnoty. Počet vrhů za rok záměrně omezujeme, aby každé štěně dostalo tu nejlepší možnou péči a pozornost.</span>
+            <span data-i18n="breeder_p2">Základem chovu jsou feny dovezené ze zahraničí z nejlepších linií. K nim vybíráme partnera podle zdraví, povahy a chovné hodnoty — ne jen podle titulů.</span>
+          </p>
+          <p>
+            <span data-i18n="breeder_p3">Fenu nepřipouštíme při každém hárání, ale nejdříve za rok až dva. Po porodu potřebuje čas se zotavit a vrátit do formy. Počet vrhů za rok proto zůstává nízký.</span>
           </p>
 
           <div class="checkmarks">
@@ -355,7 +386,7 @@
     burger.addEventListener('click', () => menu.classList.toggle('open'));
   </script>
 <script src="animations.js?v=7"></script>
-<script src="lang.js?v=9"></script>
+<script src="lang.js?v=10"></script>
 
 <script>(function(){new Image().src='track.php?p='+encodeURIComponent(location.pathname)+'&r='+encodeURIComponent(document.referrer);})();</script>
 </body>

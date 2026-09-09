@@ -208,6 +208,138 @@ p {
 }
 
 /* ---- NAV ---- */
+/* ---- HORNI OZNAMOVACI LISTA (TikTok) ----
+   Sedi nad navigaci, s odrolovanim odjede pryc (nav je sticky a prekryje ji).
+   Zavreni si pamatuje prohlizec navstevnika pod klicem gs_promo_tiktok_v1 -
+   pri dalsi kampani staci v HTML i ve skriptu zvednout cislo verze klice
+   a lista se zobrazi znovu i tem, kdo ji uz jednou zavreli. */
+.promo-bar {
+  position: relative;
+  background: linear-gradient(90deg, #16223C 0%, #2E4070 50%, #16223C 100%);
+  color: var(--color-white);
+  border-bottom: 1px solid rgba(232, 185, 106, 0.35);
+}
+
+/* Bez tohohle by display:flex nize prebil vychozi [hidden] prohlizece
+   a zavrena lista by zustala videt. */
+.promo-bar[hidden] {
+  display: none;
+}
+
+.promo-bar__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding-right: 52px;
+  padding-left: 52px;
+}
+
+.promo-bar__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 10px 0;
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none;
+}
+
+.promo-bar__icon {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.promo-bar__dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #4ADE80;
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.75);
+  animation: promoPulse 2.2s ease-out infinite;
+}
+
+.promo-bar__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-gold-light);
+  border-bottom: 1px solid rgba(232, 185, 106, 0.45);
+  transition: var(--transition);
+}
+
+.promo-bar__link:hover .promo-bar__cta,
+.promo-bar__link:focus-visible .promo-bar__cta {
+  color: var(--color-white);
+  border-bottom-color: var(--color-white);
+}
+
+.promo-bar__close {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  /* 40 px kvuli dotykovemu ovladani na mobilu */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.promo-bar__close:hover,
+.promo-bar__close:focus-visible {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--color-white);
+}
+
+@keyframes promoPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.75); }
+  70%  { box-shadow: 0 0 0 7px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-bar__dot { animation: none; }
+}
+
+@media (max-width: 560px) {
+  .promo-bar__inner {
+    gap: 8px;
+    padding-left: 14px;
+    padding-right: 46px;
+  }
+
+  .promo-bar__link {
+    gap: 7px;
+    font-size: 0.78rem;
+  }
+
+  /* Na uzkem displeji staci "Sledovat" - jmeno profilu by lamalo radek */
+  .promo-bar__handle { display: none; }
+}
+
 .nav {
   position: sticky;
   top: 0;

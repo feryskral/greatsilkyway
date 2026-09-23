@@ -33,6 +33,9 @@ RedirectMatch 404 ^/\.vscode(/.*)?$
 RedirectMatch 404 ^/\.claude(/.*)?$
 RedirectMatch 404 ^/media(/.*)?$
 
+# --- Odstranene stene Dolce Amore: fotky se uz nikde nesmi zobrazit ---
+RedirectMatch 404 ^/(thumbs/)?(foto|stene)-dolce-amore[^/]*$
+
 # --- Vynutit HTTPS ---
 <IfModule mod_rewrite.c>
   RewriteEngine On

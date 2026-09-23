@@ -198,7 +198,7 @@
     {
       "name": "Citrine",
       "gender": "female",
-      "status": "available",
+      "status": "unavailable",
       "photo": "Citrine.jpg",
       "description": "Yorkshire teriér",
       "nameEn": "Citrine",

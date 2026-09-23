@@ -1088,6 +1088,7 @@
                 <select class="select" onchange="updPuppy(${i},'status',this.value); renderPuppies();">
                   <option value="available" ${p.status==='available'?'selected':''}>Volné</option>
                   <option value="reserved" ${p.status==='reserved'?'selected':''}>Rezervováno</option>
+                  <option value="unavailable" ${p.status==='unavailable'?'selected':''}>Nedostupné</option>
                 </select>
               </div>
               <div class="field"><label>Vrh:</label><input class="input" list="litterNameOptions" value="${escapeHtml(p.litter || '')}" oninput="updPuppy(${i},'litter',this.value)" placeholder="Vrh C" title="Zobrazí se jako štítek na fotce štěněte. Musí sedět s názvem vrhu, aby tlačítko na stránce Vrhy vedlo sem." /></div>

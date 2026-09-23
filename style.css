@@ -921,6 +921,11 @@ p {
   color: white;
 }
 
+.puppy-card__status--unavailable {
+  background-color: #9CA3AF;
+  color: white;
+}
+
 /* Tag vrhu na fotce stenete (Vrh C / Vrh D) */
 .puppy-card__litter {
   position: absolute;
@@ -1333,8 +1338,20 @@ p {
   transition: var(--transition);
 }
 
+.footer__social-link {
+  color: var(--color-white);
+}
+
+.footer__social-link svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  fill: currentColor;
+}
+
 .footer__social-link:hover {
   background-color: var(--color-gold);
+  color: var(--color-navy);
 }
 
 .footer__col-title {

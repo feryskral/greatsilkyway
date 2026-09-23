@@ -347,6 +347,7 @@
       : '<span class="puppy-card__gender puppy-card__gender--female" data-i18n="gender_female">Fena</span>';
   }
   function statusBadge(s) {
+    if (s === 'unavailable') return '<span class="puppy-card__status puppy-card__status--unavailable" data-i18n="litter_status_unavailable">Nedostupné</span>';
     return s === 'reserved'
       ? '<span class="puppy-card__status puppy-card__status--reserved" data-i18n="status_reserved">Rezervováno</span>'
       : '<span class="puppy-card__status puppy-card__status--available" data-i18n="status_available">Volné</span>';
@@ -355,12 +356,15 @@
     const photo = p.photo || '';
     // V karte staci lehky nahled; original zustava pro lightbox a plnou kvalitu.
     const nahled = p.thumb || photo;
-    const reserved = p.status === 'reserved';
+    const unavailable = p.status === 'unavailable';
+    const reserved = p.status === 'reserved' || unavailable;
     const btn = reserved
       ? '<button class="btn btn--outline btn--sm" disabled style="opacity:0.5;cursor:not-allowed;" data-i18n="btn_taken">Obsazeno</button>'
       : '<a href="kontakt.html" class="btn btn--primary btn--sm" data-i18n="btn_interested">Mám zájem</a>';
     const price = reserved
-      ? '<div class="puppy-card__price" style="margin-bottom:12px;color:var(--color-text-soft);" data-i18n="status_reserved">Rezervováno</div>'
+      ? (unavailable
+        ? '<div class="puppy-card__price" style="margin-bottom:12px;color:var(--color-text-soft);" data-i18n="litter_status_unavailable">Nedostupné</div>'
+        : '<div class="puppy-card__price" style="margin-bottom:12px;color:var(--color-text-soft);" data-i18n="status_reserved">Rezervováno</div>')
       : '<div class="puppy-card__price" style="margin-bottom:12px;" data-i18n="price_on_request">Cena na dotaz</div>';
     // Kliknuti na fotku vede do galerie na album tohoto stenete
     const link = albumLinkFor(p, 'puppy');
@@ -456,7 +460,7 @@
     const box = document.getElementById('puppyAlert');
     if (!section || !box) return;
 
-    const free = (puppies || []).filter(p => p && p.status !== 'reserved');
+    const free = (puppies || []).filter(p => p && p.status !== 'reserved' && p.status !== 'unavailable');
     if (!free.length) { section.hidden = true; return; }
 
     const en = gsLang() === 'en';

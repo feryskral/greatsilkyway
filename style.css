@@ -865,9 +865,15 @@ p {
 
 /* ---- PUPPY CARDS ---- */
 .puppies-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 28px;
+}
+
+.puppies-grid > .puppy-card {
+  flex: 0 0 calc((100% - 56px) / 3);
+  min-width: 0;
 }
 
 .puppy-card {
@@ -1496,8 +1502,8 @@ p {
   }
 
   .dogs-grid,
-  .puppies-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .puppies-grid > .puppy-card {
+    flex-basis: calc((100% - 28px) / 2);
   }
 }
 
@@ -1547,8 +1553,8 @@ p {
   .gallery-grid,
   .testimonials-grid,
   .dogs-grid,
-  .puppies-grid {
-    grid-template-columns: 1fr;
+  .puppies-grid > .puppy-card {
+    flex-basis: 100%;
   }
 
   .form-row {
